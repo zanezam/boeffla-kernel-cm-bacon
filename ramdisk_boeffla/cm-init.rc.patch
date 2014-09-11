@@ -1,0 +1,27 @@
+From a5b708a5de0404cefe1ca38b985f315523515cb4 Mon Sep 17 00:00:00 2001
+From: andip71 <andreasp@gmx.de>
+Date: Sat, 19 Oct 2013 12:55:29 +0200
+Subject: [PATCH] b
+
+---
+ init.rc | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/init.rc b/init.rc
+index 1f635c9..ad6cc4f 100755
+--- a/init.rc
++++ b/init.rc
+@@ -577,3 +577,10 @@ service mdnsd /system/bin/mdnsd
+     socket mdnsd stream 0660 mdnsr inet
+     disabled
+     oneshot
++
++# Call Boeffla-Kernel init script
++service boeffla-init /sbin/boeffla-init.sh
++    class main
++    user root
++    group root
++    oneshot
+-- 
+1.8.1.2
+
