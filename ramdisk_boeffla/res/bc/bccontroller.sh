@@ -16,7 +16,7 @@ KERNEL_SPECS="bacon;cm;cm11.0;http://boeffla.df-kunde.de/bacon/boeffla-kernel-cm
 # kernel features 
 # (1=enable-busybox,2=enable-frandom,3=wipe-cache,4=disable-zram-control)
 # (5=enable-default-zram-control)
-KERNEL_FEATURES="-1-2-3-4-"
+KERNEL_FEATURES="-1-2-3-"
 
 # path to kernel libraries
 LIBPATH="/system/lib/modules"
@@ -35,37 +35,37 @@ RECOVERY_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/recovery"
 # *******************
 
 if [ "lov_gov_profiles" == "$1" ]; then
-	echo "pegasusq - boeffla moderate;pegasusq - boeffla battery saving;pegasusq - boeffla 1 core;pegasusq - boeffla 2 cores;pegasusq - speedmod;zzmoove - optimal;zzmoove - battery;zzmoove - battery plus;zzmoove - battery yank;zzmoove - battery extreme yank;zzmoove - performance;zzmoove - insane;zzmoove - moderate;zzmoove - game;pegasusqplus - balanced;pegasusqplus - battery"
+	#echo "pegasusq - boeffla moderate;pegasusq - boeffla battery saving;pegasusq - boeffla 1 core;pegasusq - boeffla 2 cores;pegasusq - speedmod;zzmoove - optimal;zzmoove - battery;zzmoove - battery plus;zzmoove - battery yank;zzmoove - battery extreme yank;zzmoove - performance;zzmoove - insane;zzmoove - moderate;zzmoove - game;pegasusqplus - balanced;pegasusqplus - battery"
 	exit 0
 fi
 
 if [ "lov_cpu_volt_profiles" == "$1" ]; then
-	echo "No undervolting;undervolt -25mV;undervolt -50mV;undervolt -75mV;undervolt -100mV;undervolt light;undervolt medium;undervolt heavy"
+	#echo "No undervolting;undervolt -25mV;undervolt -50mV;undervolt -75mV;undervolt -100mV;undervolt light;undervolt medium;undervolt heavy"
 	exit 0
 fi
 
 if [ "lov_gpu_freq_profiles" == "$1" ]; then
-	echo "54 only;160 only;160/266;266/350;54/108/160/200/266;108/160/200/266/350;160/266/350/440/533 (default);266/350/440/533/600;350/440/533/600/640;440/533/600/640/700"
+	#echo "54 only;160 only;160/266;266/350;54/108/160/200/266;108/160/200/266/350;160/266/350/440/533 (default);266/350/440/533/600;350/440/533/600/640;440/533/600/640/700"
 	exit 0
 fi
 
 if [ "lov_gpu_volt_profiles" == "$1" ]; then
-	echo "No undervolting;undervolt -25mV;undervolt -50mV;undervolt -75mV;undervolt -100mV;undervolt light;undervolt medium;undervolt heavy;overvolt +25mV;overvolt +50mV;overvolt +75mV;overvolt +100mV"
+	#echo "No undervolting;undervolt -25mV;undervolt -50mV;undervolt -75mV;undervolt -100mV;undervolt light;undervolt medium;undervolt heavy;overvolt +25mV;overvolt +50mV;overvolt +75mV;overvolt +100mV"
 	exit 0
 fi
 
 if [ "lov_gpu_freq" == "$1" ]; then
-	echo "54;108;160;200;266;300;350;400;440;500;533;600;640;700"
+	#echo "54;108;160;200;266;300;350;400;440;500;533;600;640;700"
 	exit 0
 fi
 
 if [ "lov_eq_gain_profiles" == "$1" ]; then
-	echo "Archis audiophile;Baseland;Bass extreme;Bass treble;Classic;Dance;Eargasm;Metal/Rock;Pleasant;Treble"
+	#echo "Archis audiophile;Baseland;Bass extreme;Bass treble;Classic;Dance;Eargasm;Metal/Rock;Pleasant;Treble"
 	exit 0
 fi
 
 if [ "lov_system_tweaks" == "$1" ]; then
-	echo "Off;Boeffla tweaks;Speedmod tweaks;Mattiadj tweaks"
+	#echo "Off;Boeffla tweaks;Speedmod tweaks;Mattiadj tweaks"
 	exit 0
 fi
 
@@ -76,35 +76,35 @@ fi
 
 if [ "lov_presets" == "$1" ]; then
 	# Note, the ^ sign will be translated into newline for this setting
-	echo "Power extreme~"
-	echo "Gov: pegasusq / standard"
-	echo "^Sched: row / row"
-	echo "^CPU: 1600 / no uv"
-	echo "^GPU: 440-700 / +50mV;"
+	#echo "Power extreme~"
+	#echo "Gov: pegasusq / standard"
+	#echo "^Sched: row / row"
+	#echo "^CPU: 1600 / no uv"
+	#echo "^GPU: 440-700 / +50mV;"
 	
-	echo "Power~"
-	echo "Gov: zzmoove / performance"
-	echo "^Sched: row / row"
-	echo "^CPU: 1400 / no uv"
-	echo "^GPU: 266-600 / no uv;"
+	#echo "Power~"
+	#echo "Gov: zzmoove / performance"
+	#echo "^Sched: row / row"
+	#echo "^CPU: 1400 / no uv"
+	#echo "^GPU: 266-600 / no uv;"
 	
-	echo "Standard~"
-	echo "Gov: pegasusq / standard"
-	echo "^Sched: cfq / cfq"
-	echo "^CPU: 1400 / no uv"
-	echo "^GPU: 160-440 / no uv;"
+	#echo "Standard~"
+	#echo "Gov: pegasusq / standard"
+	#echo "^Sched: cfq / cfq"
+	#echo "^CPU: 1400 / no uv"
+	#echo "^GPU: 160-440 / no uv;"
 	
-	echo "Battery friendly~"
-	echo "Gov: pegasusq / boeffla - moderate"
-	echo "^Sched: zen / zen"
-	echo "^CPU: 1400 / -25mV"
-	echo "^GPU: 160/266 / -25mV;"
+	#echo "Battery friendly~"
+	#echo "Gov: pegasusq / boeffla - moderate"
+	#echo "^Sched: zen / zen"
+	#echo "^CPU: 1400 / -25mV"
+	#echo "^GPU: 160/266 / -25mV;"
 	
-	echo "Battery saving~"
-	echo "Gov: zzmoove / battery yank"
-	echo "^Sched: zen / zen"
-	echo "^CPU: 1000 / light uv"
-	echo "^GPU: 160/266 / light uv;"
+	#echo "Battery saving~"
+	#echo "Gov: zzmoove / battery yank"
+	#echo "^Sched: zen / zen"
+	#echo "^CPU: 1000 / light uv"
+	#echo "^GPU: 160/266 / light uv;"
 	
 	exit 0
 fi
@@ -421,433 +421,40 @@ fi
 # *******************
 
 if [ "apply_governor_profile" == "$1" ]; then
-	if [ "pegasusq - standard" == "$2" ]; then
-		# cpu2
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1
-		echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
-		echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
-		echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
-		# cpu3
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
-		echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
-		echo "200" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
-		echo "200" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
-		# cpu4
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
-		echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
-		echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
-		echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0
-
-		echo "20" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
-		echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
-		echo "85" > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold
-		echo "37" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "pegasusq - boeffla 1 core" == "$2" ]; then
-		# cpu2
-		echo "1400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1
-		echo "1300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
-		echo "3000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
-		echo "3000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
-		# cpu3
-		echo "1400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
-		echo "1300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
-		echo "4000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
-		echo "4000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
-		# cpu4
-		echo "1400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
-		echo "1300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
-		echo "5000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
-		echo "5000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0
-
-		echo "20" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
-		echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
-		echo "85" > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold
-		echo "37" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "pegasusq - boeffla 2 cores" == "$2" ]; then
-		# cpu2
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1
-		echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
-		echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
-		echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
-		# cpu3
-		echo "1400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
-		echo "1300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
-		echo "4000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
-		echo "4000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
-		# cpu4
-		echo "1400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
-		echo "1300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
-		echo "5000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
-		echo "5000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0
-
-		echo "20" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
-		echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
-		echo "85" > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold
-		echo "37" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "pegasusq - speedmod" == "$2" ]; then
-		# cpu2
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1
-		echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
-		echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
-		echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
-		# cpu3
-		echo "800000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
-		echo "600000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
-		echo "200" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
-		echo "200" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
-		# cpu4
-		echo "800000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
-		echo "600000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
-		echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
-		echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0
-
-		echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
-		echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
-		echo "85" > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold
-		echo "37" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "pegasusq - boeffla battery saving" == "$2" ]; then
-		# cpu2
-		echo "1400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1
-		echo "1300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
-		echo "500" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
-		echo "500" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
-		# cpu3
-		echo "1400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
-		echo "1300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
-		echo "550" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
-		echo "550" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
-		# cpu4
-		echo "1400000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
-		echo "1300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
-		echo "600" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
-		echo "600" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0
-
-		echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
-		echo "5" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
-		echo "95" > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold
-		echo "25" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "pegasusq - boeffla moderate" == "$2" ]; then
-		# cpu2
-		echo "800000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_1_1
-		echo "700000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_0
-		echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_1_1
-		echo "100" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_0
-		# cpu3
-		echo "1100000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_2_1
-		echo "1000000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_0
-		echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_2_1
-		echo "300" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_0
-		# cpu4
-		echo "1300000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_3_1
-		echo "1200000" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_freq_4_0
-		echo "400" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_3_1
-		echo "400" > /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_rq_4_0
-
-		echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_down_rate
-		echo "10" > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_up_rate
-		echo "85" > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold
-		echo "37" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "pegasusqplus - standard" == "$2" ]; then
-		echo "30" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_down_rate
-		echo "2" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_online_bias_count
-		echo "30" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_online_bias_down_threshold
-		echo "65" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_online_bias_up_threshold
-		echo "16" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_up_rate
-		echo "5" > /sys/devices/system/cpu/cpufreq/pegasusqplus/down_differential
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/dvfs_debug
-		echo "1200000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_for_fast_down
-		echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_for_responsiveness
-		echo "37" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_step
-		echo "13" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_step_dec
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_1_1
-		echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_2_0
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_2_1
-		echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_3_0
-		echo "700000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_3_1
-		echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_4_0
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_lock
-		echo "175" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_1_1
-		echo "175" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_2_0
-		echo "275" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_2_1
-		echo "275" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_3_0
-		echo "375" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_3_1
-		echo "375" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_4_0
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/ignore_nice_load
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/lcdfreq_enable
-		echo "20" > /sys/devices/system/cpu/cpufreq/pegasusqplus/lcdfreq_kick_in_down_delay
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/lcdfreq_kick_in_freq
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/max_cpu_lock
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/min_cpu_lock
-		echo "1" > /sys/devices/system/cpu/cpufreq/pegasusqplus/sampling_down_factor
-		echo "30000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/sampling_rate
-		echo "10000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/sampling_rate_min
-		echo "1" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_nr_cpus~1
-		echo "82" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold
-		echo "95" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold_at_fast_down
-		echo "40" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold_at_min_freq
-		echo "6" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold_diff
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "pegasusqplus - balanced" == "$2" ]; then
-		echo "30" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_down_rate
-		echo "2" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_online_bias_count
-		echo "52" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_online_bias_down_threshold
-		echo "70" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_online_bias_up_threshold
-		echo "16" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_up_rate
-		echo "5" > /sys/devices/system/cpu/cpufreq/pegasusqplus/down_differential
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/dvfs_debug
-		echo "1200000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_for_fast_down
-		echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_for_responsiveness
-		echo "4" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_step
-		echo "2" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_step_dec
-		echo "700000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_1_1
-		echo "200000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_2_0
-		echo "700000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_2_1
-		echo "300000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_3_0
-		echo "900000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_3_1
-		echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_4_0
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_lock
-		echo "275" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_1_1
-		echo "275" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_2_0
-		echo "375" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_2_1
-		echo "375" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_3_0
-		echo "450" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_3_1
-		echo "450" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_4_0
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/ignore_nice_load
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/lcdfreq_enable
-		echo "20" > /sys/devices/system/cpu/cpufreq/pegasusqplus/lcdfreq_kick_in_down_delay
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/lcdfreq_kick_in_freq
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/max_cpu_lock
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/min_cpu_lock
-		echo "1" > /sys/devices/system/cpu/cpufreq/pegasusqplus/sampling_down_factor
-		echo "32000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/sampling_rate
-		echo "10000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/sampling_rate_min
-		echo "1" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_nr_cpus~1
-		echo "90" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold
-		echo "95" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold_at_fast_down
-		echo "55" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold_at_min_freq
-		echo "7" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold_diff
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "pegasusqplus - battery" == "$2" ]; then
-		echo "30" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_down_rate
-		echo "2" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_online_bias_count
-		echo "52" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_online_bias_down_threshold
-		echo "70" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_online_bias_up_threshold
-		echo "16" > /sys/devices/system/cpu/cpufreq/pegasusqplus/cpu_up_rate
-		echo "5" > /sys/devices/system/cpu/cpufreq/pegasusqplus/down_differential
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/dvfs_debug
-		echo "1200000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_for_fast_down
-		echo "400000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_for_responsiveness
-		echo "4" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_step
-		echo "2" > /sys/devices/system/cpu/cpufreq/pegasusqplus/freq_step_dec
-		echo "900000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_1_1
-		echo "700000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_2_0
-		echo "1000000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_2_1
-		echo "800000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_3_0
-		echo "1400000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_3_1
-		echo "1100000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_freq_4_0
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_lock
-		echo "300" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_1_1
-		echo "300" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_2_0
-		echo "375" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_2_1
-		echo "375" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_3_0
-		echo "450" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_3_1
-		echo "450" > /sys/devices/system/cpu/cpufreq/pegasusqplus/hotplug_rq_4_0
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/ignore_nice_load
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/lcdfreq_enable
-		echo "20" > /sys/devices/system/cpu/cpufreq/pegasusqplus/lcdfreq_kick_in_down_delay
-		echo "500000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/lcdfreq_kick_in_freq
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/max_cpu_lock
-		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusqplus/min_cpu_lock
-		echo "1" > /sys/devices/system/cpu/cpufreq/pegasusqplus/sampling_down_factor
-		echo "32000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/sampling_rate
-		echo "10000" > /sys/devices/system/cpu/cpufreq/pegasusqplus/sampling_rate_min
-		echo "1" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_nr_cpus~1
-		echo "90" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold
-		echo "95" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold_at_fast_down
-		echo "55" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold_at_min_freq
-		echo "7" > /sys/devices/system/cpu/cpufreq/pegasusqplus/up_threshold_diff
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - standard" == "$2" ]; then
-		echo "1" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - battery" == "$2" ]; then
-		echo "4" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - optimal" == "$2" ]; then
-		echo "6" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - performance" == "$2" ]; then
-		echo "8" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - battery extreme yank" == "$2" ]; then
-		echo "3" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - battery yank" == "$2" ]; then
-		echo "2" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - insane" == "$2" ]; then
-		echo "9" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - battery plus" == "$2" ]; then
-		echo "5" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - moderate" == "$2" ]; then
-		echo "7" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-
-	if [ "zzmoove - game" == "$2" ]; then
-		echo "10" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
-	
-	if [ "lulzactiveq - standard" == "$2" ]; then
-		echo "20" >/sys/devices/system/cpu/cpufreq/lulzactiveq/cpu_down_rate
-		echo "10" >/sys/devices/system/cpu/cpufreq/lulzactiveq/cpu_up_rate
-		echo "0" >/sys/devices/system/cpu/cpufreq/lulzactiveq/debug_mode
-		echo "50" >/sys/devices/system/cpu/cpufreq/lulzactiveq/dec_cpu_load
-		echo "40000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/down_sample_time
-		echo "0" >/sys/devices/system/cpu/cpufreq/lulzactiveq/dvfs_debug
-		echo "1600000 1500000 1400000 1300000 1200000 1100000 1000000 900000 800000 700000 600000 500000 400000 300000 200000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/freq_table
-		echo "1400000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hispeed_freq
-		echo "500000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_freq_1_1 
-		echo "200000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_freq_2_0 
-		echo "500000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_freq_2_1 
-		echo "400000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_freq_3_0 
-		echo "800000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_freq_3_1 
-		echo "500000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_freq_4_0 
-		echo "0" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_lock
-		echo "200" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_rq_1_1 
-		echo "200" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_rq_2_0 
-		echo "300" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_rq_2_1 
-		echo "300" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_rq_3_0 
-		echo "400" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_rq_3_1 
-		echo "400" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_rq_4_0 
-		echo "50000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/hotplug_sampling_rate
-		echo "0" >/sys/devices/system/cpu/cpufreq/lulzactiveq/ignore_nice_load
-		echo "85" >/sys/devices/system/cpu/cpufreq/lulzactiveq/inc_cpu_load
-		echo "0" >/sys/devices/system/cpu/cpufreq/lulzactiveq/max_cpu_lock
-		echo "0" >/sys/devices/system/cpu/cpufreq/lulzactiveq/min_cpu_lock
-		echo "1" >/sys/devices/system/cpu/cpufreq/lulzactiveq/pump_down_step
-		echo "2" >/sys/devices/system/cpu/cpufreq/lulzactiveq/pump_up_step
-		echo "11" >/sys/devices/system/cpu/cpufreq/lulzactiveq/screen_off_min_step
-		echo "1" >/sys/devices/system/cpu/cpufreq/lulzactiveq/up_nr_cpus
-		echo "20000" >/sys/devices/system/cpu/cpufreq/lulzactiveq/up_sample_time
-
-		busybox sleep 0.5s
-		busybox sync
-	fi
 
 	if [ "ondemand - standard" == "$2" ]; then
 		echo "3" >/sys/devices/system/cpu/cpufreq/ondemand/down_differential
-		echo "100" >/sys/devices/system/cpu/cpufreq/ondemand/freq_step
+		echo "3" >/sys/devices/system/cpu/cpufreq/ondemand/down_differential_multi_core
 		echo "0" >/sys/devices/system/cpu/cpufreq/ondemand/ignore_nice_load
+		echo "0" >/sys/devices/system/cpu/cpufreq/ondemand/input_boost
 		echo "0" >/sys/devices/system/cpu/cpufreq/ondemand/io_is_busy
+		echo "300000" >/sys/devices/system/cpu/cpufreq/ondemand/optimal_freq
 		echo "0" >/sys/devices/system/cpu/cpufreq/ondemand/powersave_bias
 		echo "1" >/sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
 		echo "100000" >/sys/devices/system/cpu/cpufreq/ondemand/sampling_rate
 		echo "10000" >/sys/devices/system/cpu/cpufreq/ondemand/sampling_rate_min
+		echo "300000" >/sys/devices/system/cpu/cpufreq/ondemand/sync_freq
 		echo "95" >/sys/devices/system/cpu/cpufreq/ondemand/up_threshold
+		echo "80" >/sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load
+		echo "80" >/sys/devices/system/cpu/cpufreq/ondemand/up_threshold_multi_core
 
 		busybox sleep 0.5s
 		busybox sync
 	fi
 
-	if [ "smartassV2 - standard" == "$2" ]; then
-		echo "800000" > /sys/devices/system/cpu/cpufreq/smartassV2/awake_ideal_freq
-		echo "0" > /sys/devices/system/cpu/cpufreq/smartassV2/debug_mask
-		echo "99000" > /sys/devices/system/cpu/cpufreq/smartassV2/down_rate_us
-		echo "55" > /sys/devices/system/cpu/cpufreq/smartassV2/max_cpu_load
-		echo "25" > /sys/devices/system/cpu/cpufreq/smartassV2/min_cpu_load
-		echo "300000" > /sys/devices/system/cpu/cpufreq/smartassV2/ramp_down_step
-		echo "200000" > /sys/devices/system/cpu/cpufreq/smartassV2/ramp_up_step
-		echo "2" > /sys/devices/system/cpu/cpufreq/smartassV2/sample_rate_jiffies
-		echo "200000" > /sys/devices/system/cpu/cpufreq/smartassV2/sleep_ideal_freq
-		echo "99999999" > /sys/devices/system/cpu/cpufreq/smartassV2/sleep_wakeup_freq
-		echo "48000" > /sys/devices/system/cpu/cpufreq/smartassV2/up_rate_us
+	if [ "conservative - standard" == "$2" ]; then
+		echo "20" >/sys/devices/system/cpu/cpufreq/conservative/down_threshold
+		echo "5" >/sys/devices/system/cpu/cpufreq/conservative/freq_step
+		echo "0" >/sys/devices/system/cpu/cpufreq/conservative/ignore_nice_load
+		echo "1" >/sys/devices/system/cpu/cpufreq/conservative/sampling_down_factor
+		echo "200000" >/sys/devices/system/cpu/cpufreq/conservative/sampling_rate
+		echo "200000" >/sys/devices/system/cpu/cpufreq/conservative/sampling_rate_min
+		echo "80" >/sys/devices/system/cpu/cpufreq/conservative/up_threshold
 
 		busybox sleep 0.5s
 		busybox sync
 	fi
-	
+
 	if [ "intelliactive - standard" == "$2" ]; then
 		echo "20000" > /sys/devices/system/cpu/cpufreq/intelliactive/above_hispeed_delay 
 		echo "0" > /sys/devices/system/cpu/cpufreq/intelliactive/boost
@@ -870,21 +477,42 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sync
 	fi
 
-	if [ "wheatley - standard" == "$2" ]; then
-		echo "5" > /sys/devices/system/cpu/cpufreq/wheatley/allowed_misses
-		echo "0" > /sys/devices/system/cpu/cpufreq/wheatley/ignore_nice_load
-		echo "0" > /sys/devices/system/cpu/cpufreq/wheatley/io_is_busy
-		echo "0" > /sys/devices/system/cpu/cpufreq/wheatley/powersave_bias
-		echo "1" > /sys/devices/system/cpu/cpufreq/wheatley/sampling_down_factor
-		echo "100000" > /sys/devices/system/cpu/cpufreq/wheatley/sampling_rate
-		echo "10000" > /sys/devices/system/cpu/cpufreq/wheatley/sampling_rate_min
-		echo "10000" > /sys/devices/system/cpu/cpufreq/wheatley/target_residency
-		echo "95" > /sys/devices/system/cpu/cpufreq/wheatley/up_threshold
+	if [ "intellidemand - standard" == "$2" ]; then
+		echo "3" > /sys/devices/system/cpu/cpufreq/intellidemand/down_differential 
+		echo "0" > /sys/devices/system/cpu/cpufreq/intellidemand/ignore_nice_load 
+		echo "1" > /sys/devices/system/cpu/cpufreq/intellidemand/io_is_busy 
+		echo "0" > /sys/devices/system/cpu/cpufreq/intellidemand/powersave_bias 
+		echo "15" > /sys/devices/system/cpu/cpufreq/intellidemand/sampling_down_factor 
+		echo "10000" > /sys/devices/system/cpu/cpufreq/intellidemand/sampling_rate 
+		echo "4294967295" > /sys/devices/system/cpu/cpufreq/intellidemand/sampling_rate_max 
+		echo "10000" > /sys/devices/system/cpu/cpufreq/intellidemand/sampling_rate_min 
+		echo "85" > /sys/devices/system/cpu/cpufreq/intellidemand/up_threshold 
 
 		busybox sleep 0.5s
 		busybox sync
 	fi
 
+	if [ "interactive - standard" == "$2" ]; then
+		echo "20000 1400000:40000 1700000:20000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 
+		echo "0" > /sys/devices/system/cpu/cpufreq/interactive/boost 
+		echo "" > /sys/devices/system/cpu/cpufreq/interactive/boostpulse 
+		echo "80000" > /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration 
+		echo "90" > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 
+		echo "1190400" > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 
+		echo "1" > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 
+		echo "40000" > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 
+		echo "100000" > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor 
+		echo "1036800" > /sys/devices/system/cpu/cpufreq/interactive/sync_freq 
+		echo "85 1500000:90 1800000:70" > /sys/devices/system/cpu/cpufreq/interactive/target_loads 
+		echo "30000" > /sys/devices/system/cpu/cpufreq/interactive/timer_rate 
+		echo "20000" > /sys/devices/system/cpu/cpufreq/interactive/timer_slack 
+		echo "1190400" > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq 
+		echo "50" > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load 
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+	
 	exit 0
 fi
 
@@ -983,6 +611,10 @@ if [ "apply_zram" == "$1" ]; then
 			echo "1" > /sys/block/zram1/reset
 			echo "1" > /sys/block/zram2/reset
 			echo "1" > /sys/block/zram3/reset
+			echo "$4" > /sys/block/zram0/disksize
+			echo "0" > /sys/block/zram1/disksize
+			echo "0" > /sys/block/zram2/disksize
+			echo "0" > /sys/block/zram3/disksize
 			busybox mkswap /dev/block/zram0
 			busybox swapon -p 2 /dev/block/zram0
 			busybox sleep 0.5s
@@ -997,6 +629,10 @@ if [ "apply_zram" == "$1" ]; then
 			echo "1" > /sys/block/zram1/reset
 			echo "1" > /sys/block/zram2/reset
 			echo "1" > /sys/block/zram3/reset
+			echo "$4" > /sys/block/zram0/disksize
+			echo "$4" > /sys/block/zram1/disksize
+			echo "0" > /sys/block/zram2/disksize
+			echo "0" > /sys/block/zram3/disksize
 			busybox mkswap /dev/block/zram0
 			busybox mkswap /dev/block/zram1
 			busybox swapon -p 2 /dev/block/zram0
@@ -1013,6 +649,10 @@ if [ "apply_zram" == "$1" ]; then
 			echo "1" > /sys/block/zram1/reset
 			echo "1" > /sys/block/zram2/reset
 			echo "1" > /sys/block/zram3/reset
+			echo "$4" > /sys/block/zram0/disksize
+			echo "$4" > /sys/block/zram1/disksize
+			echo "$4" > /sys/block/zram2/disksize
+			echo "$4" > /sys/block/zram3/disksize
 			busybox mkswap /dev/block/zram0
 			busybox mkswap /dev/block/zram1
 			busybox mkswap /dev/block/zram2
@@ -1190,11 +830,11 @@ if [ "action_debug_info_file" == "$1" ]; then
 
 	echo -e "\n============================================\n" >> $2
 
-	echo -e "\n**** boeffla_sound\n" >> $2
-	cd /sys/class/misc/boeffla_sound
-	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	#echo -e "\n**** boeffla_sound\n" >> $2
+	#cd /sys/class/misc/boeffla_sound
+	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
-	echo "\n============================================\n" >> $2
+	#echo "\n============================================\n" >> $2
 
 	echo -e "\n**** Loaded modules:\n" >> $2
 	lsmod >> $2
@@ -1202,14 +842,20 @@ if [ "action_debug_info_file" == "$1" ]; then
 	echo -e "\n**** CPU information:\n" >> $2
 	cd /sys/devices/system/cpu/cpu0/cpufreq
 	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	cd /sys/devices/system/cpu/cpu1/cpufreq
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	cd /sys/devices/system/cpu/cpu2/cpufreq
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	cd /sys/devices/system/cpu/cpu3/cpufreq
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
 	echo -e "\n**** GPU information:\n" >> $2
 
-	cd /sys/class/misc/gpu_voltage_control
-	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	#cd /sys/class/misc/gpu_voltage_control
+	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
-	cd /sys/class/misc/gpu_clock_control
-	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	#cd /sys/class/misc/gpu_clock_control
+	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
 	echo -e "\n**** Root:\n" >> $2
 	ls /system/xbin/su >> $2
@@ -1226,7 +872,7 @@ if [ "action_debug_info_file" == "$1" ]; then
 
 	echo -e "\n**** SD Card read ahead:\n" >> $2
 	cat /sys/block/mmcblk0/bdi/read_ahead_kb >> $2
-	cat /sys/block/mmcblk1/bdi/read_ahead_kb >> $2
+	#cat /sys/block/mmcblk1/bdi/read_ahead_kb >> $2
 
 	echo -e "\n**** Various kernel settings by config app:\n" >> $2
 	echo -e "\n(gov prof, cpu volt prof, gpu freq prof, gpu volt prof, eq prof, mdnie over, sys tweaks, swapp over)\n" >> $2
@@ -1234,32 +880,35 @@ if [ "action_debug_info_file" == "$1" ]; then
 	cat /dev/bk_cpu_voltages_profile >> $2
 	cat /dev/bk_gpu_frequencies_profile >> $2
 	cat /dev/bk_gpu_voltages_profile >> $2
-	cat /dev/bk_eq_gains_profile >> $2
-	cat /dev/bk_mdnie_overwrite >> $2
+	#cat /dev/bk_eq_gains_profile >> $2
+	#cat /dev/bk_mdnie_overwrite >> $2
 	cat /dev/bk_system_tweaks >> $2
 	cat /dev/bk_swappiness_overwrite >> $2
 
-	echo -e "\n**** Touch boost:\n" >> $2
-	cd /sys/class/misc/touchboost_switch
-	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	#echo -e "\n**** Touch boost:\n" >> $2
+	#cd /sys/class/misc/touchboost_switch
+	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
-	echo -e "\n**** Touch wake:\n" >> $2
-	cd /sys/class/misc/touchwake
-	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	#echo -e "\n**** Touch wake:\n" >> $2
+	#cd /sys/class/misc/touchwake
+	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
-	echo -e "\n**** Early suspend:\n" >> $2
-	cat /sys/kernel/early_suspend/early_suspend_delay >> $2
+	#echo -e "\n**** Early suspend:\n" >> $2
+	#cat /sys/kernel/early_suspend/early_suspend_delay >> $2
 
-	echo -e "\n**** Charging levels (ac/usb/wireless) and Charging instable power / ignore safety margin:\n" >> $2
-	cd /sys/kernel/charge_levels
-	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	#echo -e "\n**** Charging levels (ac/usb/wireless) and Charging instable power / ignore safety margin:\n" >> $2
+	#cd /sys/kernel/charge_levels
+	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
 	echo -e "\n**** Governor:\n" >> $2
 	cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor >> $2
+	cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor >> $2
+	cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor >> $2
+	cat /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor >> $2
 
 	echo -e "\n**** Scheduler:\n" >> $2
 	cat /sys/block/mmcblk0/queue/scheduler >> $2
-	cat /sys/block/mmcblk1/queue/scheduler >> $2
+	#cat /sys/block/mmcblk1/queue/scheduler >> $2
 
 	echo -e "\n**** Kernel Logger:\n" >> $2
 	cat /sys/kernel/printk_mode/printk_mode >> $2
@@ -1267,12 +916,12 @@ if [ "action_debug_info_file" == "$1" ]; then
 	echo -e "\n**** Android Logger:\n" >> $2
 	cat /sys/kernel/logger_mode/logger_mode >> $2
 
-	echo -e "\n**** Sharpness fix:\n" >> $2
-	cat /sys/class/misc/mdnie_preset/mdnie_preset >> $2
+	#echo -e "\n**** Sharpness fix:\n" >> $2
+	#cat /sys/class/misc/mdnie_preset/mdnie_preset >> $2
 
-	echo -e "\n**** LED information:\n" >> $2
-	cd /sys/class/sec/led
-	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	#echo -e "\n**** LED information:\n" >> $2
+	#cd /sys/class/sec/led
+	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
 	echo -e "\n**** zRam information:\n" >> $2
 	busybox find /sys/block/zram*/* -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
@@ -1392,6 +1041,7 @@ if [ "action_clean_initd" == "$1" ]; then
 	busybox tar cvz -f $2 /system/etc/init.d
 	mount -o remount,rw -t ext4 $SYSTEM_DEVICE /system
 	busybox rm /system/etc/init.d/*
+	busybox sync
 	mount -o remount,ro -t ext4 $SYSTEM_DEVICE /system
 	exit 0
 fi
@@ -1446,6 +1096,7 @@ if [ "archive_kernel" == "$1" ]; then
 	busybox mv $3.tar $3.tar.md5
 	busybox chmod 666 $3.tar.md5
 	busybox rm $2
+	busybox sync
 	exit 0
 fi
 
@@ -1480,6 +1131,7 @@ if [ "flash_cm_kernel" == "$1" ]; then
 	busybox rm -f /system/lib/modules/*
 	busybox cp $2/system/lib/modules/* /system/lib/modules
 	busybox chmod 644 /system/lib/modules/*
+	busybox sync
 	mount -o remount,ro -t ext4 $SYSTEM_DEVICE /system
 	exit 0
 fi
