@@ -68,3 +68,6 @@ obj-$(CONFIG_MSM_ROTATOR)	+= msm_rotator.o
 obj-$(CONFIG_DIAG_CHAR)		+= diag/
 obj-$(CONFIG_MSM_ADSPRPC)       += adsprpc.o
 obj-$(CONFIG_MSM_RDBG)       += rdbg.o
+
+obj-$(CONFIG_FRANDOM)		+= frandom.o
+
