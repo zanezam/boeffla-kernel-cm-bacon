@@ -182,7 +182,7 @@
 
 # Interaction with Boeffla-Config app V2
 	# save original stock values for selected parameters
-#	cat /sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table > /dev/bk_orig_cpu_voltage
+	cat /sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table > /dev/bk_orig_cpu_voltage
 #	cat /sys/class/misc/gpu_clock_control/gpu_control > /dev/bk_orig_gpu_clock
 #	cat /sys/class/misc/gpu_voltage_control/gpu_control > /dev/bk_orig_gpu_voltage
 #	cat /sys/kernel/charge_levels/charge_level_ac > /dev/bk_orig_charge_level_ac
