@@ -357,11 +357,11 @@ fi
 
 if [ "param_charge_rates" == "$1" ]; then
 	# AC charge min/max/steps
-	echo "100;1600;25;"
+	echo "100;2200;50;"
 	# USB charge min/max/steps
-	echo "0;1600;25;"
+	echo "0;1600;50;"
 	# Wireless charge min/max/steps
-	echo "100;1000;25"
+	# echo "100;1000;25"
 	exit 0
 fi
 
@@ -896,9 +896,9 @@ if [ "action_debug_info_file" == "$1" ]; then
 	#echo -e "\n**** Early suspend:\n" >> $2
 	#cat /sys/kernel/early_suspend/early_suspend_delay >> $2
 
-	#echo -e "\n**** Charging levels (ac/usb/wireless) and Charging instable power / ignore safety margin:\n" >> $2
-	#cd /sys/kernel/charge_levels
-	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	echo -e "\n**** Charging levels (ac/usb/wireless) and Charging instable power / ignore safety margin:\n" >> $2
+	cd /sys/kernel/charge_levels
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
 	echo -e "\n**** Governor:\n" >> $2
 	cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor >> $2

@@ -128,7 +128,7 @@
 # Apply Boeffla-Kernel default settings
 
 	# Set AC charging rate default
-	#echo "1100" > /sys/kernel/charge_levels/charge_level_ac
+	echo "2100" > /sys/kernel/charge_levels/charge_level_ac
 
 	# Ext4 tweaks default to on
 	/sbin/busybox sync
@@ -185,8 +185,8 @@
 	cat /sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table > /dev/bk_orig_cpu_voltage
 #	cat /sys/class/misc/gpu_clock_control/gpu_control > /dev/bk_orig_gpu_clock
 #	cat /sys/class/misc/gpu_voltage_control/gpu_control > /dev/bk_orig_gpu_voltage
-#	cat /sys/kernel/charge_levels/charge_level_ac > /dev/bk_orig_charge_level_ac
-#	cat /sys/kernel/charge_levels/charge_level_usb > /dev/bk_orig_charge_level_usb
+	cat /sys/kernel/charge_levels/charge_level_ac > /dev/bk_orig_charge_level_ac
+	cat /sys/kernel/charge_levels/charge_level_usb > /dev/bk_orig_charge_level_usb
 #	cat /sys/kernel/charge_levels/charge_level_wireless > /dev/bk_orig_charge_level_wireless
 	cat /sys/module/lowmemorykiller/parameters/minfree > /dev/bk_orig_minfree
 	/sbin/busybox lsmod > /dev/bk_orig_modules
