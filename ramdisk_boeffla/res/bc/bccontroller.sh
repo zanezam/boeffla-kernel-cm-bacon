@@ -65,7 +65,7 @@ if [ "lov_eq_gain_profiles" == "$1" ]; then
 fi
 
 if [ "lov_system_tweaks" == "$1" ]; then
-	#echo "Off;Boeffla tweaks;Speedmod tweaks;Mattiadj tweaks"
+	echo "Off;Boeffla tweaks;Speedmod tweaks;Mattiadj tweaks"
 	exit 0
 fi
 
@@ -523,7 +523,7 @@ if [ "apply_system_tweaks" == "$1" ]; then
 		echo "200" > /proc/sys/vm/dirty_expire_centisecs
 		echo "20" > /proc/sys/vm/dirty_ratio
 		echo "500" > /proc/sys/vm/dirty_writeback_centisecs
-		echo "3638" > /proc/sys/vm/min_free_kbytes
+		echo "3207" > /proc/sys/vm/min_free_kbytes
 		echo "60" > /proc/sys/vm/swappiness
 		echo "100" > /proc/sys/vm/vfs_cache_pressure
 		echo "0" > /proc/sys/vm/drop_caches
