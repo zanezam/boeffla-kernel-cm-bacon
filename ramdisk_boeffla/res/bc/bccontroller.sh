@@ -305,11 +305,11 @@ fi
 
 if [ "param_boeffla_sound" == "$1" ]; then
 	# Headphone min/max, Speaker min/max
-	echo "0;63;0;63;"
+	echo "-30;30;-30;30;"
 	# Equalizer min/max
 	echo "-12;12;"
 	# Microphone gain min/max
-	echo "0;31;"
+	echo "-30;30;"
 	# Stereo expansion min/max
 	echo "0;31"
 	exit 0
@@ -573,11 +573,11 @@ if [ "apply_system_tweaks" == "$1" ]; then
 fi
 
 if [ "apply_eq_bands" == "$1" ]; then
-	echo "1 4027 1031 0 276" > /sys/class/misc/boeffla_sound/eq_bands
-	echo "2 8076 61555 456 456" > /sys/class/misc/boeffla_sound/eq_bands
-	echo "3 7256 62323 2644 1368" > /sys/class/misc/boeffla_sound/eq_bands
-	echo "4 5774 63529 1965 4355" > /sys/class/misc/boeffla_sound/eq_bands
-	echo "5 1380 1369 0 16384" > /sys/class/misc/boeffla_sound/eq_bands
+#	echo "1 4027 1031 0 276" > /sys/class/misc/boeffla_sound/eq_bands
+#	echo "2 8076 61555 456 456" > /sys/class/misc/boeffla_sound/eq_bands
+#	echo "3 7256 62323 2644 1368" > /sys/class/misc/boeffla_sound/eq_bands
+#	echo "4 5774 63529 1965 4355" > /sys/class/misc/boeffla_sound/eq_bands
+#	echo "5 1380 1369 0 16384" > /sys/class/misc/boeffla_sound/eq_bands
 	exit 0
 fi
 
@@ -830,9 +830,9 @@ if [ "action_debug_info_file" == "$1" ]; then
 
 	echo -e "\n============================================\n" >> $2
 
-	#echo -e "\n**** boeffla_sound\n" >> $2
-	#cd /sys/class/misc/boeffla_sound
-	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	echo -e "\n**** boeffla_sound\n" >> $2
+	cd /sys/class/misc/boeffla_sound
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
 	#echo "\n============================================\n" >> $2
 
