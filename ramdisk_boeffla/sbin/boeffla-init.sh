@@ -278,15 +278,17 @@
 
 # EFS backup
 	EFS_BACKUP_INT="$BOEFFLA_DATA_PATH/efs.tar.gz"
-	# EFS_BACKUP_EXT="/storage/extSdCard/efs.tar.gz"
 
 	if [ ! -f $EFS_BACKUP_INT ]; then
 
-		cd /efs
-		/sbin/busybox tar cvz -f $EFS_BACKUP_INT .
+		dd if=/dev/block/mmcblk0p10 of=$BOEFFLA_DATA_PATH/modemst1.bin bs=512
+		dd if=/dev/block/mmcblk0p11 of=$BOEFFLA_DATA_PATH/modemst2.bin bs=512
+
+		cd $BOEFFLA_DATA_PATH
+		/sbin/busybox tar cvz -f $EFS_BACKUP_INT modemst*
 		/sbin/busybox chmod 666 $EFS_BACKUP_INT
 
-		# /sbin/busybox cp $EFS_BACKUP_INT $EFS_BACKUP_EXT
+		rm $BOEFFLA_DATA_PATH/modemst*
 		
 		echo $(date) EFS Backup: Not found, now created one >> $BOEFFLA_LOGFILE
 	fi
