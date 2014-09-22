@@ -512,6 +512,76 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sleep 0.5s
 		busybox sync
 	fi
+
+	if [ "zzmoove - standard" == "$2" ]; then
+		echo "1" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - battery" == "$2" ]; then
+		echo "4" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - optimal" == "$2" ]; then
+		echo "6" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - performance" == "$2" ]; then
+		echo "8" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - battery extreme yank" == "$2" ]; then
+		echo "3" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - battery yank" == "$2" ]; then
+		echo "2" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - insane" == "$2" ]; then
+		echo "9" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - battery plus" == "$2" ]; then
+		echo "5" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - moderate" == "$2" ]; then
+		echo "7" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - game" == "$2" ]; then
+		echo "10" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
 	
 	exit 0
 fi
