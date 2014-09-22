@@ -1038,4 +1038,11 @@ config TOUCHSCREEN_SYNAPTICS_S3508_I2C_RMI
 
 source "drivers/input/touchscreen/gt9xx/Kconfig"
 
+config TOUCHBOOST_CONTROL
+	bool "Touch boost control"
+	depends on INPUT_TOUCHSCREEN
+	help
+	  Boeffla Kernels functionality to control input boost as touch boost
+	  in the Boeffla Config app
+
 endif
