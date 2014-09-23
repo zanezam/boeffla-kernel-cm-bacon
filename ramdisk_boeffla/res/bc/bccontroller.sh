@@ -26,7 +26,7 @@ SYSTEM_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/system"
 CACHE_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/cache"
 DATA_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/userdata "
 BOOT_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/boot"
-RADIO_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/modem"
+RADIO_DEVICE="/dev/block/platform/msm_sdcc.w1/by-name/modem"
 RECOVERY_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/recovery"
 
 
@@ -527,6 +527,30 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sleep 0.5s
 		busybox sync
 	fi	
+
+	if [ "smartmax - standard" == "$2" ]; then
+		echo "1026000" > /sys/devices/system/cpu/cpufreq/smartmax/awake_ideal_freq
+		echo "1" > /sys/devices/system/cpu/cpufreq/smartmax/boost_duration
+		echo "1512000" > /sys/devices/system/cpu/cpufreq/smartmax/boost_freq
+		echo "0" > /sys/devices/system/cpu/cpufreq/smartmax/debug_mask
+		echo "60000" > /sys/devices/system/cpu/cpufreq/smartmax/down_rate
+		echo "1" > /sys/devices/system/cpu/cpufreq/smartmax/ignore_nice
+		echo "150000" > /sys/devices/system/cpu/cpufreq/smartmax/input_boost_duration
+		echo "0" > /sys/devices/system/cpu/cpufreq/smartmax/io_is_busy
+		echo "55" > /sys/devices/system/cpu/cpufreq/smartmax/max_cpu_load
+		echo "5" > /sys/devices/system/cpu/cpufreq/smartmax/min_cpu_load
+		echo "10000" > /sys/devices/system/cpu/cpufreq/smartmax/min_sampling_rate
+		echo "200000" > /sys/devices/system/cpu/cpufreq/smartmax/ramp_down_step
+		echo "1" > /sys/devices/system/cpu/cpufreq/smartmax/ramp_up_during_boost
+		echo "200000" > /sys/devices/system/cpu/cpufreq/smartmax/ramp_up_step
+		echo "30000" > /sys/devices/system/cpu/cpufreq/smartmax/sampling_rate
+		echo "594000" > /sys/devices/system/cpu/cpufreq/smartmax/suspend_ideal_freq
+		echo "1512000" > /sys/devices/system/cpu/cpufreq/smartmax/touch_poke_freq
+		echo "30000" > /sys/devices/system/cpu/cpufreq/smartmax/up_rate
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
 
 	if [ "zzmoove - standard" == "$2" ]; then
 		echo "1" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
