@@ -512,6 +512,21 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sleep 0.5s
 		busybox sync
 	fi
+	
+	if [ "wheatley - standard" == "$2" ]; then
+		echo "5" > /sys/devices/system/cpu/cpufreq/wheatley/allowed_misses
+		echo "0" > /sys/devices/system/cpu/cpufreq/wheatley/ignore_nice_load
+		echo "0" > /sys/devices/system/cpu/cpufreq/wheatley/io_is_busy
+		echo "0" > /sys/devices/system/cpu/cpufreq/wheatley/powersave_bias
+		echo "1" > /sys/devices/system/cpu/cpufreq/wheatley/sampling_down_factor
+		echo "10000" > /sys/devices/system/cpu/cpufreq/wheatley/sampling_rate
+		echo "10000" > /sys/devices/system/cpu/cpufreq/wheatley/sampling_rate_min
+		echo "10000" > /sys/devices/system/cpu/cpufreq/wheatley/target_residency
+		echo "95" > /sys/devices/system/cpu/cpufreq/wheatley/up_threshold
+
+		busybox sleep 0.5s
+		busybox sync
+	fi	
 
 	if [ "zzmoove - standard" == "$2" ]; then
 		echo "1" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
