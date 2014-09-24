@@ -35,7 +35,7 @@ RECOVERY_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/recovery"
 # *******************
 
 if [ "lov_gov_profiles" == "$1" ]; then
-	#echo "pegasusq - boeffla moderate;pegasusq - boeffla battery saving;pegasusq - boeffla 1 core;pegasusq - boeffla 2 cores;pegasusq - speedmod;zzmoove - optimal;zzmoove - battery;zzmoove - battery plus;zzmoove - battery yank;zzmoove - battery extreme yank;zzmoove - performance;zzmoove - insane;zzmoove - moderate;zzmoove - game;pegasusqplus - balanced;pegasusqplus - battery"
+	echo "zzmoove - optimal;zzmoove - battery;zzmoove - battery plus;zzmoove - battery yank;zzmoove - battery extreme yank;zzmoove - performance;zzmoove - insane;zzmoove - moderate;zzmoove - game"
 	exit 0
 fi
 
