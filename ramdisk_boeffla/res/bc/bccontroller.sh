@@ -552,6 +552,28 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sync
 	fi
 
+	if [ "slim - standard" == "$2" ]; then
+		echo "3" > /sys/devices/system/cpu/cpufreq/slim/down_differential
+		echo "1" > /sys/devices/system/cpu/cpufreq/slim/gboost
+		echo "0" > /sys/devices/system/cpu/cpufreq/slim/ignore_nice_load
+		echo "1728000,1267200,1267200,1267200" > /sys/devices/system/cpu/cpufreq/slim/input_event_min_freq
+		echo "500" > /sys/devices/system/cpu/cpufreq/slim/input_event_timeout
+		echo "300000" > /sys/devices/system/cpu/cpufreq/slim/optimal_freq
+		echo "0" > /sys/devices/system/cpu/cpufreq/slim/powersave_bias
+		echo "1" > /sys/devices/system/cpu/cpufreq/slim/sampling_down_factor
+		echo "30000" > /sys/devices/system/cpu/cpufreq/slim/sampling_rate
+		echo "10000" > /sys/devices/system/cpu/cpufreq/slim/sampling_rate_min
+		echo "300000" > /sys/devices/system/cpu/cpufreq/slim/sync_freq
+		echo "1728000,1728000,1728000,1728000" > /sys/devices/system/cpu/cpufreq/slim/two_phase_freq
+		echo "15000" > /sys/devices/system/cpu/cpufreq/slim/ui_sampling_rate
+		echo "95" > /sys/devices/system/cpu/cpufreq/slim/up_threshold
+		echo "90" > /sys/devices/system/cpu/cpufreq/slim/up_threshold_any_cpu_load
+		echo "90" > /sys/devices/system/cpu/cpufreq/slim/up_threshold_multi_core
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
 	if [ "zzmoove - standard" == "$2" ]; then
 		echo "1" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
 
