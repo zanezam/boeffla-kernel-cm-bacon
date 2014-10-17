@@ -1,6 +1,7 @@
 #
 # Makefile for the IEEE 802.1d ethernet bridging layer.
 #
+EXTRA_CFLAGS += -Wno-maybe-uninitialized
 
 obj-$(CONFIG_BRIDGE) += bridge.o
 
