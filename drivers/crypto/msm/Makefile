@@ -1,3 +1,4 @@
+EXTRA_CFLAGS += -Wno-array-bounds
 obj-$(CONFIG_CRYPTO_DEV_QCEDEV) += qcedev.o
 ifeq ($(CONFIG_CRYPTO_DEV_QCE50), y)
 	obj-$(CONFIG_CRYPTO_DEV_QCE) += qce50.o
