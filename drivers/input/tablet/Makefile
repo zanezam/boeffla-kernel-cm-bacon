@@ -2,6 +2,8 @@
 # Makefile for the tablet drivers
 #
 
+EXTRA_CFLAGS += -Wno-maybe-uninitialized
+
 # Multipart objects.
 wacom-objs	:= wacom_wac.o wacom_sys.o
 
