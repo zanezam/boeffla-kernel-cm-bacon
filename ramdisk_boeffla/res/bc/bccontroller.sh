@@ -76,34 +76,34 @@ fi
 
 if [ "lov_presets" == "$1" ]; then
 	# Note, the ^ sign will be translated into newline for this setting
-	#echo "Power extreme~"
-	#echo "Gov: pegasusq / standard"
-	#echo "^Sched: row / row"
-	#echo "^CPU: 1600 / no uv"
+	echo "Power extreme~"
+	echo "Gov: zzmoove / performance"
+	echo "^Sched: row"
+	echo "^CPU: 2880 / no uv;"
 	#echo "^GPU: 440-700 / +50mV;"
 	
-	#echo "Power~"
-	#echo "Gov: zzmoove / performance"
-	#echo "^Sched: row / row"
-	#echo "^CPU: 1400 / no uv"
+	echo "Power~"
+	echo "Gov: ondemand / standard"
+	echo "^Sched: row"
+	echo "^CPU: 2726 / no uv;"
 	#echo "^GPU: 266-600 / no uv;"
 	
-	#echo "Standard~"
-	#echo "Gov: pegasusq / standard"
-	#echo "^Sched: cfq / cfq"
-	#echo "^CPU: 1400 / no uv"
+	echo "Standard~"
+	echo "Gov: interactive / standard"
+	echo "^Sched: row"
+	echo "^CPU: 2457 / no uv;"
 	#echo "^GPU: 160-440 / no uv;"
 	
-	#echo "Battery friendly~"
-	#echo "Gov: pegasusq / boeffla - moderate"
-	#echo "^Sched: zen / zen"
-	#echo "^CPU: 1400 / -25mV"
+	echo "Battery friendly~"
+	echo "Gov: interactive / standard"
+	echo "^Sched: zen"
+	echo "^CPU: 1728 / -25mV;"
 	#echo "^GPU: 160/266 / -25mV;"
 	
-	#echo "Battery saving~"
-	#echo "Gov: zzmoove / battery yank"
-	#echo "^Sched: zen / zen"
-	#echo "^CPU: 1000 / light uv"
+	echo "Battery saving~"
+	echo "Gov: zzmoove / battery yank"
+	echo "^Sched: zen"
+	echo "^CPU: 1497 / light uv;"
 	#echo "^GPU: 160/266 / light uv;"
 	
 	exit 0
@@ -117,38 +117,38 @@ fi
 if [ "conf_presets" == "$1" ]; then
 	if [ "Power extreme" ==  "$2" ]; then
 		# gov, gov prof, sched int, sched ext, cpu max, cpu uv, gpu freq, gpu uv
-		echo "pegasusq;standard;"
+		echo "zzmoove;zzmoove - performance;"
 		echo "row;row;"
-		echo "1600000;None;"
-		echo "440/533/600/640/700;overvolt +50mV"
+		echo "2880000;None;"
+		echo "None;None"
 	fi
 	if [ "Power" ==  "$2" ]; then
 		# gov, gov prof, sched int, sched ext, cpu max, cpu uv, gpu freq, gpu uv
-		echo "zzmoove;zzmoove - performance;"
+		echo "ondemand;ondemand - standard;"
 		echo "row;row;"
-		echo "1400000;None;"
-		echo "266/350/440/533/600;None"
+		echo "2726400;None;"
+		echo "None;None"
 	fi
 	if [ "Standard" ==  "$2" ]; then
 		# gov, gov prof, sched int, sched ext, cpu max, cpu uv, gpu freq, gpu uv
-		echo "pegasusq;standard;"
-		echo "cfq;cfq;"
-		echo "1400000;None;"
+		echo "interactive;standard;"
+		echo "row;row;"
+		echo "2457600;None;"
 		echo "None;None"
 	fi
 	if [ "Battery friendly" ==  "$2" ]; then
 		# gov, gov prof, sched int, sched ext, cpu max, cpu uv, gpu freq, gpu uv
-		echo "pegasusq;pegasusq - boeffla moderate;"
+		echo "interactive;standard;"
 		echo "zen;zen;"
-		echo "1400000;undervolt -25mV;"
-		echo "160/266;undervolt -25mV"
+		echo "1728000;undervolt -25mV;"
+		echo "None;None"
 	fi
 	if [ "Battery saving" ==  "$2" ]; then
 		# gov, gov prof, sched int, sched ext, cpu max, cpu uv, gpu freq, gpu uv
 		echo "zzmoove;zzmoove - battery yank;"
 		echo "zen;zen;"
-		echo "1000000;undervolt light;"
-		echo "160/266;undervolt light"
+		echo "1497600;undervolt light;"
+		echo "None;None"
 	fi
 	exit 0
 fi
