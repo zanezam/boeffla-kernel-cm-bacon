@@ -334,9 +334,9 @@ fi
 
 if [ "param_led" == "$1" ]; then
 	# LED speed min/max/steps
-	echo "0;15;1;"
+	echo "0;12;1;"
 	# LED brightness min/max/steps
-	echo "0;130;5"
+	echo "0;100;5"
 	exit 0
 fi
 
@@ -1117,8 +1117,8 @@ if [ "action_debug_info_file" == "$1" ]; then
 	#cat /sys/class/misc/mdnie_preset/mdnie_preset >> $2
 
 	#echo -e "\n**** LED information:\n" >> $2
-	#cd /sys/class/sec/led
-	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	cd /sys/class/leds/red/device
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
 	echo -e "\n**** zRam information:\n" >> $2
 	busybox find /sys/block/zram*/* -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
