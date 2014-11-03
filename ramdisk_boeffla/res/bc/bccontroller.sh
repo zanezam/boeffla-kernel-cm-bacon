@@ -35,7 +35,7 @@ RECOVERY_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/recovery"
 # *******************
 
 if [ "lov_gov_profiles" == "$1" ]; then
-	echo "zzmoove - optimal;zzmoove - battery;zzmoove - battery plus;zzmoove - battery yank;zzmoove - battery extreme yank;zzmoove - performance;zzmoove - insane;zzmoove - moderate;zzmoove - game"
+	echo "interactive - battery;interactive - battery extreme;interactive - performance;zzmoove - optimal;zzmoove - battery;zzmoove - battery plus;zzmoove - battery yank;zzmoove - battery extreme yank;zzmoove - performance;zzmoove - insane;zzmoove - moderate;zzmoove - game"
 	exit 0
 fi
 
@@ -587,6 +587,69 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sync
 	fi
 	
+	if [ "interactive - battery" == "$2" ]; then
+		echo "20000 1400000:40000 1700000:20000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 
+		echo "0" > /sys/devices/system/cpu/cpufreq/interactive/boost 
+		echo "" > /sys/devices/system/cpu/cpufreq/interactive/boostpulse 
+		echo "80000" > /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration 
+		echo "95" > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 
+		echo "833200" > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 
+		echo "1" > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 
+		echo "10000" > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 
+		echo "100000" > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor 
+		echo "1036800" > /sys/devices/system/cpu/cpufreq/interactive/sync_freq 
+		echo "85 1200000:90 1500000:70" > /sys/devices/system/cpu/cpufreq/interactive/target_loads 
+		echo "50000" > /sys/devices/system/cpu/cpufreq/interactive/timer_rate 
+		echo "20000" > /sys/devices/system/cpu/cpufreq/interactive/timer_slack 
+		echo "1190400" > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq 
+		echo "50" > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load 
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "interactive - battery extreme" == "$2" ]; then
+		echo "20000 1400000:40000 1700000:20000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 
+		echo "0" > /sys/devices/system/cpu/cpufreq/interactive/boost 
+		echo "" > /sys/devices/system/cpu/cpufreq/interactive/boostpulse 
+		echo "80000" > /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration 
+		echo "100" > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 
+		echo "300000" > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 
+		echo "1" > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 
+		echo "5000" > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 
+		echo "100000" > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor 
+		echo "1036800" > /sys/devices/system/cpu/cpufreq/interactive/sync_freq 
+		echo "85 900000:90 1200000:70" > /sys/devices/system/cpu/cpufreq/interactive/target_loads 
+		echo "100000" > /sys/devices/system/cpu/cpufreq/interactive/timer_rate 
+		echo "20000" > /sys/devices/system/cpu/cpufreq/interactive/timer_slack 
+		echo "1190400" > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq 
+		echo "50" > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load 
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "interactive - performance" == "$2" ]; then
+		echo "20000 1400000:40000 1700000:20000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 
+		echo "0" > /sys/devices/system/cpu/cpufreq/interactive/boost 
+		echo "" > /sys/devices/system/cpu/cpufreq/interactive/boostpulse 
+		echo "80000" > /sys/devices/system/cpu/cpufreq/interactive/boostpulse_duration 
+		echo "80" > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 
+		echo "1958400" > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 
+		echo "1" > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 
+		echo "60000" > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 
+		echo "100000" > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor 
+		echo "1036800" > /sys/devices/system/cpu/cpufreq/interactive/sync_freq 
+		echo "85 1800000:90 2100000:70" > /sys/devices/system/cpu/cpufreq/interactive/target_loads 
+		echo "20000" > /sys/devices/system/cpu/cpufreq/interactive/timer_rate 
+		echo "20000" > /sys/devices/system/cpu/cpufreq/interactive/timer_slack 
+		echo "1190400" > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_freq 
+		echo "50" > /sys/devices/system/cpu/cpufreq/interactive/up_threshold_any_cpu_load 
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
 	if [ "wheatley - standard" == "$2" ]; then
 		echo "5" > /sys/devices/system/cpu/cpufreq/wheatley/allowed_misses
 		echo "0" > /sys/devices/system/cpu/cpufreq/wheatley/ignore_nice_load
