@@ -128,7 +128,7 @@
 # Apply Boeffla-Kernel default settings
 
 	# Set AC charging rate default
-	echo "2100" > /sys/kernel/charge_levels/charge_level_ac
+	echo "1500" > /sys/kernel/charge_levels/charge_level_ac
 
 	# Ext4 tweaks default to on
 	/sbin/busybox sync
