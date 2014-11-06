@@ -3039,4 +3039,9 @@ config CHARGE_LEVEL
 	help
 	  Allows configuration of ac and usb charging levels		 
 
+config PVS_LEVEL_INTERFACE
+	bool "Expose PVS level information in sys fs (Boeffla-Kernel)"
+	help
+	 Allow PVS level to be shown in Boeffla-Config app
+	 
 endif
