@@ -3045,6 +3045,7 @@ config HAS_MACH_MEMUTILS
 	bool "Motorola MSM memcpy enhancements"
 	help
 	Faster memcpy performance for Krait
+
 endif
 
 config KERNEL_TEXT_MPU_PROT
