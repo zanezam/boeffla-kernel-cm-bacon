@@ -167,14 +167,10 @@
 	fi
 
 # Perform one-time adjustments directly after first boot of the kernel
-	ADJUSTMENT_FILE="/data/.boeffla/_adj_2.0b9"
-	if [ ! -f $ADJUSTMENT_FILE ]; then
-		# adjust charge rates to stock values + readahead to 1024
-		echo "0" > /sys/kernel/charge_levels/charge_level_ac
-		echo "0" > /sys/kernel/charge_levels/charge_level_usb
-		echo 1024 > /sys/block/mmcblk0/bdi/read_ahead_kb
-		/sbin/busybox touch $ADJUSTMENT_FILE
-	fi
+	#ADJUSTMENT_FILE="/data/.boeffla/_adj_2.0b9"
+	#if [ ! -f $ADJUSTMENT_FILE ]; then
+	#  do activities here
+	#fi
 	
 # Turn off debugging for certain modules
 	echo 0 > /sys/module/kernel/parameters/initcall_debug
