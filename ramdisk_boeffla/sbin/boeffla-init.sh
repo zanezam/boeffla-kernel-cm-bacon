@@ -1,9 +1,9 @@
 #!/system/bin/sh
 
 # *****************************
-# Bacon Cyanogenmod 11 version
+# Bacon Cyanogenmod 12 version
 #
-# V0.2
+# V0.1
 # *****************************
 
 # define basic kernel configuration
