@@ -25,6 +25,9 @@
 	BUSYBOX_ENABLER="/data/.boeffla/enable-busybox"
 	FRANDOM_ENABLER="/data/.boeffla/enable-frandom"
 
+# set selinux to permissive mode to not break root
+setenforce 0
+
 # If not yet existing, create a boeffla-kernel-data folder on sdcard 
 # which is used for many purposes,
 # always set permissions and owners correctly for pathes and files
@@ -146,7 +149,7 @@
 	  /sbin/busybox sleep 1
 	done
 	echo $(date) Rom boot trigger detected, waiting a few more seconds... >> $BOEFFLA_LOGFILE
-	/sbin/busybox sleep 15
+	/sbin/busybox sleep 20
 
 # Interaction with Boeffla-Config app V2
 	# save original stock values for selected parameters
