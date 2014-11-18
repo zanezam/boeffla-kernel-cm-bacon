@@ -25,9 +25,6 @@
 	BUSYBOX_ENABLER="/data/.boeffla/enable-busybox"
 	FRANDOM_ENABLER="/data/.boeffla/enable-frandom"
 
-# set selinux to permissive mode to not break root
-setenforce 0
-
 # If not yet existing, create a boeffla-kernel-data folder on sdcard 
 # which is used for many purposes,
 # always set permissions and owners correctly for pathes and files
@@ -105,25 +102,6 @@ setenforce 0
 # remove any obsolete Boeffla-Config V2 startconfig done file
 	/sbin/busybox rm -f $BOEFFLA_STARTCONFIG_DONE
 
-# Apply Boeffla-Kernel default settings
-
-	# Sdcard buffer tweaks default to 1024 kb
-	echo 1024 > /sys/block/mmcblk0/bdi/read_ahead_kb
-	/sbin/busybox sync
-
-	# Ext4 tweaks default to on
-	/sbin/busybox sync
-	mount -o remount,commit=20,noatime $CACHE_DEVICE /cache
-	/sbin/busybox sync
-	mount -o remount,commit=20,noatime $DATA_DEVICE /data
-	/sbin/busybox sync
-
-	# dynamic fsync to on
-	echo 1 > /sys/kernel/dyn_fsync/Dyn_fsync_active
-	/sbin/busybox sync
-
-	echo $(date) Boeffla-Kernel default settings applied >> $BOEFFLA_LOGFILE
-
 # init.d support (enabler only to be considered for CM based roms)
 # (zipalign scripts will not be executed as only exception)
 	if [ -f $INITD_ENABLER ] ; then
@@ -150,6 +128,25 @@ setenforce 0
 	done
 	echo $(date) Rom boot trigger detected, waiting a few more seconds... >> $BOEFFLA_LOGFILE
 	/sbin/busybox sleep 20
+
+# Apply Boeffla-Kernel default settings
+
+	# Sdcard buffer tweaks default to 1024 kb
+	echo 1024 > /sys/block/mmcblk0/bdi/read_ahead_kb
+	/sbin/busybox sync
+
+	# Ext4 tweaks default to on
+	/sbin/busybox sync
+	mount -o remount,commit=20,noatime $CACHE_DEVICE /cache
+	/sbin/busybox sync
+	mount -o remount,commit=20,noatime $DATA_DEVICE /data
+	/sbin/busybox sync
+
+	# dynamic fsync to on
+	echo 1 > /sys/kernel/dyn_fsync/Dyn_fsync_active
+	/sbin/busybox sync
+
+	echo $(date) Boeffla-Kernel default settings applied >> $BOEFFLA_LOGFILE
 
 # Interaction with Boeffla-Config app V2
 	# save original stock values for selected parameters
