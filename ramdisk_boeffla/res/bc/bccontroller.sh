@@ -1263,6 +1263,7 @@ if [ "action_debug_info_file" == "$1" ]; then
 fi
 
 if [ "action_reboot" == "$1" ]; then
+	echo 0 > /sys/kernel/dyn_fsync/Dyn_fsync_active
 	busybox sync
 	busybox sleep 1s
 	/system/bin/reboot
@@ -1270,6 +1271,7 @@ if [ "action_reboot" == "$1" ]; then
 fi
 
 if [ "action_reboot_cwm" == "$1" ]; then
+	echo 0 > /sys/kernel/dyn_fsync/Dyn_fsync_active
 	busybox sync
 	busybox sleep 1s
 	/system/bin/reboot recovery
@@ -1277,6 +1279,7 @@ if [ "action_reboot_cwm" == "$1" ]; then
 fi
 
 if [ "action_reboot_download" == "$1" ]; then
+	echo 0 > /sys/kernel/dyn_fsync/Dyn_fsync_active
 	busybox sync
 	busybox sleep 1s
 	/system/bin/reboot download
@@ -1284,6 +1287,7 @@ if [ "action_reboot_download" == "$1" ]; then
 fi
 
 if [ "action_wipe_caches_reboot" == "$1" ]; then
+	echo 0 > /sys/kernel/dyn_fsync/Dyn_fsync_active
 	busybox rm -rf /cache/*
 	busybox rm -rf /data/dalvik-cache/*
 	busybox sync
