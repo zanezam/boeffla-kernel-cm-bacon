@@ -1340,13 +1340,13 @@ fi
 
 if [ "action_fstrim" == "$1" ]; then
 	echo -e "Trim /data"
-	/res/bc/fstrim -v /data
+	fstrim -v /data
 	echo -e ""
 	echo -e "Trim /cache"
-	/res/bc/fstrim -v /cache
+	fstrim -v /cache
 	echo -e ""
 	echo -e "Trim /system"
-	/res/bc/fstrim -v /system
+	fstrim -v /system
 	echo -e ""
 	busybox sync
 	exit 0
