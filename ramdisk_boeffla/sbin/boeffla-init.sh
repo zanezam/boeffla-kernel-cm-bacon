@@ -52,43 +52,6 @@
 	/sbin/busybox grep ro.build.version /system/build.prop >> $BOEFFLA_LOGFILE
 	echo "=========================" >> $BOEFFLA_LOGFILE
 
-# Activate frandom entropy generator if configured
-	if [ -f $FRANDOM_ENABLER ]; then
-		echo $(date) "Frandom entropy generator activation requested" >> $BOEFFLA_LOGFILE
-		/sbin/busybox insmod /lib/modules/frandom.ko
-		/sbin/busybox insmod /system/lib/modules/frandom.ko
-
-		if [ ! -e /dev/urandom.ORIG ] && [ ! -e /dev/urandom.orig ] && [ ! -e /dev/urandom.ori ]; then
-			/sbin/busybox touch /dev/urandom.MOD
-			/sbin/busybox touch /dev/random.MOD
-			/sbin/busybox mv /dev/urandom /dev/urandom.ORIG
-			/sbin/busybox ln /dev/erandom /dev/urandom
-			/sbin/busybox busybox chmod 644 /dev/urandom
-			/sbin/busybox mv /dev/random /dev/random.ORIG
-			/sbin/busybox ln /dev/erandom /dev/random
-			/sbin/busybox busybox chmod 644 /dev/random
-			/sbin/busybox sleep 0.5s
-			/sbin/busybox sync
-			echo $(date) "Frandom entropy generator activated" >> $BOEFFLA_LOGFILE
-		fi
-	fi
-
-# Install busybox applet symlinks to /system/xbin if enabled,
-# otherwise only install mount/umount/top symlinks
-	mount -o remount,rw -t ext4 $SYSTEM_DEVICE /system
-	if [ -f $BUSYBOX_ENABLER ]; then
-		/sbin/busybox --install -s /system/xbin
-		echo $(date) "Busybox applet symlinks installed to /system/xbin" >> $BOEFFLA_LOGFILE
-	else
-		/sbin/busybox ln -s /sbin/busybox /system/xbin/mount
-		/sbin/busybox ln -s /sbin/busybox /system/xbin/umount
-		/sbin/busybox ln -s /sbin/busybox /system/xbin/top
-		echo $(date) "Mount/umount/top applet symlinks installed to /system/xbin" >> $BOEFFLA_LOGFILE
-	
-	fi
-	/sbin/busybox sync
-	mount -o remount,ro -t ext4 $SYSTEM_DEVICE /system
-		
 # Correct /sbin and /res directory and file permissions
 	mount -o remount,rw rootfs /
 
@@ -102,6 +65,10 @@
 # remove any obsolete Boeffla-Config V2 startconfig done file
 	/sbin/busybox rm -f $BOEFFLA_STARTCONFIG_DONE
 
+# remove not used configuration files for frandom and busybox
+	/sbin/busybox rm -f $BUSYBOX_ENABLER
+	/sbin/busybox rm -f $FRANDOM_ENABLER
+	
 # init.d support (enabler only to be considered for CM based roms)
 # (zipalign scripts will not be executed as only exception)
 	if [ -f $INITD_ENABLER ] ; then
