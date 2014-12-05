@@ -151,6 +151,8 @@ extern void elv_unregister(struct elevator_type *);
  */
 extern ssize_t elv_iosched_show(struct request_queue *, char *);
 extern ssize_t elv_iosched_store(struct request_queue *, const char *, size_t);
+extern ssize_t elv_iosched_hard_show(struct request_queue *, char *);
+extern ssize_t elv_iosched_hard_store(struct request_queue *, const char *, size_t);
 
 extern int elevator_init(struct request_queue *, char *);
 extern void elevator_exit(struct elevator_queue *);
