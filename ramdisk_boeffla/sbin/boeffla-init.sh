@@ -19,6 +19,7 @@
 	BOEFFLA_DATA_PATH="$SD_PATH/boeffla-kernel-data"
 	BOEFFLA_LOGFILE="$BOEFFLA_DATA_PATH/boeffla-kernel.log"
 	BOEFFLA_STARTCONFIG="/data/.boeffla/startconfig"
+	BOEFFLA_STARTCONFIG_EARLY="/data/.boeffla/startconfig_early"
 	BOEFFLA_STARTCONFIG_DONE="/data/.boeffla/startconfig_done"
 	CWM_RESET_ZIP="boeffla-config-reset-v3.1.zip"
 	INITD_ENABLER="/data/.boeffla/enable-initd"
@@ -69,6 +70,34 @@
 	/sbin/busybox rm -f $BUSYBOX_ENABLER
 	/sbin/busybox rm -f $FRANDOM_ENABLER
 	
+# Apply Boeffla-Kernel default settings
+
+	# Sdcard buffer tweaks default to 1024 kb
+	echo 1024 > /sys/block/mmcblk0/bdi/read_ahead_kb
+	/sbin/busybox sync
+
+	# Ext4 tweaks default to on
+	/sbin/busybox sync
+	mount -o remount,commit=20,noatime $CACHE_DEVICE /cache
+	/sbin/busybox sync
+	mount -o remount,commit=20,noatime $DATA_DEVICE /data
+	/sbin/busybox sync
+
+	# dynamic fsync to on
+	echo 1 > /sys/kernel/dyn_fsync/Dyn_fsync_active
+	/sbin/busybox sync
+
+	echo $(date) Boeffla-Kernel default settings applied >> $BOEFFLA_LOGFILE
+
+# Execute early startconfig placed by Boeffla-Config V2 app, if there is one
+	if [ -f $BOEFFLA_STARTCONFIG_EARLY ]; then
+		echo $(date) "Early startup configuration found"  >> $BOEFFLA_LOGFILE
+		. $BOEFFLA_STARTCONFIG_EARLY
+		echo $(date) Early startup configuration applied  >> $BOEFFLA_LOGFILE
+	else
+		echo $(date) "No early startup configuration found"  >> $BOEFFLA_LOGFILE
+	fi
+
 # init.d support (enabler only to be considered for CM based roms)
 # (zipalign scripts will not be executed as only exception)
 	if [ -f $INITD_ENABLER ] ; then
@@ -96,25 +125,6 @@
 	echo $(date) Rom boot trigger detected, waiting a few more seconds... >> $BOEFFLA_LOGFILE
 	/sbin/busybox sleep 20
 
-# Apply Boeffla-Kernel default settings
-
-	# Sdcard buffer tweaks default to 1024 kb
-	echo 1024 > /sys/block/mmcblk0/bdi/read_ahead_kb
-	/sbin/busybox sync
-
-	# Ext4 tweaks default to on
-	/sbin/busybox sync
-	mount -o remount,commit=20,noatime $CACHE_DEVICE /cache
-	/sbin/busybox sync
-	mount -o remount,commit=20,noatime $DATA_DEVICE /data
-	/sbin/busybox sync
-
-	# dynamic fsync to on
-	echo 1 > /sys/kernel/dyn_fsync/Dyn_fsync_active
-	/sbin/busybox sync
-
-	echo $(date) Boeffla-Kernel default settings applied >> $BOEFFLA_LOGFILE
-
 # Interaction with Boeffla-Config app V2
 	# save original stock values for selected parameters
 	cat /sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table > /dev/bk_orig_cpu_voltage
@@ -125,20 +135,13 @@
 
 	# if there is a startconfig placed by Boeffla-Config V2 app, execute it;
 	if [ -f $BOEFFLA_STARTCONFIG ]; then
-		echo $(date) "Startup configuration found:"  >> $BOEFFLA_LOGFILE
-		cat $BOEFFLA_STARTCONFIG >> $BOEFFLA_LOGFILE
+		echo $(date) "Startup configuration found"  >> $BOEFFLA_LOGFILE
 		. $BOEFFLA_STARTCONFIG
 		echo $(date) Startup configuration applied  >> $BOEFFLA_LOGFILE
 	else
 		echo $(date) "No startup configuration found"  >> $BOEFFLA_LOGFILE
 	fi
 
-# Perform one-time adjustments directly after first boot of the kernel
-	#ADJUSTMENT_FILE="/data/.boeffla/_adj_2.0b9"
-	#if [ ! -f $ADJUSTMENT_FILE ]; then
-	#  do activities here
-	#fi
-	
 # Turn off debugging for certain modules
 	echo 0 > /sys/module/kernel/parameters/initcall_debug
 	echo 0 > /sys/module/lowmemorykiller/parameters/debug_level
@@ -215,3 +218,8 @@
 
 # Finished
 	echo $(date) Boeffla-Kernel initialisation completed >> $BOEFFLA_LOGFILE
+	echo $(date) "Loaded early startconfig was:" >> $BOEFFLA_LOGFILE
+	cat $BOEFFLA_STARTCONFIG_EARLY >> $BOEFFLA_LOGFILE
+	echo $(date) "Loaded startconfig was:" >> $BOEFFLA_LOGFILE
+	cat $BOEFFLA_STARTCONFIG >> $BOEFFLA_LOGFILE
+	echo $(date) End of kernel startup logfile >> $BOEFFLA_LOGFILE
