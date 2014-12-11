@@ -1065,11 +1065,6 @@ if [ "action_debug_info_file" == "$1" ]; then
 
 	echo -e "\n============================================\n" >> $2
 
-	echo -e "\n**** Boeffla-Kernel config\n" >> $2
-	cat /sdcard/boeffla-kernel/boeffla-kernel.conf  >> $2
-
-	echo -e "\n============================================\n" >> $2
-
 	echo -e "\n**** Boeffla-Kernel log\n" >> $2
 	cat /sdcard/boeffla-kernel-data/boeffla-kernel.log >> $2
 
@@ -1119,12 +1114,6 @@ if [ "action_debug_info_file" == "$1" ]; then
 
 	echo -e "\n**** GPU information:\n" >> $2
 
-	#cd /sys/class/misc/gpu_voltage_control
-	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
-
-	#cd /sys/class/misc/gpu_clock_control
-	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
-
 	echo -e "\n**** Root:\n" >> $2
 	ls /system/xbin/su >> $2
 	ls /system/app/Superuser.apk >> $2
@@ -1140,7 +1129,6 @@ if [ "action_debug_info_file" == "$1" ]; then
 
 	echo -e "\n**** SD Card read ahead:\n" >> $2
 	cat /sys/block/mmcblk0/bdi/read_ahead_kb >> $2
-	#cat /sys/block/mmcblk1/bdi/read_ahead_kb >> $2
 
 	echo -e "\n**** Various kernel settings by config app:\n" >> $2
 	echo -e "\n(gov prof, cpu volt prof, gpu freq prof, gpu volt prof, eq prof, mdnie over, sys tweaks, swapp over)\n" >> $2
@@ -1148,21 +1136,12 @@ if [ "action_debug_info_file" == "$1" ]; then
 	cat /dev/bk_cpu_voltages_profile >> $2
 	cat /dev/bk_gpu_frequencies_profile >> $2
 	cat /dev/bk_gpu_voltages_profile >> $2
-	#cat /dev/bk_eq_gains_profile >> $2
-	#cat /dev/bk_mdnie_overwrite >> $2
 	cat /dev/bk_system_tweaks >> $2
 	cat /dev/bk_swappiness_overwrite >> $2
 
-	#echo -e "\n**** Touch boost:\n" >> $2
-	#cd /sys/class/misc/touchboost_switch
-	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
-
-	#echo -e "\n**** Touch wake:\n" >> $2
-	#cd /sys/class/misc/touchwake
-	#busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
-
-	#echo -e "\n**** Early suspend:\n" >> $2
-	#cat /sys/kernel/early_suspend/early_suspend_delay >> $2
+	echo -e "\n**** Touch boost:\n" >> $2
+	cd /sys/class/misc/touchboost_switch
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
 	echo -e "\n**** Charging levels (ac/usb/wireless) and Charging instable power / ignore safety margin:\n" >> $2
 	cd /sys/kernel/charge_levels
@@ -1174,9 +1153,17 @@ if [ "action_debug_info_file" == "$1" ]; then
 	cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor >> $2
 	cat /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor >> $2
 
+	echo -e "\n**** Governor hard:\n" >> $2
+	cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor_hard >> $2
+	cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor_hard >> $2
+	cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor_hard >> $2
+	cat /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor_hard >> $2
+
 	echo -e "\n**** Scheduler:\n" >> $2
 	cat /sys/block/mmcblk0/queue/scheduler >> $2
-	#cat /sys/block/mmcblk1/queue/scheduler >> $2
+
+	echo -e "\n**** Scheduler hard:\n" >> $2
+	cat /sys/block/mmcblk0/queue/scheduler_hard >> $2
 
 	echo -e "\n**** Kernel Logger:\n" >> $2
 	cat /sys/kernel/printk_mode/printk_mode >> $2
@@ -1184,11 +1171,20 @@ if [ "action_debug_info_file" == "$1" ]; then
 	echo -e "\n**** Android Logger:\n" >> $2
 	cat /sys/kernel/logger_mode/logger_mode >> $2
 
-	#echo -e "\n**** Sharpness fix:\n" >> $2
-	#cat /sys/class/misc/mdnie_preset/mdnie_preset >> $2
-
-	#echo -e "\n**** LED information:\n" >> $2
+	echo -e "\n**** LED information:\n" >> $2
 	cd /sys/class/leds/red/device
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+
+	echo -e "\n**** Color control information:\n" >> $2
+	cd /sys/devices/platform/kcal_ctrl.0
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+	
+	echo -e "\n**** Swipe2wake information:\n" >> $2
+	cd /proc/touchpanel
+	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
+
+	echo -e "\n**** Swipe2sleep information:\n" >> $2
+	cd /sys/android_touch
 	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
 	echo -e "\n**** zRam information:\n" >> $2
