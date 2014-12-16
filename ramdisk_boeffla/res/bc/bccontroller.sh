@@ -711,6 +711,29 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sync
 	fi
 
+	if [ "intellimm - standard" == "$2" ]; then
+		echo "3" > /sys/devices/system/cpu/cpufreq/intellimm/down_differential
+		echo "3" > /sys/devices/system/cpu/cpufreq/intellimm/down_differential_multi_c
+		echo "652800" > /sys/devices/system/cpu/cpufreq/intellimm/freq_down_step
+		echo "1190400" > /sys/devices/system/cpu/cpufreq/intellimm/freq_down_step_barrier
+		echo "0" > /sys/devices/system/cpu/cpufreq/intellimm/ignore_nice_load
+		echo "1574400,1574400,1574400,1574400" > /sys/devices/system/cpu/cpufreq/intellimm/input_event_min_freq
+		echo "0" > /sys/devices/system/cpu/cpufreq/intellimm/io_is_busy
+		echo "1728000" > /sys/devices/system/cpu/cpufreq/intellimm/optimal_freq
+		echo "0" > /sys/devices/system/cpu/cpufreq/intellimm/powersave_bias
+		echo "1" > /sys/devices/system/cpu/cpufreq/intellimm/sampling_down_factor
+		echo "50000" > /sys/devices/system/cpu/cpufreq/intellimm/sampling_rate
+		echo "10000" > /sys/devices/system/cpu/cpufreq/intellimm/sampling_rate_min
+		echo "0" > /sys/devices/system/cpu/cpufreq/intellimm/shortcut
+		echo "1728000" > /sys/devices/system/cpu/cpufreq/intellimm/two_phase_freq
+		echo "95" > /sys/devices/system/cpu/cpufreq/intellimm/up_threshold
+		echo "80" > /sys/devices/system/cpu/cpufreq/intellimm/up_threshold_any_cpu_load
+		echo "80" > /sys/devices/system/cpu/cpufreq/intellimm/up_threshold_multi_core
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
 	if [ "zzmoove - standard" == "$2" ]; then
 		echo "1" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
 
