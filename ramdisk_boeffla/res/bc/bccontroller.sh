@@ -40,7 +40,7 @@ if [ "lov_gov_profiles" == "$1" ]; then
 fi
 
 if [ "lov_cpu_hotplug_profiles" == "$1" ]; then
-	echo "Default;Optimized;1 core;2 cores;3 cores;2 cores on;3 cores on;4 cores on"
+	echo "Default;Optimized;1 core;2 cores;3 cores;2 cores on;3 cores on;4 cores on;zzmoove native hotplug"
 	exit 0
 fi
 
@@ -427,6 +427,12 @@ fi
 
 if [ "apply_cpu_hotplug_profile" == "$1" ]; then
 
+
+	if [ `busybox cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor | busybox grep zzmoove` ]; then
+		echo "1" > /sys/devices/system/cpu/cpufreq/zzmoove/disable_hotplug
+		echo "1" > /sys/devices/system/cpu/cpufreq/zzmoove/disable_hotplug_sleep
+	fi
+
 	if [ "Default" == "$2" ]; then
 		echo "0" >/sys/devices/system/cpu/cpu0/online_control
 		echo "0" >/sys/devices/system/cpu/cpu1/online_control
@@ -488,6 +494,24 @@ if [ "apply_cpu_hotplug_profile" == "$1" ]; then
 		echo "0" >/sys/devices/system/cpu/cpu1/online_control
 		echo "0" >/sys/devices/system/cpu/cpu2/online_control
 		echo "3" >/sys/devices/system/cpu/cpu3/online_control
+		exit 0
+	fi
+
+	if [ "zzmoove native hotplug" == "$2" ]; then
+		echo "1" >/sys/devices/system/cpu/cpu0/online_control
+		echo "1" >/sys/devices/system/cpu/cpu1/online_control
+		echo "1" >/sys/devices/system/cpu/cpu2/online_control
+		echo "1" >/sys/devices/system/cpu/cpu3/online_control
+
+		if [ `busybox cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor | busybox grep zzmoove` ]; then
+			echo "0" > /sys/devices/system/cpu/cpufreq/zzmoove/disable_hotplug
+			echo "0" > /sys/devices/system/cpu/cpufreq/zzmoove/disable_hotplug_sleep
+		else
+			echo "0" >/sys/devices/system/cpu/cpu0/online_control
+			echo "0" >/sys/devices/system/cpu/cpu1/online_control
+			echo "0" >/sys/devices/system/cpu/cpu2/online_control
+			echo "0" >/sys/devices/system/cpu/cpu3/online_control
+		fi
 		exit 0
 	fi
 	
