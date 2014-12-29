@@ -539,6 +539,10 @@ static ssize_t store_scaling_min_freq_hardlimit(struct cpufreq_policy *policy, c
 	if (ret != 1)
 		return -EINVAL;
 
+	// temporary migration from 300 MHz step to 268 MHz step
+	if (input == 300000)
+		input = 268800;
+
 	// zero is an allowed value to disable the hard limit check
 	if (input == 0)
 	{
@@ -640,6 +644,10 @@ static ssize_t store_scaling_min_freq(struct cpufreq_policy *policy, const char 
 	if (ret != 1)
 		return -EINVAL;
 
+	// temporary migration from 300 MHz step to 268 MHz step
+	if (new_policy.min == 300000)
+		new_policy.min = 268800;
+	
 	// if hard limit check is enabled + if new min frequency is below hard limit,
 	// overwrite with hard limit
 	if (min_freq_hardlimit[policy->cpu] != 0)
