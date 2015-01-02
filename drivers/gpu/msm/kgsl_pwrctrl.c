@@ -33,6 +33,12 @@
 
 #define UPDATE_BUSY_VAL		1000000
 
+#define DEFAULT_MAX_PWRLEVEL   0
+#define DEFAULT_MIN_PWRLEVEL   4
+#define BYPASS_HARDLIMIT_CHECK	99
+static unsigned int max_pwrlevel_hardlimit;
+static unsigned int min_pwrlevel_hardlimit;
+
 /*
  * Expected delay for post-interrupt processing on A3xx.
  * The delay may be longer, gradually increase the delay
@@ -239,6 +245,12 @@ static int kgsl_pwrctrl_max_pwrlevel_store(struct device *dev,
 	/* You can't set a maximum power level lower than the minimum */
 	if (level > pwr->min_pwrlevel)
 		level = pwr->min_pwrlevel;
+		
+	// AP: check for hard limit and do not allow to go below
+	// a value of 99 will disable this hard limit check
+	if (max_pwrlevel_hardlimit != BYPASS_HARDLIMIT_CHECK)
+		if (level < max_pwrlevel_hardlimit)
+			level = max_pwrlevel_hardlimit;
 
 	pwr->max_pwrlevel = level;
 
@@ -295,6 +307,12 @@ static int kgsl_pwrctrl_min_pwrlevel_store(struct device *dev,
 	if (level < pwr->max_pwrlevel)
 		level = pwr->max_pwrlevel;
 
+	// AP: check for hard limit and do not allow to go above
+	// a value of 99 will disable this hard limit check
+	if (min_pwrlevel_hardlimit != BYPASS_HARDLIMIT_CHECK)
+		if (level > min_pwrlevel_hardlimit)
+			level = min_pwrlevel_hardlimit;
+
 	pwr->min_pwrlevel = level;
 
 	min_level = max_t(unsigned int, pwr->thermal_pwrlevel,
@@ -322,6 +340,73 @@ static int kgsl_pwrctrl_min_pwrlevel_show(struct device *dev,
 		return 0;
 	pwr = &device->pwrctrl;
 	return snprintf(buf, PAGE_SIZE, "%u\n", pwr->min_pwrlevel);
+}
+
+static int kgsl_pwrctrl_max_pwrlevel_hardlimit_store(struct device *dev,
+					 struct device_attribute *attr,
+					 const char *buf, size_t count)
+{
+	struct kgsl_device *device = kgsl_device_from_dev(dev);
+	struct kgsl_pwrctrl *pwr;
+	int ret;
+	unsigned int level = 0;
+
+	if (device == NULL)
+		return 0;
+
+	pwr = &device->pwrctrl;
+
+	ret = sscanf(buf, "%d", &level);
+	if (ret != 1)
+		return count;
+
+	if (((level >= 0) && (level < (pwr->num_pwrlevels - 1))) ||
+		(level == BYPASS_HARDLIMIT_CHECK))
+		max_pwrlevel_hardlimit = level;
+	else
+		pr_debug("kgsl_pwrctrl: invalid max_pwrlevel_hardlimit, not set\n");
+
+	return count;
+}
+
+static int kgsl_pwrctrl_max_pwrlevel_hardlimit_show(struct device *dev,
+					struct device_attribute *attr,
+					char *buf)
+{
+	return sprintf(buf, "%u\n", max_pwrlevel_hardlimit);
+}
+
+static int kgsl_pwrctrl_min_pwrlevel_hardlimit_store(struct device *dev,
+					 struct device_attribute *attr,
+					 const char *buf, size_t count)
+{	struct kgsl_device *device = kgsl_device_from_dev(dev);
+	struct kgsl_pwrctrl *pwr;
+	int ret;
+	unsigned int level = 0;
+
+	if (device == NULL)
+		return 0;
+
+	pwr = &device->pwrctrl;
+
+	ret = sscanf(buf, "%d", &level);
+	if (ret != 1)
+		return count;
+
+	if (((level >= 0) && (level < (pwr->num_pwrlevels - 1))) ||
+		(level == BYPASS_HARDLIMIT_CHECK))
+		min_pwrlevel_hardlimit = level;
+	else
+		pr_debug("kgsl_pwrctrl: invalid min_pwrlevel_hardlimit, not set\n");
+
+	return count;
+}
+
+static int kgsl_pwrctrl_min_pwrlevel_hardlimit_show(struct device *dev,
+					struct device_attribute *attr,
+					char *buf)
+{
+	return sprintf(buf, "%u\n", min_pwrlevel_hardlimit);
 }
 
 static int kgsl_pwrctrl_num_pwrlevels_show(struct device *dev,
@@ -709,6 +794,12 @@ DEVICE_ATTR(max_pwrlevel, 0644,
 DEVICE_ATTR(min_pwrlevel, 0644,
 	kgsl_pwrctrl_min_pwrlevel_show,
 	kgsl_pwrctrl_min_pwrlevel_store);
+DEVICE_ATTR(max_pwrlevel_hardlimit, 0644,
+	kgsl_pwrctrl_max_pwrlevel_hardlimit_show,
+	kgsl_pwrctrl_max_pwrlevel_hardlimit_store);
+DEVICE_ATTR(min_pwrlevel_hardlimit, 0644,
+	kgsl_pwrctrl_min_pwrlevel_hardlimit_show,
+	kgsl_pwrctrl_min_pwrlevel_hardlimit_store);
 DEVICE_ATTR(thermal_pwrlevel, 0644,
 	kgsl_pwrctrl_thermal_pwrlevel_show,
 	kgsl_pwrctrl_thermal_pwrlevel_store);
@@ -742,6 +833,8 @@ static const struct device_attribute *pwrctrl_attr_list[] = {
 	&dev_attr_gpu_available_frequencies,
 	&dev_attr_max_pwrlevel,
 	&dev_attr_min_pwrlevel,
+	&dev_attr_max_pwrlevel_hardlimit,
+	&dev_attr_min_pwrlevel_hardlimit,
 	&dev_attr_thermal_pwrlevel,
 	&dev_attr_num_pwrlevels,
 	&dev_attr_pmqos_latency,
@@ -976,9 +1069,23 @@ int kgsl_pwrctrl_init(struct kgsl_device *device)
 
 	/* Initialize the user and thermal clock constraints */
 
+#ifdef DEFAULT_MAX_PWRLEVEL
+	pwr->max_pwrlevel = DEFAULT_MAX_PWRLEVEL;
+#else
 	pwr->max_pwrlevel = 0;
+#endif	
+
+#ifdef DEFAULT_MIN_PWRLEVEL
+	pwr->min_pwrlevel = DEFAULT_MIN_PWRLEVEL;
+#else
 	pwr->min_pwrlevel = pdata->num_levels - 2;
+#endif	
+	
 	pwr->thermal_pwrlevel = 0;
+
+	// AP: initialize hard limits
+	max_pwrlevel_hardlimit = pwr->max_pwrlevel;
+	min_pwrlevel_hardlimit = pwr->min_pwrlevel;
 
 	pwr->active_pwrlevel = pdata->init_level;
 	pwr->default_pwrlevel = pdata->init_level;
