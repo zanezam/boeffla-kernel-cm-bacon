@@ -84,32 +84,32 @@ if [ "lov_presets" == "$1" ]; then
 	echo "Power extreme~"
 	echo "Gov: zzmoove / performance"
 	echo "^Sched: row"
-	echo "^CPU: 2880 / no uv;"
-	#echo "^GPU: 440-700 / +50mV;"
+	echo "^CPU: 2880 / no uv"
+	echo "^GPU: 330-657;"
 	
 	echo "Power~"
 	echo "Gov: ondemand / standard"
 	echo "^Sched: row"
-	echo "^CPU: 2726 / no uv;"
-	#echo "^GPU: 266-600 / no uv;"
+	echo "^CPU: 2726 / no uv"
+	echo "^GPU: 200-657;"
 	
 	echo "Standard~"
 	echo "Gov: interactive / standard"
 	echo "^Sched: row"
-	echo "^CPU: 2457 / no uv;"
-	#echo "^GPU: 160-440 / no uv;"
+	echo "^CPU: 2457 / no uv"
+	echo "^GPU: 27-578;"
 	
 	echo "Battery friendly~"
 	echo "Gov: interactive / standard"
 	echo "^Sched: zen"
-	echo "^CPU: 1728 / -25mV;"
-	#echo "^GPU: 160/266 / -25mV;"
+	echo "^CPU: 1728 / -25mV"
+	echo "^GPU: 27-330;"
 	
 	echo "Battery saving~"
 	echo "Gov: zzmoove / battery yank"
 	echo "^Sched: zen"
-	echo "^CPU: 1497 / light uv;"
-	#echo "^GPU: 160/266 / light uv;"
+	echo "^CPU: 1497 / light uv"
+	echo "^GPU: 27 only;"
 	
 	exit 0
 fi
@@ -125,35 +125,35 @@ if [ "conf_presets" == "$1" ]; then
 		echo "zzmoove;zzmoove - performance;"
 		echo "row;row;"
 		echo "2880000;None;"
-		echo "None;None"
+		echo "4,0;None"
 	fi
 	if [ "Power" ==  "$2" ]; then
 		# gov, gov prof, sched int, sched ext, cpu max, cpu uv, gpu freq, gpu uv
 		echo "ondemand;ondemand - standard;"
 		echo "row;row;"
 		echo "2726400;None;"
-		echo "None;None"
+		echo "5,0;None"
 	fi
 	if [ "Standard" ==  "$2" ]; then
 		# gov, gov prof, sched int, sched ext, cpu max, cpu uv, gpu freq, gpu uv
 		echo "interactive;standard;"
 		echo "row;row;"
 		echo "2457600;None;"
-		echo "None;None"
+		echo "6,1;None"
 	fi
 	if [ "Battery friendly" ==  "$2" ]; then
 		# gov, gov prof, sched int, sched ext, cpu max, cpu uv, gpu freq, gpu uv
 		echo "interactive;standard;"
 		echo "zen;zen;"
 		echo "1728000;undervolt -25mV;"
-		echo "None;None"
+		echo "6,4;None"
 	fi
 	if [ "Battery saving" ==  "$2" ]; then
 		# gov, gov prof, sched int, sched ext, cpu max, cpu uv, gpu freq, gpu uv
 		echo "zzmoove;zzmoove - battery yank;"
 		echo "zen;zen;"
 		echo "1497600;undervolt light;"
-		echo "None;None"
+		echo "6,6;None"
 	fi
 	exit 0
 fi
