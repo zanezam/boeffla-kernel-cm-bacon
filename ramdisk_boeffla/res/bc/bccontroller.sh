@@ -1462,9 +1462,11 @@ fi
 if [ "flash_cm_kernel" == "$1" ]; then
 	busybox dd if=$2/boot.img of=$BOOT_DEVICE
 	mount -o remount,rw -t ext4 $SYSTEM_DEVICE /system
-	busybox rm -f /system/lib/modules/*
-	busybox cp $2/system/lib/modules/* /system/lib/modules
-	busybox chmod 644 /system/lib/modules/*
+	busybox mkdir -p $LIBPATH
+	busybox chmod 755 $LIBPATH
+	busybox rm -f $LIBPATH/*
+	busybox cp $2$LIBPATH/* $LIBPATH
+	busybox chmod 644 $LIBPATH/*
 	busybox sync
 	mount -o remount,ro -t ext4 $SYSTEM_DEVICE /system
 	exit 0
