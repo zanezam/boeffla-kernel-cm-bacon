@@ -915,6 +915,25 @@ if [ "apply_ext4_tweaks" == "$1" ]; then
 	exit 0
 fi
 
+if [ "apply_survival_script" == "$1" ]; then
+	if [ "1" == "$2" ]; then
+		mount -o remount,rw -t ext4 $SYSTEM_DEVICE /system
+		busybox mkdir -p /system/addon.d
+		busybox cp /res/misc/97-boeffla-kernel.sh /system/addon.d
+		busybox chmod 755 /system/addon.d/97-boeffla-kernel.sh
+		busybox sync
+		mount -o remount,ro -t ext4 $SYSTEM_DEVICE /system
+	fi
+
+	if [ "0" == "$2" ]; then
+		mount -o remount,rw -t ext4 $SYSTEM_DEVICE /system
+		busybox rm /system/addon.d/97-boeffla-kernel.sh
+		busybox sync
+		mount -o remount,ro -t ext4 $SYSTEM_DEVICE /system
+	fi
+	exit 0
+fi
+
 if [ "apply_zram" == "$1" ]; then
 	if [ "1" == "$2" ]; then
 		if [ "1" == "$3" ]; then
