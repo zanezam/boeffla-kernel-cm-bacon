@@ -21,7 +21,7 @@
 	BOEFFLA_STARTCONFIG="/data/.boeffla/startconfig"
 	BOEFFLA_STARTCONFIG_EARLY="/data/.boeffla/startconfig_early"
 	BOEFFLA_STARTCONFIG_DONE="/data/.boeffla/startconfig_done"
-	CWM_RESET_ZIP="boeffla-config-reset-v3.1.zip"
+	CWM_RESET_ZIP="boeffla-config-reset-v4.zip"
 	INITD_ENABLER="/data/.boeffla/enable-initd"
 	BUSYBOX_ENABLER="/data/.boeffla/enable-busybox"
 	FRANDOM_ENABLER="/data/.boeffla/enable-frandom"
@@ -207,16 +207,17 @@
 		echo $(date) EFS Backup: Not found, now created one >> $BOEFFLA_LOGFILE
 	fi
 
-# Copy reset cwm zip in boeffla-kernel-data folder
+# Copy reset recovery zip in boeffla-kernel-data folder, delete older versions first
 	CWM_RESET_ZIP_SOURCE="/res/misc/$CWM_RESET_ZIP"
 	CWM_RESET_ZIP_TARGET="$BOEFFLA_DATA_PATH/$CWM_RESET_ZIP"
 
 	if [ ! -f $CWM_RESET_ZIP_TARGET ]; then
 
+		/sbin/busybox rm $BOEFFLA_DATA_PATH/boeffla-config-reset*
 		/sbin/busybox cp $CWM_RESET_ZIP_SOURCE $CWM_RESET_ZIP_TARGET
 		/sbin/busybox chmod 666 $CWM_RESET_ZIP_TARGET
 
-		echo $(date) CWM reset zip copied >> $BOEFFLA_LOGFILE
+		echo $(date) Recovery reset zip copied >> $BOEFFLA_LOGFILE
 	fi
 
 # Finished
