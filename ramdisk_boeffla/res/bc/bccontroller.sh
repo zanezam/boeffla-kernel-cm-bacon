@@ -40,7 +40,7 @@ if [ "lov_gov_profiles" == "$1" ]; then
 fi
 
 if [ "lov_cpu_hotplug_profiles" == "$1" ]; then
-	echo "Default;Optimized;1 core;2 cores;3 cores;2 cores on;3 cores on;4 cores on;zzmoove native hotplug"
+	echo "Default;Optimized;1 core max;2 cores max;3 cores max;2 cores min;3 cores min;4 cores min;zzmoove native hotplug"
 	exit 0
 fi
 
@@ -441,7 +441,7 @@ if [ "apply_cpu_hotplug_profile" == "$1" ]; then
 		exit 0
 	fi
 
-	if [ "1 core" == "$2" ]; then
+	if [ "1 core max" == "$2" ]; then
 		echo "0" >/sys/devices/system/cpu/cpu0/online_control
 		echo "2" >/sys/devices/system/cpu/cpu1/online_control
 		echo "2" >/sys/devices/system/cpu/cpu2/online_control
@@ -449,7 +449,7 @@ if [ "apply_cpu_hotplug_profile" == "$1" ]; then
 		exit 0
 	fi
 
-	if [ "2 cores" == "$2" ]; then
+	if [ "2 cores max" == "$2" ]; then
 		echo "0" >/sys/devices/system/cpu/cpu0/online_control
 		echo "0" >/sys/devices/system/cpu/cpu1/online_control
 		echo "2" >/sys/devices/system/cpu/cpu2/online_control
@@ -457,7 +457,7 @@ if [ "apply_cpu_hotplug_profile" == "$1" ]; then
 		exit 0
 	fi
 
-	if [ "3 cores" == "$2" ]; then
+	if [ "3 cores max" == "$2" ]; then
 		echo "0" >/sys/devices/system/cpu/cpu0/online_control
 		echo "0" >/sys/devices/system/cpu/cpu1/online_control
 		echo "0" >/sys/devices/system/cpu/cpu2/online_control
@@ -465,7 +465,7 @@ if [ "apply_cpu_hotplug_profile" == "$1" ]; then
 		exit 0
 	fi
 
-	if [ "2 cores on" == "$2" ]; then
+	if [ "2 cores min" == "$2" ]; then
 		echo "1" >/sys/devices/system/cpu/cpu0/online_control
 		echo "0" >/sys/devices/system/cpu/cpu1/online_control
 		echo "0" >/sys/devices/system/cpu/cpu2/online_control
@@ -473,7 +473,7 @@ if [ "apply_cpu_hotplug_profile" == "$1" ]; then
 		exit 0
 	fi
 
-	if [ "3 cores on" == "$2" ]; then
+	if [ "3 cores min" == "$2" ]; then
 		echo "1" >/sys/devices/system/cpu/cpu0/online_control
 		echo "0" >/sys/devices/system/cpu/cpu1/online_control
 		echo "1" >/sys/devices/system/cpu/cpu2/online_control
@@ -481,7 +481,7 @@ if [ "apply_cpu_hotplug_profile" == "$1" ]; then
 		exit 0
 	fi
 
-	if [ "4 cores on" == "$2" ]; then
+	if [ "4 cores min" == "$2" ]; then
 		echo "1" >/sys/devices/system/cpu/cpu0/online_control
 		echo "1" >/sys/devices/system/cpu/cpu1/online_control
 		echo "1" >/sys/devices/system/cpu/cpu2/online_control
