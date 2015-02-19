@@ -24,9 +24,9 @@ LIBPATH="/system/lib/modules"
 # block devices
 SYSTEM_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/system"
 CACHE_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/cache"
-DATA_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/userdata "
+DATA_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/userdata"
 BOOT_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/boot"
-RADIO_DEVICE="/dev/block/platform/msm_sdcc.w1/by-name/modem"
+RADIO_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/modem"
 RECOVERY_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/recovery"
 
 
@@ -263,6 +263,9 @@ if [ "conf_cpu_volt" == "$1" ]; then
 fi
 
 if [ "conf_eq_gains" == "$1" ]; then
+	if [ "Flat" ==  "$2" ]; then
+		echo "0;0;0;0;0"
+	fi
 	if [ "Archis audiophile" ==  "$2" ]; then
 		echo "8;4;4;2;6"
 	fi
@@ -292,6 +295,9 @@ if [ "conf_eq_gains" == "$1" ]; then
 	fi
 	if [ "Metal/Rock" ==  "$2" ]; then
 		echo "4;3;0;-4;3"
+	fi
+	if [ "Googy" ==  "$2" ]; then
+		echo "10;2;-1;2;10"
 	fi
 	exit 0
 fi
@@ -1296,7 +1302,7 @@ if [ "action_debug_info_file" == "$1" ]; then
 	cd /sys/class/misc/boeffla_sound
 	busybox find * -print -maxdepth 0 -type f -exec tail -v -n +1 {} + >> $2
 
-	#echo "\n============================================\n" >> $2
+	echo "\n============================================\n" >> $2
 
 	echo -e "\n**** Loaded modules:\n" >> $2
 	lsmod >> $2
