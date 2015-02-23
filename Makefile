@@ -194,7 +194,8 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc64/ \
 export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?=arm
 #CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
-CROSS_COMPILE   ?= /home/zanezam/Werkstatt/entwicklung/toolchains/l474/bin/arm-eabi-
+#CROSS_COMPILE	?= /opt/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/bin/arm-linux-androideabi-
+CROSS_COMPILE   ?= /home/zanezam/Werkstatt/entwicklung/toolchains/sm493/bin/arm-eabi-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -246,8 +247,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = gcc
 HOSTCXX      = g++
-HOSTCFLAGS = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fomit-frame-pointer -fgraphite -floop-flatten -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block
-HOSTCXXFLAGS = -Ofast -fgraphite -floop-flatten -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block
+HOSTCFLAGS = -Wall -Wmissing-prototypes -Wstrict-prototypes -Ofast -fomit-frame-pointer -floop-flatten -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fgcse-las
+HOSTCXXFLAGS = -Ofast -floop-flatten -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -fgcse-las
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -353,14 +354,14 @@ CC		= $(srctree)/scripts/gcc-wrapper.py $(REAL_CC)
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
 
-KERNELFLAGS = -DNDEBUG -mtune=cortex-a15 -mcpu=cortex-a15 -marm -mfpu=neon-vfpv4 -ftree-vectorize -mvectorize-with-neon-quad -funroll-loops -fgraphite-identity -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -floop-flatten
+KERNELFLAGS = -DNDEBUG -munaligned-access -fforce-addr -fsingle-precision-constant -mtune=cortex-a15 -mcpu=cortex-a15 -marm -mfpu=neon-vfpv4 -ftree-vectorize -mvectorize-with-neon-quad -funroll-loops -floop-parallelize-all -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -floop-flatten -fgcse-las
 MODFLAGS = -DMODULE $(KERNELFLAGS)
 CFLAGS_MODULE = $(MODFLAGS)
 AFLAGS_MODULE = $(MODFLAGS)
 LDFLAGS_MODULE = -T $(srctree)/scripts/module-common.lds
 CFLAGS_KERNEL = $(KERNELFLAGS)
-AFLAGS_KERNEL = $(KERNELFLAGS)
-CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
+AFLAGS_KERNEL =
+CFLAGS_GCOV = -fprofile-arcs -ftest-coverage
 
 # Use LINUXINCLUDE when you must reference the include/ directory.
 # Needed to be compatible with the O= option
@@ -376,10 +377,10 @@ KBUILD_CFLAGS   := -Wall -DNDEBUG -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
 		   -fno-delete-null-pointer-checks \
-		   -mcpu=cortex-a15 -mtune=cortex-a15 -mfpu=neon-vfpv4 \
-		   -fgraphite -ftree-loop-linear -floop-interchange -floop-strip-mine -floop-block -floop-flatten \
-		   -ffast-math -fsingle-precision-constant \
-		   -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr -funsafe-math-optimizations -fno-pic
+		   -mcpu=cortex-a15 -mtune=cortex-a15 -mfpu=neon-vfpv4 -marm \
+		   -fsingle-precision-constant \
+		   -fgcse-lm -fgcse-sm -fsched-spec-load -fforce-addr -fno-pic \
+		   -fno-diagnostics-show-caret
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -611,7 +612,7 @@ endif
 KBUILD_CFLAGS += $(call cc-option, -fno-var-tracking-assignments)
 
 ifdef CONFIG_DEBUG_INFO
-KBUILD_CFLAGS	+= -g
+KBUILD_CFLAGS	+= -gdwarf-2
 KBUILD_AFLAGS	+= -gdwarf-2
 endif
 
