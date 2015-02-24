@@ -1,17 +1,41 @@
-From ef2d693cf36d0cc48115aa8d2ee5e9a900419c79 Mon Sep 17 00:00:00 2001
+From 0346e8295a4ae2a4bacebf18a120c7b3f26d2aee Mon Sep 17 00:00:00 2001
 From: andip71 <andreasp@gmx.de>
-Date: Tue, 18 Nov 2014 14:02:04 +0100
-Subject: [PATCH] 2
+Date: Tue, 24 Feb 2015 20:40:48 +0100
+Subject: [PATCH] 3
 
 ---
- init.rc | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ init.rc | 30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
 diff --git a/init.rc b/init.rc
-index fb1fb23..b8acbed 100755
+index 32d33d8..8b7cf6d 100755
 --- a/init.rc
 +++ b/init.rc
-@@ -73,6 +73,9 @@ on init
+@@ -18,7 +18,7 @@ on early-init
+     write /proc/1/oom_score_adj -1000
+ 
+     # Apply strict SELinux checking of PROT_EXEC on mmap/mprotect calls.
+-    write /sys/fs/selinux/checkreqprot 0
++    # AP: write /sys/fs/selinux/checkreqprot 0
+ 
+     # Set the security context for the init process.
+     # This should occur before anything else (e.g. ueventd) is started.
+@@ -32,6 +32,14 @@ on early-init
+     # create mountpoints
+     mkdir /mnt 0775 root system
+ 
++    # AP: Allow system UID to setenforce and set booleans.
++    chown system system /selinux/enforce
++    chown system system /sys/fs/selinux/enforce
++    chown -R system system /selinux/booleans
++    chown -R system system /sys/fs/selinux/booleans
++    chown system system /selinux/commit_pending_bools
++    chown system system /sys/fs/selinux/commit_pending_bools
++
+ on init
+     sysclktz 0
+ 
+@@ -73,6 +81,9 @@ on init
      mkdir /mnt/media_rw 0700 media_rw media_rw
      mkdir /storage 0751 root sdcard_r
  
@@ -21,7 +45,20 @@ index fb1fb23..b8acbed 100755
      # Directory for putting things only root should see.
      mkdir /mnt/secure 0700 root root
  
-@@ -349,9 +352,9 @@ on boot
+@@ -324,9 +335,9 @@ on post-fs-data
+ 
+     # Set SELinux security contexts on upgrade or policy update.
+     restorecon_recursive /data
+-    restorecon /data/data
+-    restorecon /data/user
+-    restorecon /data/user/0
++    # AP: restorecon /data/data
++    # AP: restorecon /data/user
++    # AP: restorecon /data/user/0
+ 
+     # If there is no fs-post-data action in the init.<device>.rc file, you
+     # must uncomment this line, otherwise encrypted filesystems
+@@ -349,9 +360,9 @@ on boot
      write /proc/sys/vm/overcommit_memory 1
      write /proc/sys/vm/min_free_order_shift 4
      chown root system /sys/module/lowmemorykiller/parameters/adj
@@ -33,7 +70,7 @@ index fb1fb23..b8acbed 100755
  
      # Tweak background writeout
      write /proc/sys/vm/dirty_expire_centisecs 200
-@@ -655,3 +658,10 @@ service pre-recovery /system/bin/uncrypt
+@@ -655,3 +666,10 @@ service pre-recovery /system/bin/uncrypt
      class main
      disabled
      oneshot
