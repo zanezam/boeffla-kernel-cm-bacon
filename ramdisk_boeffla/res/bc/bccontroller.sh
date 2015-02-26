@@ -1070,10 +1070,10 @@ fi
 if [ "apply_zram" == "$1" ]; then
 	if [ "1" == "$2" ]; then
 		if [ "1" == "$3" ]; then
-			busybox swapoff /dev/block/zram0
-			busybox swapoff /dev/block/zram1
-			busybox swapoff /dev/block/zram2
-			busybox swapoff /dev/block/zram3
+			su root busybox swapoff /dev/block/zram0
+			su root busybox swapoff /dev/block/zram1
+			su root busybox swapoff /dev/block/zram2
+			su root busybox swapoff /dev/block/zram3
 			echo "1" > /sys/block/zram0/reset
 			echo "1" > /sys/block/zram1/reset
 			echo "1" > /sys/block/zram2/reset
@@ -1082,16 +1082,16 @@ if [ "apply_zram" == "$1" ]; then
 			echo "0" > /sys/block/zram1/disksize
 			echo "0" > /sys/block/zram2/disksize
 			echo "0" > /sys/block/zram3/disksize
-			busybox mkswap /dev/block/zram0
-			busybox swapon -p 2 /dev/block/zram0
+			su root busybox mkswap /dev/block/zram0
+			su root busybox swapon -p 2 /dev/block/zram0
 			busybox sleep 0.5s
 			busybox sync
 		fi
 		if [ "2" == "$3" ]; then
-			busybox swapoff /dev/block/zram0
-			busybox swapoff /dev/block/zram1
-			busybox swapoff /dev/block/zram2
-			busybox swapoff /dev/block/zram3
+			su root busybox swapoff /dev/block/zram0
+			su root busybox swapoff /dev/block/zram1
+			su root busybox swapoff /dev/block/zram2
+			su root busybox swapoff /dev/block/zram3
 			echo "1" > /sys/block/zram0/reset
 			echo "1" > /sys/block/zram1/reset
 			echo "1" > /sys/block/zram2/reset
@@ -1100,18 +1100,18 @@ if [ "apply_zram" == "$1" ]; then
 			echo "$4" > /sys/block/zram1/disksize
 			echo "0" > /sys/block/zram2/disksize
 			echo "0" > /sys/block/zram3/disksize
-			busybox mkswap /dev/block/zram0
-			busybox mkswap /dev/block/zram1
-			busybox swapon -p 2 /dev/block/zram0
-			busybox swapon -p 2 /dev/block/zram1
+			su root busybox mkswap /dev/block/zram0
+			su root busybox mkswap /dev/block/zram1
+			su root busybox swapon -p 2 /dev/block/zram0
+			su root busybox swapon -p 2 /dev/block/zram1
 			busybox sleep 0.5s
 			busybox sync
 		fi
 		if [ "4" == "$3" ]; then
-			busybox swapoff /dev/block/zram0
-			busybox swapoff /dev/block/zram1
-			busybox swapoff /dev/block/zram2
-			busybox swapoff /dev/block/zram3
+			su root busybox swapoff /dev/block/zram0
+			su root busybox swapoff /dev/block/zram1
+			su root busybox swapoff /dev/block/zram2
+			su root busybox swapoff /dev/block/zram3
 			echo "1" > /sys/block/zram0/reset
 			echo "1" > /sys/block/zram1/reset
 			echo "1" > /sys/block/zram2/reset
@@ -1120,14 +1120,14 @@ if [ "apply_zram" == "$1" ]; then
 			echo "$4" > /sys/block/zram1/disksize
 			echo "$4" > /sys/block/zram2/disksize
 			echo "$4" > /sys/block/zram3/disksize
-			busybox mkswap /dev/block/zram0
-			busybox mkswap /dev/block/zram1
-			busybox mkswap /dev/block/zram2
-			busybox mkswap /dev/block/zram3
-			busybox swapon -p 2 /dev/block/zram0
-			busybox swapon -p 2 /dev/block/zram1
-			busybox swapon -p 2 /dev/block/zram2
-			busybox swapon -p 2 /dev/block/zram3
+			su root busybox mkswap /dev/block/zram0
+			su root busybox mkswap /dev/block/zram1
+			su root busybox mkswap /dev/block/zram2
+			su root busybox mkswap /dev/block/zram3
+			su root busybox swapon -p 2 /dev/block/zram0
+			su root busybox swapon -p 2 /dev/block/zram1
+			su root busybox swapon -p 2 /dev/block/zram2
+			su root busybox swapon -p 2 /dev/block/zram3
 			busybox sleep 0.5s
 			busybox sync
 		fi
@@ -1135,10 +1135,10 @@ if [ "apply_zram" == "$1" ]; then
 	fi
 
 	if [ "0" == "$2" ]; then
-		busybox swapoff /dev/block/zram0
-		busybox swapoff /dev/block/zram1
-		busybox swapoff /dev/block/zram2
-		busybox swapoff /dev/block/zram3
+		su root busybox swapoff /dev/block/zram0
+		su root busybox swapoff /dev/block/zram1
+		su root busybox swapoff /dev/block/zram2
+		su root busybox swapoff /dev/block/zram3
 		echo "1" > /sys/block/zram0/reset
 		echo "1" > /sys/block/zram1/reset
 		echo "1" > /sys/block/zram2/reset
@@ -1549,6 +1549,7 @@ fi
 
 
 if [ "flash_kernel" == "$1" ]; then
+	setenforce 0
 	busybox dd if=$2 of=$BOOT_DEVICE
 	exit 0
 fi
@@ -1573,6 +1574,7 @@ if [ "extract_kernel" == "$1" ]; then
 fi
 
 if [ "flash_recovery" == "$1" ]; then
+	setenforce 0
 	busybox dd if=$2 of=$RECOVERY_DEVICE
 	exit 0
 fi
@@ -1583,6 +1585,7 @@ if [ "extract_recovery" == "$1" ]; then
 fi
 
 if [ "flash_modem" == "$1" ]; then
+	setenforce 0
 	busybox dd if=$2 of=$RADIO_DEVICE
 	exit 0
 fi
@@ -1593,6 +1596,7 @@ if [ "extract_modem" == "$1" ]; then
 fi
 
 if [ "flash_cm_kernel" == "$1" ]; then
+	setenforce 0
 	busybox dd if=$2/boot.img of=$BOOT_DEVICE
 	mount -o remount,rw -t ext4 $SYSTEM_DEVICE /system
 	busybox mkdir -p $LIBPATH
