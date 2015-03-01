@@ -13,7 +13,7 @@
 	# block devices
 	SYSTEM_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/system"
 	CACHE_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/cache"
-	DATA_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/userdata "
+	DATA_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/userdata"
 
 # define file paths
 	BOEFFLA_DATA_PATH="$SD_PATH/boeffla-kernel-data"

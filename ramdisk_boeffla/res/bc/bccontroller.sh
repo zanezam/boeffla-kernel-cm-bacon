@@ -1296,6 +1296,9 @@ if [ "action_debug_info_file" == "$1" ]; then
 	echo -e "\n**** Boeffla-Config app log 3\n" >> $2
 	cat /sdcard/boeffla-kernel-data/bc.log.3 >> $2
 
+	echo -e "\n**** Boeffla-Config crash log\n" >> $2
+	cat /sdcard/boeffla-kernel-data/bc.crashlog >> $2
+
 	echo -e "\n============================================\n" >> $2
 
 	echo -e "\n**** boeffla_sound\n" >> $2
