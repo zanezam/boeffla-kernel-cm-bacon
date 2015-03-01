@@ -15,8 +15,8 @@ KERNEL_SPECS="bacon;cm;cm12.0;http://boeffla.df-kunde.de/bacon/boeffla-kernel-cm
 
 # kernel features 
 # (1=enable-busybox,2=enable-frandom,3=wipe-cache,4=disable-zram-control)
-# (5=enable-default-zram-control,6=enable-selinux-control)
-KERNEL_FEATURES="-3-6-"
+# (5=enable-default-zram-control,6=enable-selinux-switch, 7=enable-selinux-control)
+KERNEL_FEATURES="-3-6-7-"
 
 # path to kernel libraries
 LIBPATH="/system/lib/modules"
@@ -1307,6 +1307,9 @@ if [ "action_debug_info_file" == "$1" ]; then
 
 	echo "\n============================================\n" >> $2
 
+	echo -e "\n**** SELinux:\n" >> $2
+	getenforce >> $2
+
 	echo -e "\n**** Loaded modules:\n" >> $2
 	lsmod >> $2
 
@@ -1558,6 +1561,7 @@ fi
 
 
 if [ "flash_kernel" == "$1" ]; then
+	setenforce 0
 	busybox dd if=$2 of=$BOOT_DEVICE
 	exit 0
 fi
@@ -1582,6 +1586,7 @@ if [ "extract_kernel" == "$1" ]; then
 fi
 
 if [ "flash_recovery" == "$1" ]; then
+	setenforce 0
 	busybox dd if=$2 of=$RECOVERY_DEVICE
 	exit 0
 fi
@@ -1592,6 +1597,7 @@ if [ "extract_recovery" == "$1" ]; then
 fi
 
 if [ "flash_modem" == "$1" ]; then
+	setenforce 0
 	busybox dd if=$2 of=$RADIO_DEVICE
 	exit 0
 fi
@@ -1602,6 +1608,7 @@ if [ "extract_modem" == "$1" ]; then
 fi
 
 if [ "flash_cm_kernel" == "$1" ]; then
+	setenforce 0
 	busybox dd if=$2/boot.img of=$BOOT_DEVICE
 	mount -o remount,rw -t ext4 $SYSTEM_DEVICE /system
 	busybox mkdir -p $LIBPATH
