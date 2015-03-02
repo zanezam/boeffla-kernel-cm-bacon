@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm 3.4.105 Kernel Configuration
+# Linux/arm 3.4.106 Kernel Configuration
 #
 CONFIG_ARM=y
 CONFIG_ARM_HAS_SG_CHAIN=y
@@ -2563,7 +2563,6 @@ CONFIG_BACKLIGHT_CLASS_DEVICE=y
 # CONFIG_BACKLIGHT_ADP8870 is not set
 # CONFIG_BACKLIGHT_LP855X is not set
 CONFIG_BACKLIGHT_LM3630=y
-CONFIG_BACKLIGHT_EXT_CONTROL=y
 # CONFIG_LOGO is not set
 CONFIG_SOUND=y
 # CONFIG_SOUND_OSS_CORE is not set
