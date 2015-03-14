@@ -11,16 +11,6 @@ diff --git a/init.rc b/init.rc
 index fb1fb23..b8acbed 100755
 --- a/init.rc
 +++ b/init.rc
-@@ -73,6 +73,9 @@ on init
-     mkdir /mnt/media_rw 0700 media_rw media_rw
-     mkdir /storage 0751 root sdcard_r
- 
-+    # Create mountpoint so Dalvik can mark as slave in zygotes.
-+    mount tmpfs tmpfs /storage mode=0050,uid=0,gid=1028
-+
-     # Directory for putting things only root should see.
-     mkdir /mnt/secure 0700 root root
- 
 @@ -349,9 +352,9 @@ on boot
      write /proc/sys/vm/overcommit_memory 1
      write /proc/sys/vm/min_free_order_shift 4
