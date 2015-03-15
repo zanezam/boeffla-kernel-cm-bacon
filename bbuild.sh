@@ -461,6 +461,7 @@ stepR_rewrite_config()
 	cp arch/arm/configs/$DEFCONFIG .config
 	make oldconfig
 	cp .config arch/arm/configs/$DEFCONFIG
+	make mrproper
 	
 	# commit change
 	git add arch/arm/configs/$DEFCONFIG
