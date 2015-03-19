@@ -2,7 +2,7 @@
 
 # Boeffla Kernel Universal Build Script
 #
-# Version 1.0, 11.03.2015
+# Version 1.1, 19.03.2015
 #
 # (C) Lord Boeffla (aka andip71)
 
@@ -78,6 +78,8 @@ REPACK_PATH="$ROOT_PATH/repack"
 TOOLCHAIN_COMPILE=`grep "^CROSS_COMPILE" $SOURCE_PATH/Makefile`
 
 BOEFFLA_DATE=$(date +%Y%m%d)
+GIT_BRANCH=`git b | grep --color=none "*"`
+
 
 # overwrite settings with custom file
 . $ROOT_PATH/x-settings.sh
@@ -530,6 +532,13 @@ case "$1" in
 		step9_send_finished_mail
 		exit
 		;;
+	ur)
+		step6_repack_ramdisk
+		step7_analyse_log
+		step8_transfer_kernel
+		step9_send_finished_mail
+		exit
+		;;
 	0)
 		step0_copy_code
 		exit
@@ -589,8 +598,9 @@ echo
 echo "Function menu"
 echo "================================================"
 echo
-echo "a  = all, execute steps 0-7"
-echo "u  = upd, execute steps 3-7"
+echo "a   = all, execute steps 0-9"
+echo "u   = upd, execute steps 3-9"
+echo "ur  = upd, execute steps 6-9"
 echo
 echo "0  = copy code"
 echo "1  = make clean"
@@ -614,6 +624,7 @@ echo
 echo "  Boeffla version:  $BOEFFLA_VERSION"
 echo "  Extended cmdline: $EXTENDED_CMDLINE"
 echo "  Boeffla date:     $BOEFFLA_DATE"
+echo "  Git branch:       $GIT_BRANCH"
 echo
 echo "  Toolchain:    $TOOLCHAIN / $TOOLCHAIN_COMPILE"
 echo "  Root path:    $ROOT_PATH"
