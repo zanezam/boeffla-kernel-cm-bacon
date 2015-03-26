@@ -1,5 +1,8 @@
 # We can build either as part of a standalone Kernel build or part
 # of an Android build.  Determine which mechanism is being used
+
+EXTRA_CFLAGS += -Wno-discarded-array-qualifiers
+
 ifeq ($(MODNAME),)
 	KERNEL_BUILD := 1
 else
