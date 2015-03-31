@@ -65,6 +65,7 @@ static struct dentry *bool_dir;
 static int bool_num;
 static char **bool_pending_names;
 static int *bool_pending_values;
+static int bool_locked = 1;
 
 /* global data for classes */
 static struct dentry *class_dir;
@@ -98,6 +99,7 @@ enum sel_inos {
 	SEL_ROOT_INO = 2,
 	SEL_LOAD,	/* load policy */
 	SEL_ENFORCE,	/* get or set enforcing status */
+	SEL_LOCKED,		/* get or set lock status for enforcing */
 	SEL_CONTEXT,	/* validate context */
 	SEL_ACCESS,	/* compute access decision */
 	SEL_CREATE,	/* compute create labeling decision */
@@ -144,6 +146,10 @@ static ssize_t sel_write_enforce(struct file *file, const char __user *buf,
 	char *page = NULL;
 	ssize_t length;
 	int new_value;
+
+	// if selinux enforcing status is locked by boeffla kernel, exit
+	if (bool_locked)
+		return count;
 
 	length = -ENOMEM;
 	if (count >= PAGE_SIZE)
@@ -196,6 +202,47 @@ static const struct file_operations sel_enforce_ops = {
 	.write		= sel_write_enforce,
 	.llseek		= generic_file_llseek,
 };
+
+
+static ssize_t sel_write_locked(struct file *file, const char __user *buf,
+				 size_t count, loff_t *ppos)
+
+{
+	char *page = NULL;
+	int new_value;
+
+	page = (char *)get_zeroed_page(GFP_KERNEL);
+	if (!page)
+		return -EINVAL;
+
+	if (copy_from_user(page, buf, count))
+		return -EINVAL;
+
+	if (sscanf(page, "%d", &new_value) != 1)
+		return -EINVAL;
+
+	if ((new_value == 1) || (new_value == 0))
+		bool_locked = new_value;
+
+	return count;
+}
+
+static ssize_t sel_read_locked(struct file *filp, char __user *buf,
+				size_t count, loff_t *ppos)
+{
+	char tmpbuf[TMPBUFLEN];
+	ssize_t length;
+
+	length = scnprintf(tmpbuf, TMPBUFLEN, "%d", bool_locked);
+	return simple_read_from_buffer(buf, count, ppos, tmpbuf, length);
+}
+
+static const struct file_operations sel_locked_ops = {
+	.read		= sel_read_locked,
+	.write		= sel_write_locked,
+	.llseek		= generic_file_llseek,
+};
+
 
 static ssize_t sel_read_handle_unknown(struct file *filp, char __user *buf,
 					size_t count, loff_t *ppos)
@@ -1818,6 +1865,7 @@ static int sel_fill_super(struct super_block *sb, void *data, int silent)
 	static struct tree_descr selinux_files[] = {
 		[SEL_LOAD] = {"load", &sel_load_ops, S_IRUSR|S_IWUSR},
 		[SEL_ENFORCE] = {"enforce", &sel_enforce_ops, S_IRUGO|S_IWUSR},
+		[SEL_LOCKED] = {"bk_locked", &sel_locked_ops, S_IRUGO|S_IWUSR},
 		[SEL_CONTEXT] = {"context", &transaction_ops, S_IRUGO|S_IWUGO},
 		[SEL_ACCESS] = {"access", &transaction_ops, S_IRUGO|S_IWUGO},
 		[SEL_CREATE] = {"create", &transaction_ops, S_IRUGO|S_IWUGO},
