@@ -369,6 +369,14 @@ step6_repack_ramdisk()
 		zip $BOEFFLA_FILENAME.recovery.zip $MODULE_PATH/*
 	fi
 
+	# sign recovery zip if there are keys available
+	if [ -f "$BUILD_PATH/tools_boeffla/testkey.x509.pem" ]; then
+		echo -e ">>> signing recovery zip\n"
+		java -jar $BUILD_PATH/tools_boeffla/signapk.jar -w $BUILD_PATH/tools_boeffla/testkey.x509.pem $BUILD_PATH/tools_boeffla/testkey.pk8 $BOEFFLA_FILENAME.recovery.zip $BOEFFLA_FILENAME.recovery.zip_signed
+		cp $BOEFFLA_FILENAME.recovery.zip_signed $BOEFFLA_FILENAME.recovery.zip
+		rm $BOEFFLA_FILENAME.recovery.zip_signed
+	fi
+
 	md5sum $BOEFFLA_FILENAME.recovery.zip > $BOEFFLA_FILENAME.recovery.zip.md5
 
 	# For Samsung kernels, create tar.md5 for odin
