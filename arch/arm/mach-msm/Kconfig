@@ -3039,4 +3039,11 @@ config HAS_MACH_MEMUTILS
 	bool "Motorola MSM memcpy enhancements"
 	help
 	Faster memcpy performance for Krait
+
+config CHARGE_LEVEL
+	bool "Charge level interface"
+	default y
+	help
+	  Allows configuration of ac and usb charging levels	
+
 endif
