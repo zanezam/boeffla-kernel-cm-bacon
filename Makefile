@@ -195,7 +195,7 @@ export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?=arm
 #CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 #CROSS_COMPILE	?= /opt/toolchains/arm-linux-androideabi-4.7/prebuilt/linux-x86/bin/arm-linux-androideabi-
-CROSS_COMPILE   ?= ${CCACHE} /werkstatt/entwicklung/toolchains/u500/bin/arm-eabi-
+CROSS_COMPILE   ?= ${CCACHE} /werkstatt/entwicklung/toolchains/u511/bin/arm-eabi-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
