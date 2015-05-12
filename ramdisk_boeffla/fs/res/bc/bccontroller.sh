@@ -966,7 +966,54 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sleep 0.5s
 		busybox sync
 	fi
+
+	if [ "pegasusq - standard" == "$2" ]; then
+		echo "5" > /sys/devices/system/cpu/cpufreq/pegasusq/down_differential
+		echo "2265600" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_for_responsiveness
+		echo "37" > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step
+		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusq/ignore_nice_load
+		echo "0" > /sys/devices/system/cpu/cpufreq/pegasusq/io_is_busy
+		echo "2" > /sys/devices/system/cpu/cpufreq/pegasusq/sampling_down_factor
+		echo "50000" > /sys/devices/system/cpu/cpufreq/pegasusq/sampling_rate
+		echo "10000" > /sys/devices/system/cpu/cpufreq/pegasusq/sampling_rate_min
+		echo "85" > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold
+		echo "40" > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold_at_min_freq
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
 	
+	if [ "lionheart - standard" == "$2" ]; then
+		echo "30" > /sys/devices/system/cpu/cpufreq/lionheart/down_threshold
+		echo "5" > /sys/devices/system/cpu/cpufreq/lionheart/freq_step
+		echo "0" > /sys/devices/system/cpu/cpufreq/lionheart/ignore_nice_load
+		echo "1" > /sys/devices/system/cpu/cpufreq/lionheart/sampling_down_factor
+		echo "10000" > /sys/devices/system/cpu/cpufreq/lionheart/sampling_rate
+		echo "10000" > /sys/devices/system/cpu/cpufreq/lionheart/sampling_rate_min
+		echo "65" > /sys/devices/system/cpu/cpufreq/lionheart/up_threshold
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "nightmare - standard" == "$2" ]; then
+		echo "50" > /sys/devices/system/cpu/cpufreq/nightmare/dec_cpu_load
+		echo "540000" > /sys/devices/system/cpu/cpufreq/nightmare/freq_for_responsiveness
+		echo "1890000" > /sys/devices/system/cpu/cpufreq/nightmare/freq_for_responsiveness_max
+		echo "20" > /sys/devices/system/cpu/cpufreq/nightmare/freq_step
+		echo "20" > /sys/devices/system/cpu/cpufreq/nightmare/freq_step_at_min_freq
+		echo "10" > /sys/devices/system/cpu/cpufreq/nightmare/freq_step_dec
+		echo "10" > /sys/devices/system/cpu/cpufreq/nightmare/freq_step_dec_at_max_freq
+		echo "30" > /sys/devices/system/cpu/cpufreq/nightmare/freq_up_brake
+		echo "30" > /sys/devices/system/cpu/cpufreq/nightmare/freq_up_brake_at_min_freq
+		echo "70" > /sys/devices/system/cpu/cpufreq/nightmare/inc_cpu_load
+		echo "60" > /sys/devices/system/cpu/cpufreq/nightmare/inc_cpu_load_at_min_freq
+		echo "60000" > /sys/devices/system/cpu/cpufreq/nightmare/sampling_rate
+		
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
 	exit 0
 fi
 
