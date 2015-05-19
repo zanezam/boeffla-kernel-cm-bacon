@@ -35,7 +35,7 @@ RECOVERY_DEVICE="/dev/block/platform/msm_sdcc.1/by-name/recovery"
 # *******************
 
 if [ "lov_gov_profiles" == "$1" ]; then
-	echo "interactive - battery;interactive - battery extreme;interactive - performance;zzmoove - optimal;zzmoove - battery;zzmoove - battery plus;zzmoove - battery yank;zzmoove - battery extreme yank;zzmoove - performance;zzmoove - insane;zzmoove - moderate;zzmoove - game"
+	echo "interactive - battery;interactive - battery extreme;interactive - performance;zzmoove - optimal;zzmoove - battery;zzmoove - battery plus;zzmoove - battery yank;zzmoove - battery extreme yank;zzmoove - performance;zzmoove - insane;zzmoove - moderate;zzmoove - game;zzmoove - relax"
 	exit 0
 fi
 
@@ -962,6 +962,13 @@ if [ "apply_governor_profile" == "$1" ]; then
 
 	if [ "zzmoove - game" == "$2" ]; then
 		echo "10" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
+	if [ "zzmoove - relax" == "$2" ]; then
+		echo "11" > /sys/devices/system/cpu/cpufreq/zzmoove/profile_number
 
 		busybox sleep 0.5s
 		busybox sync
