@@ -530,6 +530,10 @@ if [ "apply_cpu_hotplug_profile" == "$1" ]; then
 		if [ `busybox cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor | busybox grep zzmoove` ]; then
 			echo "0" > /sys/devices/system/cpu/cpufreq/zzmoove/disable_hotplug
 			echo "0" > /sys/devices/system/cpu/cpufreq/zzmoove/disable_hotplug_sleep
+
+			if [ `busybox cat /sys/devices/system/cpu/cpufreq/zzmoove/profile_number | busybox grep 11` ]; then
+				echo "2" > /sys/devices/system/cpu/cpufreq/zzmoove/hotplug_min_limit
+			fi
 		else
 			echo "0" >/sys/devices/system/cpu/cpu0/online_control
 			echo "0" >/sys/devices/system/cpu/cpu1/online_control
