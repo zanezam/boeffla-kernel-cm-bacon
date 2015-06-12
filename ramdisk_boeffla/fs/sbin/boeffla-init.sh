@@ -70,6 +70,25 @@
 # remove not used configuration files for frandom and busybox
 	/sbin/busybox rm -f $BUSYBOX_ENABLER
 	/sbin/busybox rm -f $FRANDOM_ENABLER
+	
+# Apply Boeffla-Kernel default settings
+
+	# Sdcard buffer tweaks default to 1024 kb
+	echo 1024 > /sys/block/mmcblk0/bdi/read_ahead_kb
+	/sbin/busybox sync
+
+	# Ext4 tweaks default to on
+	/sbin/busybox sync
+	mount -o remount,commit=4,noatime $CACHE_DEVICE /cache
+	/sbin/busybox sync
+	mount -o remount,commit=4,noatime $DATA_DEVICE /data
+	/sbin/busybox sync
+
+	# dynamic fsync to on
+	echo 1 > /sys/kernel/dyn_fsync/Dyn_fsync_active
+	/sbin/busybox sync
+
+	echo $(date) Boeffla-Kernel default settings applied >> $BOEFFLA_LOGFILE
 
 # Execute early startconfig placed by Boeffla-Config V2 app, if there is one
 	if [ -f $BOEFFLA_STARTCONFIG_EARLY ]; then
@@ -124,22 +143,7 @@
 		. $BOEFFLA_STARTCONFIG
 		echo $(date) Startup configuration applied  >> $BOEFFLA_LOGFILE
 	else
-		# Sdcard buffer tweaks default to 1024 kb
-		echo 1024 > /sys/block/mmcblk0/bdi/read_ahead_kb
-		/sbin/busybox sync
-
-		# Ext4 tweaks default to on
-		/sbin/busybox sync
-		mount -o remount,commit=4,noatime $CACHE_DEVICE /cache
-		/sbin/busybox sync
-		mount -o remount,commit=4,noatime $DATA_DEVICE /data
-		/sbin/busybox sync
-
-		# dynamic fsync to on
-		echo 1 > /sys/kernel/dyn_fsync/Dyn_fsync_active
-		/sbin/busybox sync
-
-		echo $(date) "No Startup configuration found, apply Boeffla-Kernel default settings" >> $BOEFFLA_LOGFILE
+		echo $(date) "No startup configuration found"  >> $BOEFFLA_LOGFILE
 	fi
 
 # Turn off debugging for certain modules
