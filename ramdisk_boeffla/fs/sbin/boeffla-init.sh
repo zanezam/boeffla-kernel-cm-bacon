@@ -79,9 +79,9 @@
 
 	# Ext4 tweaks default to on
 	/sbin/busybox sync
-	mount -o remount,commit=4,noatime $CACHE_DEVICE /cache
+	mount -o remount,commit=20,noatime $CACHE_DEVICE /cache
 	/sbin/busybox sync
-	mount -o remount,commit=4,noatime $DATA_DEVICE /data
+	mount -o remount,commit=20,noatime $DATA_DEVICE /data
 	/sbin/busybox sync
 
 	# dynamic fsync to on
