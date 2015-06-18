@@ -1025,6 +1025,25 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sync
 	fi
 
+	if [ "impulse - standard" == "$2" ]; then
+		echo "20000" > /sys/devices/system/cpu/cpufreq/impulse/above_hispeed_delay
+		echo "1" > /sys/devices/system/cpu/cpufreq/impulse/align_windows
+		echo "0" > /sys/devices/system/cpu/cpufreq/impulse/boost
+		echo "0" > /sys/devices/system/cpu/cpufreq/impulse/boostpulse
+		echo "80000" > /sys/devices/system/cpu/cpufreq/impulse/boostpulse_duration
+		echo "99" > /sys/devices/system/cpu/cpufreq/impulse/go_hispeed_load
+		echo "5" > /sys/devices/system/cpu/cpufreq/impulse/go_lowspeed_load
+		echo "1958400" > /sys/devices/system/cpu/cpufreq/impulse/hispeed_freq
+		echo "0" > /sys/devices/system/cpu/cpufreq/impulse/max_freq_hysteresis
+		echo "80000" > /sys/devices/system/cpu/cpufreq/impulse/min_sample_time
+		echo "0" > /sys/devices/system/cpu/cpufreq/impulse/powersave_bias
+		echo "90" > /sys/devices/system/cpu/cpufreq/impulse/target_loads
+		echo "20000" > /sys/devices/system/cpu/cpufreq/impulse/timer_rate
+		echo "80000" > /sys/devices/system/cpu/cpufreq/impulse/timer_slack
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
 	exit 0
 fi
 
