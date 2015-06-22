@@ -102,38 +102,8 @@ static ssize_t kcal_min_show(struct device *dev,
 	return sprintf(buf, "%d\n", lut_data->minimum);
 }
 
-static ssize_t kcal_invert_store(struct device *dev,
-		struct device_attribute *attr,	const char *buf, size_t count)
-{
-	int kcal_inv;
-	struct kcal_lut_data *lut_data = dev_get_drvdata(dev);
-
-	if (count > 2)
-		return -EINVAL;
-
-	sscanf(buf, "%d", &kcal_inv);
-
-	if (kcal_inv < 0 || kcal_inv > 1)
-		return -EINVAL;
-
-	lut_data->inverted = (kcal_inv == 1);
-
-	mdss_mdp_pp_panel_invert(lut_data->inverted);
-
-	return count;
-}
-
-static ssize_t kcal_invert_show(struct device *dev,
-		struct device_attribute *attr, char *buf)
-{
-	struct kcal_lut_data *lut_data = dev_get_drvdata(dev);
-
-	return sprintf(buf, "%d\n", lut_data->inverted ? 1 : 0);
-}
-
 static DEVICE_ATTR(kcal, 0644, kcal_show, kcal_store);
 static DEVICE_ATTR(kcal_min, 0644, kcal_min_show, kcal_min_store);
-static DEVICE_ATTR(kcal_invert, 0644, kcal_invert_show, kcal_invert_store);
 
 static int __devinit kcal_ctrl_probe(struct platform_device *pdev)
 {
@@ -156,7 +126,6 @@ static int __devinit kcal_ctrl_probe(struct platform_device *pdev)
 
 	ret = device_create_file(&pdev->dev, &dev_attr_kcal);
 	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_min);
-	ret |= device_create_file(&pdev->dev, &dev_attr_kcal_invert);
 	if (ret)
 		pr_err("%s: unable to create sysfs entries\n", __func__);
 
@@ -169,7 +138,6 @@ static int __devexit kcal_ctrl_remove(struct platform_device *pdev)
 
 	device_remove_file(&pdev->dev, &dev_attr_kcal);
 	device_remove_file(&pdev->dev, &dev_attr_kcal_min);
-	device_remove_file(&pdev->dev, &dev_attr_kcal_invert);
 
 	kfree(lut_data);
 
