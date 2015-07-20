@@ -78,7 +78,7 @@ REPACK_PATH="$ROOT_PATH/repack"
 TOOLCHAIN_COMPILE=`grep "^CROSS_COMPILE" $SOURCE_PATH/Makefile`
 
 BOEFFLA_DATE=$(date +%Y%m%d)
-GIT_BRANCH=`git b | grep --color=none "*"`
+GIT_BRANCH=`git branch | grep --color=none "*"`
 
 
 # overwrite settings with custom file
