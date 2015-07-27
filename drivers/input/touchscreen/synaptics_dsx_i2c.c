@@ -46,6 +46,8 @@
 #include <linux/input/mt.h>
 #endif
 
+#include <linux/boeffla_touchkey_control.h>
+
 #define DRIVER_NAME "synaptics-rmi-ts"
 #define INPUT_PHYS_NAME "synaptics-rmi-ts/input0"
 
@@ -105,6 +107,10 @@ char *tp_firmware_strings[TP_TYPE_MAX][LCD_TYPE_MAX] = {
 #define NO_SLEEP_OFF (0 << 2)
 #define NO_SLEEP_ON (1 << 2)
 #define CONFIGURED (1 << 7)
+
+#ifdef CONFIG_BOEFFLA_TOUCH_KEY_CONTROL
+int finger0_prev_status = 0;
+#endif
 
 static int synaptics_rmi4_i2c_read(struct synaptics_rmi4_data *rmi4_data,
 		unsigned short addr, unsigned char *data,
@@ -946,6 +952,7 @@ static int synaptics_rmi4_f11_abs_report(struct synaptics_rmi4_data *rmi4_data,
 			touch_count++;
 		}
 	}
+
 
 	if (touch_count == 0) {
 		input_report_key(rmi4_data->input_dev,
@@ -2736,6 +2743,14 @@ static int synaptics_rmi4_f12_abs_report(struct synaptics_rmi4_data *rmi4_data,
 					x, y, wx, wy);
 			touch_count++;
 			finger_info |= 1;
+
+#ifdef CONFIG_BOEFFLA_TOUCH_KEY_CONTROL
+			if ((finger == 0) && (finger_status == 1) && finger0_prev_status == 0)
+			{
+				finger0_prev_status = 1;
+				btkc_touch(x, y);
+			}
+#endif			
 		}
 	}
 
@@ -2755,6 +2770,10 @@ static int synaptics_rmi4_f12_abs_report(struct synaptics_rmi4_data *rmi4_data,
 				BTN_TOOL_FINGER, 0);
 #ifndef TYPE_B_PROTOCOL
 		input_mt_sync(rmi4_data->input_dev);
+#endif
+
+#ifdef CONFIG_BOEFFLA_TOUCH_KEY_CONTROL
+		finger0_prev_status = 0;
 #endif
 	}
 
