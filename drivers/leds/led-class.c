@@ -21,7 +21,13 @@
 #include <linux/leds.h>
 #include "leds.h"
 
+#ifdef CONFIG_BOEFFLA_TOUCH_KEY_CONTROL
+#include <linux/boeffla_touchkey_control.h>
+#endif
+
 #define LED_BUFF_SIZE 50
+
+
 
 static struct class *leds_class;
 
@@ -50,6 +56,12 @@ static ssize_t led_brightness_store(struct device *dev,
 	char *after;
 	unsigned long state = simple_strtoul(buf, &after, 10);
 	size_t count = after - buf;
+
+#ifdef CONFIG_BOEFFLA_TOUCH_KEY_CONTROL
+	if (strcmp(led_cdev->name, "button-backlight") == 0)
+		if (btkc_block_touchkey_backlight(state))
+			return count;
+#endif
 
 	if (isspace(*after))
 		count++;
@@ -209,6 +221,11 @@ int led_classdev_register(struct device *parent, struct led_classdev *led_cdev)
 
 	printk(KERN_DEBUG "Registered led device: %s\n",
 			led_cdev->name);
+
+#ifdef CONFIG_BOEFFLA_TOUCH_KEY_CONTROL
+	if (strcmp(led_cdev->name, "button-backlight") == 0)
+		btkc_store_handle(led_cdev);
+#endif
 
 	return 0;
 }
