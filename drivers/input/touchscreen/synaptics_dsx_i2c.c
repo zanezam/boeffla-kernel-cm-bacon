@@ -46,7 +46,9 @@
 #include <linux/input/mt.h>
 #endif
 
+#ifdef CONFIG_BOEFFLA_TOUCH_KEY_CONTROL
 #include <linux/boeffla_touchkey_control.h>
+#endif
 
 #define DRIVER_NAME "synaptics-rmi-ts"
 #define INPUT_PHYS_NAME "synaptics-rmi-ts/input0"
