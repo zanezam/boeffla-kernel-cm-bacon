@@ -1,7 +1,8 @@
 /*
- * Author: andip71, 27.07.2015
  * 
- * Version 1.0.0
+ * Boeffla touchkey control OnePlus One
+ *
+ * Author: andip71 (aka Lord Boeffla)
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -13,7 +14,7 @@
  * GNU General Public License for more details.
  *
  */
- 
+
 #include <linux/leds.h>
 
 
@@ -27,7 +28,14 @@
 
 #define TOUCHKEY_Y			1900
 
-#define BTK_CONTROL_VERSION 	"1.0.0"
+#define TIMEOUT_DEFAULT		0
+#define TIMEOUT_MIN			0
+#define TIMEOUT_MAX			30
+
+#define LED_OFF				0
+#define LED_ON				255
+
+#define BTK_CONTROL_VERSION 	"1.1.0"
 
 
 /*****************************************/
