@@ -516,7 +516,23 @@ stepB_backup()
 # main function
 ################
 
+unset CCACHE_DISABLE
+
 case "$1" in
+	rel)
+		export CCACHE_DISABLE=1
+		step0_copy_code
+		step1_make_clean
+		step2_make_config
+		step3_compile
+		step4_unpack_ramdisk
+		step5_patch_ramdisk
+		step6_repack_ramdisk
+		step7_analyse_log
+		step8_transfer_kernel
+		step9_send_finished_mail
+		exit
+		;;
 	a)
 		step0_copy_code
 		step1_make_clean
@@ -606,6 +622,7 @@ echo
 echo "Function menu"
 echo "================================================"
 echo
+echo "rel = all, execute steps 0-9 - without CCACHE"
 echo "a   = all, execute steps 0-9"
 echo "u   = upd, execute steps 3-9"
 echo "ur  = upd, execute steps 6-9"
