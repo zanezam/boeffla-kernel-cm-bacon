@@ -1068,6 +1068,21 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sleep 0.5s
 		busybox sync
 	fi
+
+	if [ "ondemandplus - standard" == "$2" ]; then
+		echo "20" >/sys/devices/system/cpu/cpufreq/ondemandplus/down_differential
+		echo "1728000" >/sys/devices/system/cpu/cpufreq/ondemandplus/inter_hifreq
+		echo "300000" >/sys/devices/system/cpu/cpufreq/ondemandplus/inter_lofreq
+		echo "2" >/sys/devices/system/cpu/cpufreq/ondemandplus/inter_staycycles
+		echo "0" >/sys/devices/system/cpu/cpufreq/ondemandplus/io_is_busy
+		echo "652800" >/sys/devices/system/cpu/cpufreq/ondemandplus/staycycles_resetfreq
+		echo "20000" >/sys/devices/system/cpu/cpufreq/ondemandplus/timer_rate
+		echo "70" >/sys/devices/system/cpu/cpufreq/ondemandplus/up_threshold
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+	
 	exit 0
 fi
 
