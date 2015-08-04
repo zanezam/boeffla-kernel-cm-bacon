@@ -856,6 +856,30 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sync
 	fi
 
+	if [ "smartmax_eps - standard" == "$2" ]; then
+		echo "652800" > /sys/devices/system/cpu/cpufreq/smartmax/awake_ideal_freq
+		echo "0" > /sys/devices/system/cpu/cpufreq/smartmax/boost_duration
+		echo "1497600" > /sys/devices/system/cpu/cpufreq/smartmax/boost_freq
+		echo "0" > /sys/devices/system/cpu/cpufreq/smartmax/debug_mask
+		echo "60000" > /sys/devices/system/cpu/cpufreq/smartmax/down_rate
+		echo "1" > /sys/devices/system/cpu/cpufreq/smartmax/ignore_nice
+		echo "90000" > /sys/devices/system/cpu/cpufreq/smartmax/input_boost_duration
+		echo "0" > /sys/devices/system/cpu/cpufreq/smartmax/io_is_busy
+		echo "70" > /sys/devices/system/cpu/cpufreq/smartmax/max_cpu_load
+		echo "40" > /sys/devices/system/cpu/cpufreq/smartmax/min_cpu_load
+		echo "10000" > /sys/devices/system/cpu/cpufreq/smartmax/min_sampling_rate
+		echo "200000" > /sys/devices/system/cpu/cpufreq/smartmax/ramp_down_step
+		echo "1" > /sys/devices/system/cpu/cpufreq/smartmax/ramp_up_during_boost
+		echo "200000" > /sys/devices/system/cpu/cpufreq/smartmax/ramp_up_step
+		echo "30000" > /sys/devices/system/cpu/cpufreq/smartmax/sampling_rate
+		echo "300000" > /sys/devices/system/cpu/cpufreq/smartmax/suspend_ideal_freq
+		echo "1036800" > /sys/devices/system/cpu/cpufreq/smartmax/touch_poke_freq
+		echo "30000" > /sys/devices/system/cpu/cpufreq/smartmax/up_rate
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+
 	if [ "slim - standard" == "$2" ]; then
 		echo "3" > /sys/devices/system/cpu/cpufreq/slim/down_differential
 		echo "1" > /sys/devices/system/cpu/cpufreq/slim/gboost
