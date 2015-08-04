@@ -1082,7 +1082,27 @@ if [ "apply_governor_profile" == "$1" ]; then
 		busybox sleep 0.5s
 		busybox sync
 	fi
-	
+
+	if [ "yankactive - standard" == "$2" ]; then
+		echo "80000" >/sys/devices/system/cpu/cpufreq/yankactive/above_hispeed_delay
+		echo "0" >/sys/devices/system/cpu/cpufreq/yankactive/boost
+		echo "20000" >/sys/devices/system/cpu/cpufreq/yankactive/boostpulse_duration
+		echo "99" >/sys/devices/system/cpu/cpufreq/yankactive/go_hispeed_load
+		echo "1728000" >/sys/devices/system/cpu/cpufreq/yankactive/hispeed_freq
+		echo "0" >/sys/devices/system/cpu/cpufreq/yankactive/io_is_busy
+		echo "20000" >/sys/devices/system/cpu/cpufreq/yankactive/min_sample_time
+		echo "0" >/sys/devices/system/cpu/cpufreq/yankactive/sampling_down_factor
+		echo "0" >/sys/devices/system/cpu/cpufreq/yankactive/sync_freq
+		echo "95" >/sys/devices/system/cpu/cpufreq/yankactive/target_loads
+		echo "20000" >/sys/devices/system/cpu/cpufreq/yankactive/timer_rate
+		echo "80000" >/sys/devices/system/cpu/cpufreq/yankactive/timer_slack
+		echo "0" >/sys/devices/system/cpu/cpufreq/yankactive/up_threshold_any_cpu_freq
+		echo "0" >/sys/devices/system/cpu/cpufreq/yankactive/up_threshold_any_cpu_load
+
+		busybox sleep 0.5s
+		busybox sync
+	fi
+		
 	exit 0
 fi
 
