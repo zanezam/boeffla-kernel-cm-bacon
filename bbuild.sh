@@ -76,9 +76,10 @@ BUILD_PATH="$ROOT_PATH/build"
 REPACK_PATH="$ROOT_PATH/repack"
 
 TOOLCHAIN_COMPILE=`grep "^CROSS_COMPILE" $SOURCE_PATH/Makefile`
+TOOLCHAIN_COMPILE=/`echo $TOOLCHAIN_COMPILE | sed -n -e 's/^.* \///p'`
 
 BOEFFLA_DATE=$(date +%Y%m%d)
-GIT_BRANCH=`git branch | grep --color=none "*"`
+GIT_BRANCH=`git symbolic-ref --short HEAD`
 
 
 # overwrite settings with custom file
@@ -651,12 +652,13 @@ echo "  Extended cmdline: $EXTENDED_CMDLINE"
 echo "  Boeffla date:     $BOEFFLA_DATE"
 echo "  Git branch:       $GIT_BRANCH"
 echo
-echo "  Toolchain:    $TOOLCHAIN / $TOOLCHAIN_COMPILE"
-echo "  Root path:    $ROOT_PATH"
-echo "  Root dir:     $ROOT_DIR_NAME"
-echo "  Source path:  $SOURCE_PATH"
-echo "  Build path:   $BUILD_PATH"
-echo "  Repack path:  $REPACK_PATH"
+echo "  Toolchain:     $TOOLCHAIN"
+echo "  Cross_compile: $TOOLCHAIN_COMPILE"
+echo "  Root path:     $ROOT_PATH"
+echo "  Root dir:      $ROOT_DIR_NAME"
+echo "  Source path:   $SOURCE_PATH"
+echo "  Build path:    $BUILD_PATH"
+echo "  Repack path:   $REPACK_PATH"
 echo
 echo "================================================"
 
