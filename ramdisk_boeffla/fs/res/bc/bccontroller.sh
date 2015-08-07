@@ -16,7 +16,7 @@ KERNEL_SPECS="bacon;cm;cm12.0s1;http://boeffla.df-kunde.de/bacon/boeffla-kernel-
 # kernel features 
 # (1=enable-busybox,2=enable-frandom,3=wipe-cache,4=disable-zram-control)
 # (5=enable-default-zram-control,6=enable-selinux-switch, 7=enable-selinux-control)
-KERNEL_FEATURES="-3-6-7-"
+KERNEL_FEATURES="-3-4-6-7-"
 
 # path to kernel libraries
 LIBPATH="/system/lib/modules"
@@ -1209,87 +1209,87 @@ if [ "apply_survival_script" == "$1" ]; then
 	exit 0
 fi
 
-if [ "apply_zram" == "$1" ]; then
-	if [ "1" == "$2" ]; then
-		if [ "1" == "$3" ]; then
-			busybox swapoff /dev/block/zram0
-			busybox swapoff /dev/block/zram1
-			busybox swapoff /dev/block/zram2
-			busybox swapoff /dev/block/zram3
-			echo "1" > /sys/block/zram0/reset
-			echo "1" > /sys/block/zram1/reset
-			echo "1" > /sys/block/zram2/reset
-			echo "1" > /sys/block/zram3/reset
-			echo "$4" > /sys/block/zram0/disksize
-			echo "0" > /sys/block/zram1/disksize
-			echo "0" > /sys/block/zram2/disksize
-			echo "0" > /sys/block/zram3/disksize
-			busybox mkswap /dev/block/zram0
-			busybox swapon -p 2 /dev/block/zram0
-			busybox sleep 0.5s
-			busybox sync
-		fi
-		if [ "2" == "$3" ]; then
-			busybox swapoff /dev/block/zram0
-			busybox swapoff /dev/block/zram1
-			busybox swapoff /dev/block/zram2
-			busybox swapoff /dev/block/zram3
-			echo "1" > /sys/block/zram0/reset
-			echo "1" > /sys/block/zram1/reset
-			echo "1" > /sys/block/zram2/reset
-			echo "1" > /sys/block/zram3/reset
-			echo "$4" > /sys/block/zram0/disksize
-			echo "$4" > /sys/block/zram1/disksize
-			echo "0" > /sys/block/zram2/disksize
-			echo "0" > /sys/block/zram3/disksize
-			busybox mkswap /dev/block/zram0
-			busybox mkswap /dev/block/zram1
-			busybox swapon -p 2 /dev/block/zram0
-			busybox swapon -p 2 /dev/block/zram1
-			busybox sleep 0.5s
-			busybox sync
-		fi
-		if [ "4" == "$3" ]; then
-			busybox swapoff /dev/block/zram0
-			busybox swapoff /dev/block/zram1
-			busybox swapoff /dev/block/zram2
-			busybox swapoff /dev/block/zram3
-			echo "1" > /sys/block/zram0/reset
-			echo "1" > /sys/block/zram1/reset
-			echo "1" > /sys/block/zram2/reset
-			echo "1" > /sys/block/zram3/reset
-			echo "$4" > /sys/block/zram0/disksize
-			echo "$4" > /sys/block/zram1/disksize
-			echo "$4" > /sys/block/zram2/disksize
-			echo "$4" > /sys/block/zram3/disksize
-			busybox mkswap /dev/block/zram0
-			busybox mkswap /dev/block/zram1
-			busybox mkswap /dev/block/zram2
-			busybox mkswap /dev/block/zram3
-			busybox swapon -p 2 /dev/block/zram0
-			busybox swapon -p 2 /dev/block/zram1
-			busybox swapon -p 2 /dev/block/zram2
-			busybox swapon -p 2 /dev/block/zram3
-			busybox sleep 0.5s
-			busybox sync
-		fi
-		echo "80" > /proc/sys/vm/swappiness
-	fi
-
-	if [ "0" == "$2" ]; then
-		busybox swapoff /dev/block/zram0
-		busybox swapoff /dev/block/zram1
-		busybox swapoff /dev/block/zram2
-		busybox swapoff /dev/block/zram3
-		echo "1" > /sys/block/zram0/reset
-		echo "1" > /sys/block/zram1/reset
-		echo "1" > /sys/block/zram2/reset
-		echo "1" > /sys/block/zram3/reset
-		busybox sleep 0.5s
-		busybox sync
-	fi
-	exit 0
-fi
+#if [ "apply_zram" == "$1" ]; then
+#	if [ "1" == "$2" ]; then
+#		if [ "1" == "$3" ]; then
+#			busybox swapoff /dev/block/zram0
+#			busybox swapoff /dev/block/zram1
+#			busybox swapoff /dev/block/zram2
+#			busybox swapoff /dev/block/zram3
+#			echo "1" > /sys/block/zram0/reset
+#			echo "1" > /sys/block/zram1/reset
+#			echo "1" > /sys/block/zram2/reset
+#			echo "1" > /sys/block/zram3/reset
+#			echo "$4" > /sys/block/zram0/disksize
+#			echo "0" > /sys/block/zram1/disksize
+#			echo "0" > /sys/block/zram2/disksize
+#			echo "0" > /sys/block/zram3/disksize
+#			busybox mkswap /dev/block/zram0
+#			busybox swapon -p 2 /dev/block/zram0
+#			busybox sleep 0.5s
+#			busybox sync
+#		fi
+#		if [ "2" == "$3" ]; then
+#			busybox swapoff /dev/block/zram0
+#			busybox swapoff /dev/block/zram1
+#			busybox swapoff /dev/block/zram2
+#			busybox swapoff /dev/block/zram3
+#			echo "1" > /sys/block/zram0/reset
+#			echo "1" > /sys/block/zram1/reset
+#			echo "1" > /sys/block/zram2/reset
+#			echo "1" > /sys/block/zram3/reset
+#			echo "$4" > /sys/block/zram0/disksize
+#			echo "$4" > /sys/block/zram1/disksize
+#			echo "0" > /sys/block/zram2/disksize
+#			echo "0" > /sys/block/zram3/disksize
+#			busybox mkswap /dev/block/zram0
+#			busybox mkswap /dev/block/zram1
+#			busybox swapon -p 2 /dev/block/zram0
+#			busybox swapon -p 2 /dev/block/zram1
+#			busybox sleep 0.5s
+#			busybox sync
+#		fi
+#		if [ "4" == "$3" ]; then
+#			busybox swapoff /dev/block/zram0
+#			busybox swapoff /dev/block/zram1
+#			busybox swapoff /dev/block/zram2
+#			busybox swapoff /dev/block/zram3
+#			echo "1" > /sys/block/zram0/reset
+#			echo "1" > /sys/block/zram1/reset
+#			echo "1" > /sys/block/zram2/reset
+#			echo "1" > /sys/block/zram3/reset
+#			echo "$4" > /sys/block/zram0/disksize
+#			echo "$4" > /sys/block/zram1/disksize
+#			echo "$4" > /sys/block/zram2/disksize
+#			echo "$4" > /sys/block/zram3/disksize
+#			busybox mkswap /dev/block/zram0
+#			busybox mkswap /dev/block/zram1
+#			busybox mkswap /dev/block/zram2
+#			busybox mkswap /dev/block/zram3
+#			busybox swapon -p 2 /dev/block/zram0
+#			busybox swapon -p 2 /dev/block/zram1
+#			busybox swapon -p 2 /dev/block/zram2
+#			busybox swapon -p 2 /dev/block/zram3
+#			busybox sleep 0.5s
+#			busybox sync
+#		fi
+#		echo "80" > /proc/sys/vm/swappiness
+#	fi
+#
+#	if [ "0" == "$2" ]; then
+#		busybox swapoff /dev/block/zram0
+#		busybox swapoff /dev/block/zram1
+#		busybox swapoff /dev/block/zram2
+#		busybox swapoff /dev/block/zram3
+#		echo "1" > /sys/block/zram0/reset
+#		echo "1" > /sys/block/zram1/reset
+#		echo "1" > /sys/block/zram2/reset
+#		echo "1" > /sys/block/zram3/reset
+#		busybox sleep 0.5s
+#		busybox sync
+#	fi
+#	exit 0
+#fi
 
 if [ "apply_cifs" == "$1" ]; then
 	if [ "1" == "$2" ]; then
