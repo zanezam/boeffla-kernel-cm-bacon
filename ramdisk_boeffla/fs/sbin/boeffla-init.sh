@@ -132,6 +132,12 @@
 	cat /sys/class/kgsl/kgsl-3d0/devfreq/governor > /dev/bk_orig_gpu_governor
 	cat /sys/class/kgsl/kgsl-3d0/min_pwrlevel > /dev/bk_orig_min_pwrlevel
 	cat /sys/class/kgsl/kgsl-3d0/max_pwrlevel > /dev/bk_orig_max_pwrlevel
+	cat /proc/sys/vm/swappiness > /dev/bk_orig_swappiness
+	cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor > /dev/bk_orig_scaling_governor
+	cat /sys/block/mmcblk0/queue/scheduler > /dev/bk_orig_mmcblk0_scheduler
+	cat /sys/block/mmcblk1/queue/scheduler > /dev/bk_orig_mmcblk1_scheduler
+	cat /sys/block/mmcblk0/bdi/read_ahead_kb > /dev/bk_orig_mmcblk0_read_ahead_kb
+	cat /sys/block/mmcblk1/bdi/read_ahead_kb > /dev/bk_orig_mmcblk1_read_ahead_kb
 
 	# if there is a startconfig placed by Boeffla-Config V2 app, execute it;
 	if [ -f $BOEFFLA_STARTCONFIG ]; then
