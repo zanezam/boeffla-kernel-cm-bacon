@@ -2,7 +2,7 @@
 
 # Boeffla Kernel Universal Build Script
 #
-# Version 1.1, 19.03.2015
+# Version 1.2, 26.08.2015
 #
 # (C) Lord Boeffla (aka andip71)
 
@@ -82,8 +82,10 @@ BOEFFLA_DATE=$(date +%Y%m%d)
 GIT_BRANCH=`git symbolic-ref --short HEAD`
 
 
-# overwrite settings with custom file
-. $ROOT_PATH/x-settings.sh
+# overwrite settings with custom file, if it exists
+if [ -f $ROOT_PATH/x-settings.sh ]; then
+  . $ROOT_PATH/x-settings.sh
+fi
 
 BOEFFLA_FILENAME="boeffla-kernel-$BOEFFLA_VERSION"
 
