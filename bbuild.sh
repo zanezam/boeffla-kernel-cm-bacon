@@ -10,7 +10,7 @@
 # Parameters to be configured manually
 #######################################
 
-BOEFFLA_VERSION="3.0-test-CM12-bacon"
+BOEFFLA_VERSION="x.x-test-COS12.1-bacon"
 EXTENDED_CMDLINE="androidboot.selinux=permissive"
 
 TOOLCHAIN="/opt/toolchains/arm-eabi-4.8/bin/arm-eabi-"
@@ -23,7 +23,7 @@ OUTPUT_FOLDER=""
 DEFCONFIG="boeffla_defconfig"
 DEFCONFIG_VARIANT=""
 
-MKBOOTIMG_CMDLINE="console=ttyHSL0,115200,n8 androidboot.hardware=bacon user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3"
+MKBOOTIMG_CMDLINE="console=ttyHSL0,115200,n8 androidboot.hardware=bacon user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3 androidboot.bootdevice=msm_sdcc.1"
 MKBOOTIMG_BASE="0x00000000"
 MKBOOTIMG_PAGESIZE="2048"
 MKBOOTIMG_RAMDISK_OFFSET="0x02000000"
