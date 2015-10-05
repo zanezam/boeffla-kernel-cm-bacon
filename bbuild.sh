@@ -233,11 +233,20 @@ step5_patch_ramdisk()
 		# copy dt.img
 		cp $BUILD_PATH/$OUTPUT_FOLDER/arch/arm/boot/dt.img $REPACK_PATH/dt.img
 
-		# copy modules and set permissions
+		# copy modules from kernel compile
 		mkdir -p $REPACK_PATH/$MODULE_PATH
 		
 		cd $BUILD_PATH/$OUTPUT_FOLDER
 		find -name '*.ko' -exec cp -av {} $REPACK_PATH/$MODULE_PATH/ \;
+
+		# copy static modules and rename from ko_ to ko, only if there are some
+		if [ -f $BUILD_PATH/modules_boeffla/*.ko_ ]; then
+			cp $BUILD_PATH/modules_boeffla/* $REPACK_PATH/$MODULE_PATH
+			cd $REPACK_PATH/$MODULE_PATH
+			for i in *.ko_; do mv $i ${i%ko_}ko; echo Static module: ${i%ko_}ko; done
+		fi
+		
+		# set module permissions
 		chmod 644 $REPACK_PATH/$MODULE_PATH/*
 
 		# strip modules
