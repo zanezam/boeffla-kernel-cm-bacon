@@ -4,7 +4,7 @@
 # 14 Sep 2000, Christoph Hellwig <hch@infradead.org>
 # Rewritten to use lists instead of if-statements.
 # 
-
+CFLAGS_KERNEL := -fno-inline-functions -fno-unswitch-loops -fno-gcse-after-reload -fno-tree-loop-distribute-patterns
 obj-y :=	open.o read_write.o file_table.o super.o \
 		char_dev.o stat.o exec.o pipe.o namei.o fcntl.o \
 		ioctl.o readdir.o select.o fifo.o dcache.o inode.o \
