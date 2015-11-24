@@ -1,0 +1,27 @@
+From 0b0ff749160993ab74a8cff55ef51a8c0b9cc386 Mon Sep 17 00:00:00 2001
+From: andip71 <andreasp@gmx.de>
+Date: Tue, 24 Nov 2015 09:35:56 +0100
+Subject: [PATCH] 2
+
+---
+ ramdisk/init.rc | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/ramdisk/init.rc b/ramdisk/init.rc
+index 4b644bc..9a8ab4e 100755
+--- a/ramdisk/init.rc
++++ b/ramdisk/init.rc
+@@ -765,3 +765,10 @@ service logcatd /system/bin/logcat -b all -v threadtime -v usec -v printable -D
+     user logd
+     group log
+     writepid /dev/cpuset/system-background/tasks
++
++# Call Boeffla-Kernel init script
++service boeffla-init /sbin/boeffla-init.sh
++    class main
++    user root
++    group root
++    oneshot
+-- 
+1.9.1
+
