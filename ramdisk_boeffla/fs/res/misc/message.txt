@@ -1,0 +1,8 @@
+Please note:<br>
+CM13 is <u><b>still</b></u> not 100% stable, so please "happily" expect some crashes and 
+reboots. This will get better step by step over the time as CM13 is currently under 
+heavy development.<br><br>
+
+Side note:<br>
+Interactive CPU governor is by far the most stable governor on this device, so you might 
+consider using it when your main goal is highest stability.
