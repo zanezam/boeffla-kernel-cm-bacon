@@ -319,6 +319,12 @@ static struct queue_sysfs_entry queue_iosched_entry = {
 	.store = elv_iosched_store,
 };
 
+static struct queue_sysfs_entry queue_iosched_hard_entry = {
+	.attr = {.name = "scheduler_hard", .mode = S_IRUGO | S_IWUSR },
+	.show = elv_iosched_hard_show,
+	.store = elv_iosched_hard_store,
+};
+
 static struct queue_sysfs_entry queue_hw_sector_size_entry = {
 	.attr = {.name = "hw_sector_size", .mode = S_IRUGO },
 	.show = queue_logical_block_size_show,
@@ -398,6 +404,7 @@ static struct attribute *default_attrs[] = {
 	&queue_max_integrity_segments_entry.attr,
 	&queue_max_segment_size_entry.attr,
 	&queue_iosched_entry.attr,
+	&queue_iosched_hard_entry.attr,
 	&queue_hw_sector_size_entry.attr,
 	&queue_logical_block_size_entry.attr,
 	&queue_physical_block_size_entry.attr,
