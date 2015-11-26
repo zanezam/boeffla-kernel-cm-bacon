@@ -1,0 +1,25 @@
+From 10c0d09ca21764825a8a2ea42b383a05893b8381 Mon Sep 17 00:00:00 2001
+From: andip71 <andreasp@gmx.de>
+Date: Thu, 26 Nov 2015 06:58:28 +0100
+Subject: [PATCH] 2
+
+---
+ fstab.bacon | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/fstab.bacon b/fstab.bacon
+index 866d02f..99f7303 100644
+--- a/fstab.bacon
++++ b/fstab.bacon
+@@ -3,7 +3,7 @@
+ # The filesystem that contains the filesystem checker binary (typically /system) cannot
+ # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+ 
+-/dev/block/platform/msm_sdcc.1/by-name/system       /system         ext4    ro,barrier=1                                                    wait
++/dev/block/platform/msm_sdcc.1/by-name/system       /system         ext4    rw,barrier=1                                                    wait
+ /dev/block/platform/msm_sdcc.1/by-name/userdata     /data           ext4    noatime,nosuid,nodev,barrier=1,data=ordered,noauto_da_alloc,errors=panic wait,check,encryptable=/dev/block/platform/msm_sdcc.1/by-name/reserve4
+ /dev/block/platform/msm_sdcc.1/by-name/userdata     /data           f2fs    noatime,nosuid,nodev,rw,inline_xattr                            wait,check,encryptable=/dev/block/platform/msm_sdcc.1/by-name/reserve4
+ /dev/block/platform/msm_sdcc.1/by-name/cache        /cache          ext4    noatime,nosuid,nodev,barrier=1,data=ordered,noauto_da_alloc,errors=panic wait,check
+-- 
+1.9.1
+
