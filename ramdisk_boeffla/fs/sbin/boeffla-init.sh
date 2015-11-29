@@ -122,6 +122,9 @@
 	echo $(date) Rom boot trigger detected, waiting a few more seconds... >> $BOEFFLA_LOGFILE
 	/sbin/busybox sleep 20
 
+# Release locks on protected sysfs nodes
+	echo 0 > /sys/class/kgsl/kgsl-3d0/bk_locked
+
 # Interaction with Boeffla-Config app V2
 	# save original stock values for selected parameters
 	cat /sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table > /dev/bk_orig_cpu_voltage
