@@ -47,6 +47,8 @@
 #define INIT_UDELAY		200
 #define MAX_UDELAY		2000
 
+static int bool_locked = 1;
+
 #ifdef CONFIG_CPU_FREQ_GOV_SLIM
 int graphics_boost = 6;
 #endif
@@ -240,6 +242,10 @@ static int kgsl_pwrctrl_max_pwrlevel_store(struct device *dev,
 	if (device == NULL)
 		return 0;
 
+	// if pwrlevels are locked by boeffla kernel, exit
+	if (bool_locked)
+		return count;
+		
 	pwr = &device->pwrctrl;
 
 	ret = kgsl_sysfs_store(buf, &level);
@@ -292,6 +298,10 @@ static int kgsl_pwrctrl_min_pwrlevel_store(struct device *dev,
 
 	if (device == NULL)
 		return 0;
+
+	// if pwrlevels are locked by boeffla kernel, exit
+	if (bool_locked)
+		return count;
 
 	pwr = &device->pwrctrl;
 
@@ -706,6 +716,31 @@ static ssize_t kgsl_pwrctrl_bus_split_store(struct device *dev,
 	return count;
 }
 
+static int pwrlevels_write_locked(struct device *dev,
+					 struct device_attribute *attr,
+					 const char *buf, size_t count)
+{
+	int ret;
+	unsigned int new_value = 0;
+
+	ret = kgsl_sysfs_store(buf, &new_value);
+	if (ret)
+		return ret;		
+
+	if ((new_value == 1) || (new_value == 0))
+		bool_locked = new_value;
+
+	return count;
+}
+				 
+static int pwrlevels_read_locked(struct device *dev,
+					struct device_attribute *attr,
+					char *buf)
+{
+	return snprintf(buf, PAGE_SIZE, "%d\n", bool_locked);
+}
+
+
 DEVICE_ATTR(gpuclk, 0644, kgsl_pwrctrl_gpuclk_show, kgsl_pwrctrl_gpuclk_store);
 DEVICE_ATTR(max_gpuclk, 0644, kgsl_pwrctrl_max_gpuclk_show,
 	kgsl_pwrctrl_max_gpuclk_store);
@@ -722,6 +757,9 @@ DEVICE_ATTR(max_pwrlevel, 0644,
 DEVICE_ATTR(min_pwrlevel, 0644,
 	kgsl_pwrctrl_min_pwrlevel_show,
 	kgsl_pwrctrl_min_pwrlevel_store);
+DEVICE_ATTR(bk_locked, 0644,
+	pwrlevels_read_locked,
+	pwrlevels_write_locked);
 DEVICE_ATTR(thermal_pwrlevel, 0644,
 	kgsl_pwrctrl_thermal_pwrlevel_show,
 	kgsl_pwrctrl_thermal_pwrlevel_store);
@@ -755,6 +793,7 @@ static const struct device_attribute *pwrctrl_attr_list[] = {
 	&dev_attr_gpu_available_frequencies,
 	&dev_attr_max_pwrlevel,
 	&dev_attr_min_pwrlevel,
+	&dev_attr_bk_locked,
 	&dev_attr_thermal_pwrlevel,
 	&dev_attr_num_pwrlevels,
 	&dev_attr_pmqos_latency,
