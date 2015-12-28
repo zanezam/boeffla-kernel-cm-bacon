@@ -377,7 +377,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
 		   -fno-delete-null-pointer-checks \
-		   -fno-diagnostics-show-caret -fno-pic \
+		   -fno-diagnostics-show-caret \
 		   $(KERNELFLAGS)
 KBUILD_AFLAGS_KERNEL := $(KERNELFLAGS)
 KBUILD_CFLAGS_KERNEL := $(KERNELFLAGS)
