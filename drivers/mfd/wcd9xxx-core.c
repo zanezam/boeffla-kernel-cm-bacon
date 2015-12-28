@@ -917,9 +917,8 @@ static int wcd9xxx_enable_static_supplies(struct wcd9xxx *wcd9xxx,
 	}
 
 	while (ret && --i)
-		if (i >= 0)
-			if (!pdata->regulator[i].ondemand)
-				regulator_disable(wcd9xxx->supplies[i].consumer);
+		if (!pdata->regulator[i].ondemand)
+			regulator_disable(wcd9xxx->supplies[i].consumer);
 
 	return ret;
 }
