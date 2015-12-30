@@ -24,6 +24,7 @@
 #include <linux/slab.h>
 #include <linux/notifier.h>
 #include <linux/init.h>
+#include <linux/module.h>
 #include <linux/vmpressure.h>
 
 /*
@@ -50,6 +51,10 @@ static const unsigned long vmpressure_win = SWAP_CLUSTER_MAX * 16;
  */
 static const unsigned int vmpressure_level_med = 60;
 static const unsigned int vmpressure_level_critical = 95;
+
+static unsigned long vmpressure_scale_max = 100;
+module_param_named(vmpressure_scale_max, vmpressure_scale_max,
+			ulong, S_IRUGO | S_IWUSR);
 
 static struct vmpressure global_vmpressure;
 BLOCKING_NOTIFIER_HEAD(vmpressure_notifier);
@@ -95,7 +100,7 @@ static struct vmpressure *work_to_vmpressure(struct work_struct *work)
 	return container_of(work, struct vmpressure, work);
 }
 
-#ifdef CONFIG_MEMCG
+#ifdef CONFIG_CGROUP_MEM_RES_CTLR
 static struct vmpressure *cg_to_vmpressure(struct cgroup *cg)
 {
 	return css_to_vmpressure(cgroup_subsys_state(cg, mem_cgroup_subsys_id));
@@ -165,6 +170,19 @@ static unsigned long vmpressure_calc_pressure(unsigned long scanned,
 		 scanned, reclaimed);
 
 	return pressure;
+}
+
+static unsigned long vmpressure_account_stall(unsigned long pressure,
+				unsigned long stall, unsigned long scanned)
+{
+	unsigned long scale;
+
+	if (pressure < 70)
+		return pressure;
+
+	scale = ((vmpressure_scale_max - pressure) * stall) / scanned;
+
+	return pressure + scale;
 }
 
 struct vmpressure_event {
@@ -280,6 +298,7 @@ void vmpressure_global(gfp_t gfp, unsigned long scanned,
 {
 	struct vmpressure *vmpr = &global_vmpressure;
 	unsigned long pressure;
+	unsigned long stall;
 
 	if (!(gfp & (__GFP_HIGHMEM | __GFP_MOVABLE | __GFP_IO | __GFP_FS)))
 		return;
@@ -290,6 +309,11 @@ void vmpressure_global(gfp_t gfp, unsigned long scanned,
 	mutex_lock(&vmpr->sr_lock);
 	vmpr->scanned += scanned;
 	vmpr->reclaimed += reclaimed;
+
+	if (!current_is_kswapd())
+		vmpr->stall += scanned;
+
+	stall = vmpr->stall;
 	scanned = vmpr->scanned;
 	reclaimed = vmpr->reclaimed;
 	mutex_unlock(&vmpr->sr_lock);
@@ -300,9 +324,11 @@ void vmpressure_global(gfp_t gfp, unsigned long scanned,
 	mutex_lock(&vmpr->sr_lock);
 	vmpr->scanned = 0;
 	vmpr->reclaimed = 0;
+	vmpr->stall = 0;
 	mutex_unlock(&vmpr->sr_lock);
 
 	pressure = vmpressure_calc_pressure(scanned, reclaimed);
+	pressure = vmpressure_account_stall(pressure, stall, scanned);
 	vmpressure_notify(pressure);
 }
 
@@ -325,7 +351,7 @@ void vmpressure(gfp_t gfp, struct mem_cgroup *memcg,
 	if (!memcg)
 		vmpressure_global(gfp, scanned, reclaimed);
 
-	if (IS_ENABLED(CONFIG_MEMCG))
+	if (IS_ENABLED(CONFIG_CGROUP_MEM_RES_CTLR))
 		vmpressure_memcg(gfp, memcg, scanned, reclaimed);
 }
 

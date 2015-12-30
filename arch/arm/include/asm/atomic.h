@@ -137,19 +137,31 @@ static inline int atomic_cmpxchg(atomic_t *ptr, int old, int new)
 	return oldval;
 }
 
-static inline void atomic_clear_mask(unsigned long mask, unsigned long *addr)
+static inline int __atomic_add_unless(atomic_t *v, int a, int u)
 {
-	unsigned long tmp, tmp2;
+	int oldval, newval;
+	unsigned long tmp;
 
-	__asm__ __volatile__("@ atomic_clear_mask\n"
-"1:	ldrex	%0, [%3]\n"
-"	bic	%0, %0, %4\n"
-"	strex	%1, %0, [%3]\n"
-"	teq	%1, #0\n"
-"	bne	1b"
-	: "=&r" (tmp), "=&r" (tmp2), "+Qo" (*addr)
-	: "r" (addr), "Ir" (mask)
+	smp_mb();
+	prefetchw(&v->counter);
+
+	__asm__ __volatile__ ("@ atomic_add_unless\n"
+"1:	ldrex	%0, [%4]\n"
+"	teq	%0, %5\n"
+"	beq	2f\n"
+"	add	%1, %0, %6\n"
+"	strex	%2, %1, [%4]\n"
+"	teq	%2, #0\n"
+"	bne	1b\n"
+"2:"
+	: "=&r" (oldval), "=&r" (newval), "=&r" (tmp), "+Qo" (v->counter)
+	: "r" (&v->counter), "r" (u), "r" (a)
 	: "cc");
+
+	if (oldval != u)
+		smp_mb();
+
+	return oldval;
 }
 
 #else /* ARM_ARCH_6 */
@@ -200,19 +212,6 @@ static inline int atomic_cmpxchg(atomic_t *v, int old, int new)
 	return ret;
 }
 
-static inline void atomic_clear_mask(unsigned long mask, unsigned long *addr)
-{
-	unsigned long flags;
-
-	raw_local_irq_save(flags);
-	*addr &= ~mask;
-	raw_local_irq_restore(flags);
-}
-
-#endif /* __LINUX_ARM_ARCH__ */
-
-#define atomic_xchg(v, new) (xchg(&((v)->counter), new))
-
 static inline int __atomic_add_unless(atomic_t *v, int a, int u)
 {
 	int c, old;
@@ -222,6 +221,10 @@ static inline int __atomic_add_unless(atomic_t *v, int a, int u)
 		c = old;
 	return c;
 }
+
+#endif /* __LINUX_ARM_ARCH__ */
+
+#define atomic_xchg(v, new) (xchg(&((v)->counter), new))
 
 #define atomic_inc(v)		atomic_add(1, v)
 #define atomic_dec(v)		atomic_sub(1, v)
@@ -246,7 +249,30 @@ typedef struct {
 
 #define ATOMIC64_INIT(i) { (i) }
 
-static inline u64 atomic64_read(atomic64_t *v)
+#ifdef CONFIG_ARM_LPAE
+static inline u64 atomic64_read(const atomic64_t *v)
+{
+	u64 result;
+
+	__asm__ __volatile__("@ atomic64_read\n"
+"	ldrd	%0, %H0, [%1]"
+	: "=&r" (result)
+	: "r" (&v->counter), "Qo" (v->counter)
+	);
+
+	return result;
+}
+
+static inline void atomic64_set(atomic64_t *v, u64 i)
+{
+	__asm__ __volatile__("@ atomic64_set\n"
+"	strd	%2, %H2, [%1]"
+	: "=Qo" (v->counter)
+	: "r" (&v->counter), "r" (i)
+	);
+}
+#else
+static inline u64 atomic64_read(const atomic64_t *v)
 {
 	u64 result;
 
@@ -272,6 +298,7 @@ static inline void atomic64_set(atomic64_t *v, u64 i)
 	: "r" (&v->counter), "r" (i)
 	: "cc");
 }
+#endif
 
 static inline void atomic64_add(u64 i, atomic64_t *v)
 {
