@@ -60,7 +60,11 @@ static unsigned int input_boost_freq;
 #endif
 module_param(input_boost_freq, uint, 0644);
 
+#ifdef CONFIG_TOUCHBOOST_CONTROL
+unsigned int input_boost_ms = 40;
+#else
 static unsigned int input_boost_ms = 40;
+#endif
 module_param(input_boost_ms, uint, 0644);
 
 static u64 last_input_time;
