@@ -33,6 +33,8 @@
 
 #define UPDATE_BUSY_VAL		1000000
 
+// #define DEFAULT_MAX_PWRLEVEL   1
+#define DEFAULT_MIN_PWRLEVEL   4
 #define BYPASS_HARDLIMIT_CHECK	99
 static unsigned int max_pwrlevel_hardlimit;
 static unsigned int min_pwrlevel_hardlimit;
@@ -1076,8 +1078,18 @@ int kgsl_pwrctrl_init(struct kgsl_device *device)
 
 	/* Initialize the user and thermal clock constraints */
 
+#ifdef DEFAULT_MAX_PWRLEVEL
+	pwr->max_pwrlevel = DEFAULT_MAX_PWRLEVEL;
+#else
 	pwr->max_pwrlevel = 0;
+#endif	
+
+#ifdef DEFAULT_MIN_PWRLEVEL
+	pwr->min_pwrlevel = DEFAULT_MIN_PWRLEVEL;
+#else
 	pwr->min_pwrlevel = pdata->num_levels - 2;
+#endif	
+	
 	pwr->thermal_pwrlevel = 0;
 
 	// AP: initialize hard limits
