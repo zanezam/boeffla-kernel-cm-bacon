@@ -33,6 +33,9 @@
 
 #define UPDATE_BUSY_VAL		1000000
 
+// #define DEFAULT_MAX_PWRLEVEL   1
+#define DEFAULT_MIN_PWRLEVEL   4
+
 /*
  * Expected delay for post-interrupt processing on A3xx.
  * The delay may be longer, gradually increase the delay
@@ -1145,8 +1148,18 @@ int kgsl_pwrctrl_init(struct kgsl_device *device)
 
 	/* Initialize the user and thermal clock constraints */
 
+#ifdef DEFAULT_MAX_PWRLEVEL
+	pwr->max_pwrlevel = DEFAULT_MAX_PWRLEVEL;
+#else
 	pwr->max_pwrlevel = 0;
+#endif	
+
+#ifdef DEFAULT_MIN_PWRLEVEL
+	pwr->min_pwrlevel = DEFAULT_MIN_PWRLEVEL;
+#else
 	pwr->min_pwrlevel = pdata->num_levels - 2;
+#endif	
+	
 	pwr->thermal_pwrlevel = 0;
 
 	pwr->active_pwrlevel = pdata->init_level;
