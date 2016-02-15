@@ -33,8 +33,6 @@
 
 #define UPDATE_BUSY_VAL		1000000
 
-// AP: default max pwrlevel is 1 instead of 0, to not start with OC
-#define DEFAULT_MAX_PWRLEVEL	1
 #define BYPASS_HARDLIMIT_CHECK	99
 static unsigned int max_pwrlevel_hardlimit;
 static unsigned int min_pwrlevel_hardlimit;
@@ -1078,7 +1076,7 @@ int kgsl_pwrctrl_init(struct kgsl_device *device)
 
 	/* Initialize the user and thermal clock constraints */
 
-	pwr->max_pwrlevel = DEFAULT_MAX_PWRLEVEL; // AP: define default max power level to not start with OC
+	pwr->max_pwrlevel = 0;
 	pwr->min_pwrlevel = pdata->num_levels - 2;
 	pwr->thermal_pwrlevel = 0;
 
