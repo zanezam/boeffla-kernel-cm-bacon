@@ -92,16 +92,14 @@ static ssize_t charge_info_show(struct kobject *kobj, struct kobj_attribute *att
 	if ((charge_info_level_req == 0) && (charge_info_level_cur == 0))
 		return sprintf(buf, "%s", charge_info_text);
 
-	pr_info("Boeffla-Kernel: current charge current is %d mA", charge_info_level_req);
-
 	// stock charge logic
 	if (charge_level == 0)
-		return sprintf(buf, "%s / %d mA (SL)", 
-				charge_info_text, charge_info_level_req);
+		return sprintf(buf, "%s / ~%d mA (%d) SL", 
+				charge_info_text, charge_info_level_cur, charge_info_level_req);
 
 	// non-stock charge logic
-		return sprintf(buf, "%s / %d mA", 
-			charge_info_text, charge_info_level_req);
+		return sprintf(buf, "%s / ~%d mA (%d)", 
+			charge_info_text, charge_info_level_cur, charge_info_level_req);
 }
 
 
