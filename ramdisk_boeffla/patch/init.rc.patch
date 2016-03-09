@@ -11,14 +11,13 @@ diff --git a/init.rc b/init.rc
 index fb1fb23..b8acbed 100755
 --- a/init.rc
 +++ b/init.rc
-@@ -26,6 +26,10 @@ on early-init
+@@ -26,6 +26,9 @@ on early-init
 
      # Set the security context of /adb_keys if present.
      restorecon /adb_keys
 +
-+    # Boeffla kernel: set the security contexts of /sbin and /res/bc
++    # Boeffla kernel: set the security contexts of /sbin
 +    restorecon_recursive /sbin
-+    restorecon_recursive /res/bc
 
      start ueventd
 

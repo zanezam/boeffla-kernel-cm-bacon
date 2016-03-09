@@ -11,15 +11,13 @@ diff --git a/file_contexts b/file_contexts
 index 78d9b1c..de4d89d 100644
 --- a/file_contexts
 +++ b/file_contexts
-@@ -637,3 +637,8 @@
+@@ -637,3 +637,6 @@
  /sys/devices/virtual/graphics/fb0/cabc          u:object_r:livedisplay_sysfs:s0
  /sys/devices/virtual/graphics/fb0/rgb           u:object_r:livedisplay_sysfs:s0
  /sys/devices/virtual/graphics/fb0/sre           u:object_r:livedisplay_sysfs:s0
 +
 +# Boeffla specific selinux contexts
-+/sbin/busybox			u:object_r:shell_exec:s0
-+/sbin/boeffla-init.sh	u:object_r:shell_exec:s0
-+/res/bc/bccontroller.sh	u:object_r:shell_exec:s0
++/sbin/busybox			u:object_r:system_file:s0
 --
 1.9.1
 
