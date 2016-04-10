@@ -1,0 +1,37 @@
+From 6eecd63fc88c029a0b47e111ce90eefa84353307 Mon Sep 17 00:00:00 2001
+From: andip71 <andreasp@gmx.de>
+Date: Tue, 8 Mar 2016 08:02:56 +0100
+Subject: [PATCH] 2
+
+---
+ init.rc | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/init.rc b/init.rc
+index 5c6b606..8dc6401 100755
+--- a/init.rc
++++ b/init.rc
+@@ -20,6 +20,9 @@ on early-init
+
+     # Set the security context of /adb_keys if present.
+     restorecon /adb_keys
++
++    # Boeffla kernel: set the security contexts of /sbin
++    restorecon_recursive /sbin
+
+     start ueventd
+
+@@ -769,3 +773,10 @@ service logcatd /system/bin/logcat -b all -v threadtime -v usec -v printable -D
+     user logd
+     group log
+     writepid /dev/cpuset/system-background/tasks
++
++# Call Boeffla-Kernel init script
++service boeffla-init /sbin/boeffla-init.sh
++    class main
++    user root
++    group root
++    oneshot
+-- 
+1.9.1
+
