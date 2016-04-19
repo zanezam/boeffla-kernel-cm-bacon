@@ -111,6 +111,7 @@ config register 04h
 #define LED_SPEED_CONT_MODE		1
 #define LED_INTENSITY_MAX		100
 
+int led_mute = 0;
 int led_enable_fade = 0;
 int led_intensity = 0;
 int led_speed = 0;
@@ -297,12 +298,20 @@ static int SN3193_SetBrightness(int color,u8 brightness)
 	if (color == RED_SLED)
 		brightness = brightness/4;
 
-	// apply brightness correction factor
-	// (if led_intensity is 0, apply standard driver behaviour)
-	if (led_intensity == 0) 
-		corrected_brightness = brightness;
+	// if led_mute is enabled, set brightness to zero
+	if (led_mute == 1)
+	{
+		corrected_brightness = 0;
+	}
 	else
-		corrected_brightness = (brightness * led_intensity) / 100;
+	{
+		// apply brightness correction factor
+		// (if led_intensity is 0, apply standard driver behaviour)
+		if (led_intensity == 0)
+			corrected_brightness = brightness;
+		else
+			corrected_brightness = (brightness * led_intensity) / 100;
+	}
 
 	pr_debug("Boeffla-LED %d - %d\n", brightness, corrected_brightness);
 
@@ -930,6 +939,20 @@ static ssize_t sled_test(struct device *dev, struct device_attribute *attr,
 }
 
 
+static ssize_t show_led_mute(struct device *dev,
+                    struct device_attribute *attr, char *buf)
+{
+	switch(led_mute)
+	{
+		case 0:
+			return sprintf(buf, "%d - off\n", led_mute);
+		case 1:
+			return sprintf(buf, "%d - on\n", led_mute);
+		default:
+			return sprintf(buf, "%d - undefined\n", led_mute);
+	}
+}
+
 static ssize_t show_led_fade(struct device *dev,
                     struct device_attribute *attr, char *buf)
 {
@@ -942,6 +965,34 @@ static ssize_t show_led_fade(struct device *dev,
 		default:	
 			return sprintf(buf, "%d - undefined\n", led_enable_fade);
 	}
+}
+
+static ssize_t store_led_mute(struct device *dev,
+					struct device_attribute *devattr,
+					const char *buf, size_t count)
+{
+	int enabled = -1; /* default to not set a new value */
+
+	sscanf(buf, "%d", &enabled);
+
+	switch(enabled) /* Accept only if 0 or 1 */
+	{
+		case 0:
+			led_mute = enabled;
+			break;
+
+		case 1:
+			led_mute = enabled;
+			// switch off any LED activity now
+			SN3193_TurnOffOut_sled();
+			SN3193_enable_sled(0);
+			break;
+
+		default:
+			break;
+	}
+
+	return count;
 }
 
 static ssize_t store_led_fade(struct device *dev,
@@ -1024,6 +1075,7 @@ static DEVICE_ATTR(grpfreq, S_IWUSR | S_IRUGO, NULL, sled_grpfreq_store);
 
 static DEVICE_ATTR(blink, S_IWUSR | S_IRUGO, NULL, sled_blink_store);
 
+static DEVICE_ATTR(led_mute, S_IWUSR | S_IRUGO, show_led_mute, store_led_mute);
 static DEVICE_ATTR(led_fade, S_IWUSR | S_IRUGO, show_led_fade, store_led_fade);
 static DEVICE_ATTR(led_intensity, S_IWUSR | S_IRUGO, show_led_intensity, store_led_intensity);
 static DEVICE_ATTR(led_speed, S_IWUSR | S_IRUGO, show_led_speed, store_led_speed);
@@ -1037,6 +1089,7 @@ static struct attribute *blink_attributes[] = {
 	&dev_attr_showing.attr,
 	&dev_attr_ledreset.attr,
 	&dev_attr_ledtest.attr,
+	&dev_attr_led_mute.attr,
 	&dev_attr_led_fade.attr,
 	&dev_attr_led_intensity.attr,
 	&dev_attr_led_speed.attr,
