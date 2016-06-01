@@ -55,13 +55,6 @@
 	/sbin/busybox grep ro.build.version /system/build.prop >> $BOEFFLA_LOGFILE
 	echo "=========================" >> $BOEFFLA_LOGFILE
 
-# disable default zRam if configured
-	if [ -f $DISABLE_DEFAULT_ZRAM ]; then
-		busybox swapoff /dev/block/zram0
-		echo "1" > /sys/block/zram0/reset
-		busybox sync
-	fi
-
 # remove any obsolete Boeffla-Config V2 startconfig done file
 	/sbin/busybox rm -f $BOEFFLA_STARTCONFIG_DONE
 
@@ -69,6 +62,13 @@
 	/sbin/busybox rm -f $BUSYBOX_ENABLER
 	/sbin/busybox rm -f $FRANDOM_ENABLER
 	
+# disable default zRam if configured
+	if [ -f $DISABLE_DEFAULT_ZRAM ]; then
+		busybox swapoff /dev/block/zram0
+		echo "1" > /sys/block/zram0/reset
+		busybox sync
+	fi
+
 # Apply Boeffla-Kernel default settings
 
 	# Sdcard buffer tweaks default to 1024 kb
