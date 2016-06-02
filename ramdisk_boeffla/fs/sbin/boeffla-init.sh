@@ -21,7 +21,7 @@
 	BOEFFLA_STARTCONFIG="/data/.boeffla/startconfig"
 	BOEFFLA_STARTCONFIG_EARLY="/data/.boeffla/startconfig_early"
 	BOEFFLA_STARTCONFIG_DONE="/data/.boeffla/startconfig_done"
-	CWM_RESET_ZIP="boeffla-config-reset-v4.zip"
+	CWM_RESET_ZIP="boeffla-config-reset-v5.zip"
 	INITD_ENABLER="/data/.boeffla/enable-initd"
 	BUSYBOX_ENABLER="/data/.boeffla/enable-busybox"
 	FRANDOM_ENABLER="/data/.boeffla/enable-frandom"
