@@ -26,6 +26,7 @@
 	BUSYBOX_ENABLER="/data/.boeffla/enable-busybox"
 	FRANDOM_ENABLER="/data/.boeffla/enable-frandom"
 	PERMISSIVE_ENABLER="/data/.boeffla/enable-permissive"
+	DISABLE_DEFAULT_ZRAM="/data/.boeffla/disable-default-zram"
 
 # If not yet existing, create a boeffla-kernel-data folder on sdcard 
 # which is used for many purposes,
@@ -57,9 +58,10 @@
 # remove any obsolete Boeffla-Config V2 startconfig done file
 	/sbin/busybox rm -f $BOEFFLA_STARTCONFIG_DONE
 
-# remove not used configuration files for frandom and busybox
+# remove not used configuration files
 	/sbin/busybox rm -f $BUSYBOX_ENABLER
 	/sbin/busybox rm -f $FRANDOM_ENABLER
+	/sbin/busybox rm -f $DISABLE_DEFAULT_ZRAM
 	
 # disable default zRam if configured
 	if [ -f $DISABLE_DEFAULT_ZRAM ]; then
