@@ -3,7 +3,7 @@
 # Boeffla-Config controller interface
 #
 # *******************************
-# Bacon COS12.1 version
+# Bacon COS13.1 version
 #
 # V0.1
 # *******************************
@@ -13,7 +13,7 @@
 # ********************************
 
 # kernel specification (hardware; type; target; url)
-KERNEL_SPECS="bacon;cm;cm13.0s1;http://boeffla.df-kunde.de/bacon/boeffla-kernel-cms/"
+KERNEL_SPECS="bacon;cm;cm13.1s1;http://boeffla.df-kunde.de/bacon/boeffla-kernel-cms/"
 
 # kernel features 
 # (1=enable-busybox,2=enable-frandom,3=wipe-cache,4=disable-zram-control)
