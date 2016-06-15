@@ -27,6 +27,7 @@
 	FRANDOM_ENABLER="/data/.boeffla/enable-frandom"
 	PERMISSIVE_ENABLER="/data/.boeffla/enable-permissive"
 	DISABLE_DEFAULT_ZRAM="/data/.boeffla/disable-default-zram"
+	DOZE_DISABLER="/data/.boeffla/disable-doze"
 
 # If not yet existing, create a boeffla-kernel-data folder on sdcard 
 # which is used for many purposes,
@@ -189,6 +190,12 @@
 		echo $(date) Recovery reset zip copied >> $BOEFFLA_LOGFILE
 	fi
 
+# disable doze if configured
+	if [ -f $DOZE_DISABLER ]; then
+		dumpsys deviceidle disable
+		echo $(date) "Doze disabled" >> $BOEFFLA_LOGFILE
+	fi
+
 # If not explicitely configured to permissive, set SELinux to enforcing and restart mpdecision
 	if [ ! -f $PERMISSIVE_ENABLER ]; then
 		echo "1" > /sys/fs/selinux/enforce
@@ -201,6 +208,7 @@
 	else
 		echo $(date) "SELinux: permissive" >> $BOEFFLA_LOGFILE
 	fi
+
 
 # Finished
 	echo $(date) Boeffla-Kernel initialisation completed >> $BOEFFLA_LOGFILE
