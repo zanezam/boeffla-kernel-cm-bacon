@@ -187,22 +187,12 @@
 		echo $(date) "Doze disabled" >> $BOEFFLA_LOGFILE
 	fi
 
-# Remove SELinux enforce lock to allow SELinux mode changes from now on
-	echo "0" > /sys/fs/selinux/bk_locked
-
-# If not explicitely configured to permissive, set SELinux to enforcing and restart mpdecision
+# SELinux part 1 - only reporting what will be done
 	if [ ! -f $PERMISSIVE_ENABLER ]; then
-		echo "1" > /sys/fs/selinux/enforce
-
-		stop mpdecision
-		/sbin/busybox sleep 0.5
-		start mpdecision
-
 		echo $(date) "SELinux: enforcing" >> $BOEFFLA_LOGFILE
 	else
 		echo $(date) "SELinux: permissive" >> $BOEFFLA_LOGFILE
 	fi
-
 
 # Finished
 	echo $(date) Boeffla-Kernel initialisation completed >> $BOEFFLA_LOGFILE
@@ -211,3 +201,12 @@
 	echo $(date) "Loaded startconfig was:" >> $BOEFFLA_LOGFILE
 	cat $BOEFFLA_STARTCONFIG >> $BOEFFLA_LOGFILE
 	echo $(date) End of kernel startup logfile >> $BOEFFLA_LOGFILE
+
+# SELinux part 2 - actual handling as very last thing (switching it to on will terminate this script)
+	
+	# Remove SELinux enforce lock to allow SELinux mode changes from now on
+	echo "0" > /sys/fs/selinux/bk_locked
+	
+	if [ ! -f $PERMISSIVE_ENABLER ]; then
+		echo "1" > /sys/fs/selinux/enforce
+	fi
