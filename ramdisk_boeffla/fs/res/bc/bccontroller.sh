@@ -18,7 +18,8 @@ KERNEL_SPECS="bacon;cm;cm13.1s1;http://boeffla.df-kunde.de/bacon/boeffla-kernel-
 # kernel features 
 # (1=enable-busybox,2=enable-frandom,3=wipe-cache,4=disable-zram-control)
 # (5=enable-default-zram-control,6=enable-selinux-switch, 7=enable-selinux-control)
-KERNEL_FEATURES="-3-4-6-7-"
+# (8=no-hotplugging,9=enable-doze-control)
+KERNEL_FEATURES="-3-4-6-7-9-"
 
 # path to kernel libraries
 LIBPATH="/system/lib/modules"
