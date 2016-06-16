@@ -642,10 +642,9 @@ static ssize_t store_scaling_min_freq(struct cpufreq_policy *policy, const char 
 	if (ret != 1)
 		return -EINVAL;
 
-	// if hard limit check is enabled + if new min frequency is below hard limit,
-	// overwrite with hard limit
+	// if hard limit check is enabled, we do not allow changing 
+	// min frequency from userspace at all
 	if (min_freq_hardlimit[policy->cpu] != 0)
-		if (new_policy.min < min_freq_hardlimit[policy->cpu])
 			new_policy.min = min_freq_hardlimit[policy->cpu];
 
 	ret = cpufreq_driver->verify(&new_policy);
