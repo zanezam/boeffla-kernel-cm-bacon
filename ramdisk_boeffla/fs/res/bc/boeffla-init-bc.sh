@@ -1,6 +1,8 @@
 #!/system/bin/sh
 
 # *****************************
+# BC-based initialization
+#
 # Bacon Cyanogenmod 13 version
 #
 # V0.1
@@ -56,6 +58,11 @@
 	/sbin/busybox grep ro.build.version /system/build.prop >> $BOEFFLA_LOGFILE
 	echo "=========================" >> $BOEFFLA_LOGFILE
 
+# set busybox selinux labels
+	mount -o rw,remount rootfs /
+	chcon u:object_r:toolbox_exec:s0 /sbin/busybox
+	mount -o ro,remount rootfs /
+
 # remove any obsolete Boeffla-Config V2 startconfig done file
 	/sbin/busybox rm -f $BOEFFLA_STARTCONFIG_DONE
 
@@ -86,15 +93,6 @@
 
 	echo $(date) Boeffla-Kernel default settings applied >> $BOEFFLA_LOGFILE
 
-# Execute early startconfig placed by Boeffla-Config V2 app, if there is one
-	if [ -f $BOEFFLA_STARTCONFIG_EARLY ]; then
-		echo $(date) "Early startup configuration found"  >> $BOEFFLA_LOGFILE
-		. $BOEFFLA_STARTCONFIG_EARLY
-		echo $(date) Early startup configuration applied  >> $BOEFFLA_LOGFILE
-	else
-		echo $(date) "No early startup configuration found"  >> $BOEFFLA_LOGFILE
-	fi
-
 # init.d support (enabler only to be considered for CM based roms)
 # (zipalign scripts will not be executed as only exception)
 	if [ -f $INITD_ENABLER ] ; then
@@ -113,14 +111,9 @@
 		echo $(date) init.d script handling by kernel disabled >> $BOEFFLA_LOGFILE
 	fi
 
-# Now wait for the rom to finish booting up
-# (by checking for the android acore process)
-	echo $(date) Checking for Rom boot trigger... >> $BOEFFLA_LOGFILE
-	while ! /sbin/busybox pgrep com.android.systemui ; do
-	  /sbin/busybox sleep 1
-	done
-	echo $(date) Rom boot trigger detected, waiting a few more seconds... >> $BOEFFLA_LOGFILE
-	/sbin/busybox sleep 20
+# Wait for some time to ensure rom is fully initialized
+	echo $(date) Waiting a few more seconds... >> $BOEFFLA_LOGFILE
+	/sbin/busybox sleep 10
 
 # Interaction with Boeffla-Config app V2
 	# save original stock values for selected parameters
@@ -196,23 +189,16 @@
 		echo $(date) "Doze disabled" >> $BOEFFLA_LOGFILE
 	fi
 
-# SELinux part 1 - only reporting what will be done
-	if [ ! -f $PERMISSIVE_ENABLER ]; then
-		echo $(date) "SELinux: enforcing" >> $BOEFFLA_LOGFILE
-	else
+# disable SELinux if configured
+	if [ -f $PERMISSIVE_ENABLER ]; then
+		echo "0" > /sys/fs/selinux/enforce
 		echo $(date) "SELinux: permissive" >> $BOEFFLA_LOGFILE
+	else
+		echo $(date) "SELinux: enforcing" >> $BOEFFLA_LOGFILE
 	fi
 
 # Finished
 	echo $(date) Boeffla-Kernel initialisation completed >> $BOEFFLA_LOGFILE
-	echo $(date) "Loaded early startconfig was:" >> $BOEFFLA_LOGFILE
-	cat $BOEFFLA_STARTCONFIG_EARLY >> $BOEFFLA_LOGFILE
 	echo $(date) "Loaded startconfig was:" >> $BOEFFLA_LOGFILE
 	cat $BOEFFLA_STARTCONFIG >> $BOEFFLA_LOGFILE
 	echo $(date) End of kernel startup logfile >> $BOEFFLA_LOGFILE
-
-# SELinux part 2 - actual handling as very last thing (switching it to on will terminate this script)
-	if [ ! -f $PERMISSIVE_ENABLER ]; then
-		echo "1" > /sys/fs/selinux/enforce
-	fi
-
