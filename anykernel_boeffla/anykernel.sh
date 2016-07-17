@@ -314,11 +314,10 @@ chmod -R 755 $ramdisk/res/bc
 chmod -R 755 $ramdisk/res/misc
 chmod -R 750 $ramdisk/init.superuser.rc
 chmod -R 644 $ramdisk/sepolicy
+chmod -R 750 $ramdisk/sbin/adbd
 
 # ramdisk changes
 backup_file default.prop;
-replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0";
-replace_string default.prop "ro.secure=0" "ro.secure=1" "ro.secure=0";
 replace_string default.prop "ro.debuggable=1" "ro.debuggable=0" "ro.debuggable=1";
 
 ############### Ramdisk customization end ###############
