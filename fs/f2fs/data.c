@@ -657,7 +657,7 @@ int f2fs_map_blocks(struct inode *inode, struct f2fs_map_blocks *map,
 	int mode = create ? ALLOC_NODE : LOOKUP_NODE_RA;
 	pgoff_t pgofs, end_offset, end;
 	int err = 0, ofs = 1;
-	unsigned int ofs_in_node, last_ofs_in_node;
+	unsigned int ofs_in_node, last_ofs_in_node = 0;
 	blkcnt_t prealloc;
 	struct extent_info ei;
 	bool allocated = false;
