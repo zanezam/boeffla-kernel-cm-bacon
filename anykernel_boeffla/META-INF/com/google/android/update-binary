@@ -155,6 +155,16 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
 	mount -o remount,ro -t auto /system;
 fi;
 
+if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.system)" == 1 ]; then
+	ui_print "* Copying firmware files...";
+	ui_print " ";
+
+	mount -o remount,rw /system;
+	cp -rf /tmp/anykernel/system/etc/firmware/* /system/etc/firmware/;
+	set_perm_recursive 0 0 0755 0644 /system/etc/firmware;
+	mount -o remount,ro /system;
+fi;
+
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
 	rm -rf /tmp/anykernel;
 fi;
