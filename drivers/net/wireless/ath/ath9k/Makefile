@@ -1,3 +1,5 @@
+EXTRA_CFLAGS += -Wno-logical-not-parentheses
+
 ath9k-y +=	beacon.o \
 		gpio.o \
 		init.o \
