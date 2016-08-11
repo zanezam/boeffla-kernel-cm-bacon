@@ -24,7 +24,7 @@
 *.order
 modules.builtin
 *.elf
-*.bin
+# *.bin
 # *.gz
 *.bz2
 *.lzma
