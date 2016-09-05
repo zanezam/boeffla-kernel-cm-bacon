@@ -13,6 +13,7 @@
 BOEFFLA_VERSION="5.0-test-CM13.0-bacon"
 
 TOOLCHAIN="/opt/toolchains/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
+ARCHITECTURE=arm
 
 COMPILE_DTB="y"
 MODULES_IN_SYSTEM="y"
@@ -71,6 +72,10 @@ if [ -f ~/x-settings.sh ]; then
 fi
 
 BOEFFLA_FILENAME="boeffla-kernel-$BOEFFLA_VERSION"
+
+# set environment
+export ARCH=$ARCHITECTURE
+export CROSS_COMPILE="${CCACHE} $TOOLCHAIN"
 
 
 #####################
