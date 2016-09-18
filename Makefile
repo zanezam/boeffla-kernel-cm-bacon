@@ -374,7 +374,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
-		   -Wno-format-security -Wno-shift-overflow \
+		   -Wno-format-security -Wno-shift-overflow -Wno-misleading-indentation \
 		   -Wno-array-bounds -Wno-tautological-compare -Wno-switch-unreachable \
 		   -Wno-unused-const-variable -Wno-duplicate-decl-specifier \
 		   -fno-delete-null-pointer-checks \
