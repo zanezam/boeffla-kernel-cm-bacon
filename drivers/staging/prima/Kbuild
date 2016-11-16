@@ -663,8 +663,8 @@ ifneq ($(wildcard $(srctree)/arch/$(SRCARCH)/mach-msm/include/mach/msm_smsm.h),)
 CDEFINES += -DEXISTS_MSM_SMSM
 endif
 
-# Fix build for GCC 4.7
-EXTRA_CFLAGS += -Wno-unused-function
+# Fix build for GCC 4.7+
+EXTRA_CFLAGS += -Wno-maybe-uninitialized -Wno-unused-function -Wno-array-bounds
 
 KBUILD_CPPFLAGS += $(CDEFINES)
 
