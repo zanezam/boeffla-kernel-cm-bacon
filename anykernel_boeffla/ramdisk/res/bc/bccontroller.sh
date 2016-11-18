@@ -13,7 +13,7 @@
 # ********************************
 
 # kernel specification (hardware; type; target; url)
-KERNEL_SPECS="bacon;cm;cm14.0;http://kernel.boeffla.de/bacon/boeffla-kernel-cm/"
+KERNEL_SPECS="bacon;cm;cm14.0;http://kernel.boeffla.de/bacon/boeffla-kernel-cm/;boeffla-kernel-#VERSION#-CM14.1-bacon-anykernel.recovery.zip"
 
 # kernel features 
 # (1=enable-busybox,2=enable-frandom,3=wipe-cache,4=disable-zram-control)
