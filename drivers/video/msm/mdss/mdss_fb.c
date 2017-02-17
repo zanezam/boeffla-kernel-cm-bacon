@@ -1105,11 +1105,16 @@ static int mdss_fb_blank_blank(struct msm_fb_data_type *mfd,
 
 	mfd->op_enable = false;
 	if (mdss_panel_is_power_off(req_power_state)) {
+		/* save bl level to restore on unblank */
+		u32 bl_level = mfd->unset_bl_level
+				? mfd->unset_bl_level : mfd->bl_level;
+
 		/* Stop Display thread */
 		if (mfd->disp_thread)
 			mdss_fb_stop_disp_thread(mfd);
 		mutex_lock(&mfd->bl_lock);
 		mdss_fb_set_backlight(mfd, 0);
+		mfd->unset_bl_level = bl_level;
 		mfd->bl_updated = 0;
 		mutex_unlock(&mfd->bl_lock);
 	}
@@ -1411,6 +1416,8 @@ int mdss_fb_alloc_fb_ion_memory(struct msm_fb_data_type *mfd, size_t fb_size)
 
 fb_mmap_failed:
 	ion_free(mfd->fb_ion_client, mfd->fb_ion_handle);
+	mfd->fb_ion_handle = NULL;
+	mfd->fbmem_buf = NULL;
 	return rc;
 }
 
