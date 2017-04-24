@@ -370,8 +370,8 @@ LINUXINCLUDE    := -I$(srctree)/arch/$(hdr-arch)/include \
 KBUILD_CPPFLAGS := -D__KERNEL__
 
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
-		   -fno-strict-aliasing -fno-common \
-		   -Werror-implicit-function-declaration \
+		   -fno-strict-aliasing -fno-common -Wno-format-truncation \
+		   -Werror-implicit-function-declaration -Wno-format-overflow \
 		   -Wno-format-security -Wno-shift-overflow -Wno-misleading-indentation \
 		   -Wno-array-bounds -Wno-tautological-compare -Wno-switch-unreachable \
 		   -Wno-unused-const-variable -Wno-duplicate-decl-specifier -Wno-int-in-bool-context \
