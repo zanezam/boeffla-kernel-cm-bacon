@@ -1140,7 +1140,7 @@ if [ "apply_ext4_tweaks" == "$1" ]; then
 
 	if [ "0" == "$2" ]; then
 		busybox sync
-		busyboxmount -o remount,commit=0,noatime $CACHE_DEVICE /cache
+		busybox mount -o remount,commit=0,noatime $CACHE_DEVICE /cache
 		busybox sync
 		busybox mount -o remount,commit=0,noatime $DATA_DEVICE /data
 		busybox sync
