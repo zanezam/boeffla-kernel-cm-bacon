@@ -143,6 +143,9 @@ step3_compile()
 
 	TIMESTAMP1=$(date +%s)
 
+	# remove a previous kernel image
+	rm $BUILD_PATH/$OUTPUT_FOLDER/arch/$ARCHITECTURE/boot/$KERNEL_IMAGE &>/dev/null
+
 	# jump to build path
 	cd $BUILD_PATH
 
@@ -171,6 +174,18 @@ step3_compile()
 
 	# Log compile time (screen output)
 	echo "compile time:" $(($TIMESTAMP2 - $TIMESTAMP1)) "seconds"
+
+	# if kernel image does not exist, exit processing
+	if [ ! -e $BUILD_PATH/$OUTPUT_FOLDER/arch/$ARCHITECTURE/boot/$KERNEL_IMAGE ]; then
+		echo -e $COLOR_RED
+		echo ""
+		echo "Compile was NOT successful !! Aborting."
+		echo ""
+		echo -e $COLOR_NEUTRAL
+		exit
+	fi
+
+	# Log kernel image size (screen output)
 	echo "Kernel image size (bytes):"
 	stat -c%s $BUILD_PATH/$OUTPUT_FOLDER/arch/$ARCHITECTURE/boot/$KERNEL_IMAGE
 
